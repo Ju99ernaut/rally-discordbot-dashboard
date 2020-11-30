@@ -1,0 +1,36 @@
+{
+    "dashboard": {
+        "home": "Home",
+        "welcome": "Welcome",
+        "logs": "View Logs",
+        "balance": "Balance",
+        "donations": "Donations",
+        "buys": "Buys",
+        "sells": "Sells",
+        "holders": "Holders",
+        "coinBalance": "Coin Balance",
+        "coinHolders": "Coin Holders",
+        "volume": "Buys/Sells Volume"
+    },
+    "navbar": {
+        "account": "Account",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "sidebar": {
+        "main": "MAIN",
+        "dashboard": "Dashboard",
+        "setup": "Setup",
+        "commands": "Commands",
+        "featureRequest": "Feature Request",
+        "misc": "MISC",
+        "logs": "Logs",
+        "controls": "Controls",
+        "settings": "Settings"
+    },
+    "footer": {
+        "terms": "Terms of Service",
+        "policy": "Privacy Policy",
+        "about": "About Us"
+    }
+}
