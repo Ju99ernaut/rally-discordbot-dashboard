@@ -1,5 +1,5 @@
 # Rally Discord Bot Dashboard
-Dashboard for managing rally discord bot
+Dashboard for managing rally discord bot built using `vuejs`
 
 ## Screenshot
 ![screehot](https://i.imgur.com/S2pSx5Q.png)
