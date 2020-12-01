@@ -4,7 +4,7 @@
     <nav class="text-sm font-semibold mb-6" aria-label="Breadcrumb">
       <ol class="list-none p-0 inline-flex">
         <li class="flex items-center text-blue-500">
-          <a href="#" class="text-gray-700">Home</a>
+          <a href="#" class="text-gray-700">{{ $t("dashboard.home") }}</a>
           <svg
             class="fill-current w-3 h-3 mx-3"
             xmlns="http://www.w3.org/2000/svg"
@@ -16,18 +16,20 @@
           </svg>
         </li>
         <li class="flex items-center">
-          <a href="#" class="text-gray-600">Dashboard</a>
+          <a href="#" class="text-gray-600">{{ $t("sidebar.dashboard") }}</a>
         </li>
       </ol>
     </nav>
     <!-- breadcrumb end -->
 
     <div class="lg:flex justify-between items-center mb-6">
-      <p class="text-2xl font-semibold mb-2 lg:mb-0">Welcome, Anonymous!</p>
+      <p class="text-2xl font-semibold mb-2 lg:mb-0">
+        {{ $t("dashboard.welcome") }}, Anonymous!
+      </p>
       <button
         class="bg-blue-500 hover:bg-blue-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
       >
-        View Logs
+        {{ $t("dashboard.logs") }}
       </button>
     </div>
 
@@ -50,7 +52,7 @@
         </div>
         <div>
           <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-            Balance
+            {{ $t("dashboard.balance") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
             $ 6389
@@ -72,7 +74,7 @@
         </div>
         <div>
           <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-            Donations
+            {{ $t("dashboard.donations") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
             $ 46,760.89
@@ -94,7 +96,7 @@
         </div>
         <div>
           <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-            Buys/Sells
+            {{ $t("dashboard.buys") }}/{{ $t("dashboard.sells") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
             376
@@ -116,7 +118,7 @@
         </div>
         <div>
           <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-            Holders
+            {{ $t("dashboard.holders") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
             35
@@ -130,7 +132,7 @@
         <div
           class="w-full bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">Coin Balance</p>
+          <p class="text-xl mb-4">{{ $t("dashboard.coinBalance") }}</p>
           <div class="chart-area">
             <line-chart
               style="height: 100%"
@@ -149,7 +151,7 @@
         <div
           class="w-full bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">Coin Holders</p>
+          <p class="text-xl mb-4">{{ $t("dashboard.coinHolders") }}</p>
           <div class="chart-area">
             <bar-chart
               style="height: 100%"
@@ -168,7 +170,7 @@
         <div
           class="w-full bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">Buys/Sells Volume</p>
+          <p class="text-xl mb-4">{{ $t("dashboard.volume") }}</p>
           <div class="chart-area">
             <line-chart
               style="height: 100%"

@@ -83,9 +83,15 @@
       class="absolute bg-gray-100 dark:bg-gray-800 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
       :class="dropDownOpen ? '' : 'hidden'"
     >
-      <a href="#" class="block px-4 py-2 hover:bg-gray-700">Account</a>
-      <a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a>
-      <a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a>
+      <a href="#" class="block px-4 py-2 hover:bg-gray-700">{{
+        $t("navbar.account")
+      }}</a>
+      <a href="#" class="block px-4 py-2 hover:bg-gray-700">{{
+        $t("navbar.settings")
+      }}</a>
+      <a href="#" class="block px-4 py-2 hover:bg-gray-700">{{
+        $t("navbar.logout")
+      }}</a>
     </div>
     <!-- dropdown menu end -->
   </div>
