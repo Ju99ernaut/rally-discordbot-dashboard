@@ -17,8 +17,8 @@
       <p class="font-semibold pl-4">PlatformPro</p>
     </div>
 
-    <div class="mb-4 px-4">
-      <p class="pl-4 text-sm font-semibold mb-1">{{ $t("sidebar.main") }}</p>
+    <div class="mb-4 px-4 text-sm font-semibold">
+      <p class="pl-4 mb-1">{{ $t("sidebar.main") }}</p>
       <div
         class="w-full flex items-center h-10 pl-4 text-blue-400 hover:text-blue-400 rounded-lg cursor-pointer"
       >
@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div class="mb-4 px-4">
+    <div class="mb-4 px-4 text-sm font-semibold">
       <p class="pl-4 text-sm font-semibold mb-1">{{ $t("sidebar.misc") }}</p>
       <div
         class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
