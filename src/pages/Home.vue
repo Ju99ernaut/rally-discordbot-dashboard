@@ -176,7 +176,6 @@
               style="height: 100%"
               chart-id="purple-line-chart"
               :chart-data="purpleLineChart.chartData"
-              :gradient-colors="purpleLineChart.gradientColors"
               :gradient-stops="purpleLineChart.gradientStops"
               :extra-options="purpleLineChart.extraOptions"
             >
@@ -229,6 +228,31 @@ export default {
             {
               label: "Data",
               fill: true,
+              borderColor: config.colors.default,
+              borderWidth: 2,
+              borderDash: [],
+              borderDashOffset: 0.0,
+              pointBackgroundColor: config.colors.default,
+              pointBorderColor: "rgba(255,255,255,0)",
+              pointHoverBackgroundColor: config.colors.default,
+              pointBorderWidth: 20,
+              pointHoverRadius: 4,
+              pointHoverBorderWidth: 15,
+              pointRadius: 4,
+              data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
+            },
+          ],
+        },
+        gradientStops: [1, 0.2, 0],
+      },
+      greenLineChart: {
+        extraOptions: chartConfigs.greenChartOptions,
+        chartData: {
+          labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
+          datasets: [
+            {
+              label: "My First dataset",
+              fill: true,
               borderColor: config.colors.primary,
               borderWidth: 2,
               borderDash: [],
@@ -240,41 +264,11 @@ export default {
               pointHoverRadius: 4,
               pointHoverBorderWidth: 15,
               pointRadius: 4,
-              data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-            },
-          ],
-        },
-        gradientColors: config.colors.primaryGradient,
-        gradientStops: [1, 0.2, 0],
-      },
-      greenLineChart: {
-        extraOptions: chartConfigs.greenChartOptions,
-        chartData: {
-          labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
-          datasets: [
-            {
-              label: "My First dataset",
-              fill: true,
-              borderColor: config.colors.danger,
-              borderWidth: 2,
-              borderDash: [],
-              borderDashOffset: 0.0,
-              pointBackgroundColor: config.colors.danger,
-              pointBorderColor: "rgba(255,255,255,0)",
-              pointHoverBackgroundColor: config.colors.danger,
-              pointBorderWidth: 20,
-              pointHoverRadius: 4,
-              pointHoverBorderWidth: 15,
-              pointRadius: 4,
               data: [90, 27, 60, 12, 80],
             },
           ],
         },
-        gradientColors: [
-          "rgba(66,134,121,0.15)",
-          "rgba(66,134,121,0.0)",
-          "rgba(66,134,121,0)",
-        ],
+        gradientColors: config.colors.primaryGradient,
         gradientStops: [1, 0.4, 0],
       },
       blueBarChart: {
@@ -293,7 +287,11 @@ export default {
             },
           ],
         },
-        gradientColors: config.colors.primaryGradient,
+        gradientColors: [
+          "rgba(29,140,248,0.2)",
+          "rgba(29,140,248,0.0)",
+          "rgba(29,140,248,0)",
+        ],
         gradientStops: [1, 0.4, 0],
       },
     };
