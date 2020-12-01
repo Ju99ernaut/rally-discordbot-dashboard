@@ -1,6 +1,10 @@
 # Rally Discord Bot Dashboard
 Dashboard for managing rally discord bot built using `vuejs`
 
+* [initial template](https://github.com/Murked/vue-tailwind-admin)
+* [theme](https://github.com/estevanmaito/windmill-dashboard)
+* [charts](https://github.com/creativetimofficial/vue-black-dashboard)
+
 ## Screenshot
 ![screehot](https://i.imgur.com/S2pSx5Q.png)
 
