@@ -11,11 +11,15 @@ export default new Vuex.Store({
         userId: null,
         userDataUuid: null,
         user: null,
-        sideBarOpen: false
+        sideBarOpen: false,
+        dark: true
     },
     getters: {
-        sideBarOpen: state => {
-            return state.sideBarOpen
+        sideBarOpe(state) {
+            return state.sideBarOpen;
+        },
+        dark(state) {
+            return state.dark;
         },
         user(state) {
             return state.user;
@@ -26,7 +30,10 @@ export default new Vuex.Store({
     },
     mutations: {
         toggleSidebar(state) {
-            state.sideBarOpen = !state.sideBarOpen
+            state.sideBarOpen = !state.sideBarOpen;
+        },
+        toggleTheme(state) {
+            state.dark = !state.dark;
         },
         authUser(state, userData) {
             state.token = userData.token;
@@ -44,6 +51,9 @@ export default new Vuex.Store({
     actions: {
         toggleSidebar(context) {
             context.commit('toggleSidebar')
+        },
+        toggleTheme(context) {
+            context.commit('toggleTheme')
         }
     }
 });
