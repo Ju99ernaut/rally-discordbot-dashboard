@@ -37,7 +37,7 @@
     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
       <!-- Card -->
       <div
-        class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        class="flex items-center p-4 bg-white rounded-lg shadow-md dark:bg-gray-800"
       >
         <div
           class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
@@ -61,7 +61,7 @@
       </div>
       <!-- Card -->
       <div
-        class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        class="flex items-center p-4 bg-white rounded-lg shadow-md dark:bg-gray-800"
       >
         <div
           class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
@@ -83,7 +83,7 @@
       </div>
       <!-- Card -->
       <div
-        class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        class="flex items-center p-4 bg-white rounded-lg shadow-md dark:bg-gray-800"
       >
         <div
           class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
@@ -105,7 +105,7 @@
       </div>
       <!-- Card -->
       <div
-        class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        class="flex items-center p-4 bg-white rounded-lg shadow-md dark:bg-gray-800"
       >
         <div
           class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
@@ -130,7 +130,7 @@
     <div class="flex flex-wrap -mx-3">
       <div class="w-full xl:w-1/2 px-3">
         <div
-          class="w-full bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mb-8 xl:mb-0"
+          class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
           <p class="text-xl mb-4">{{ $t("dashboard.coinBalance") }}</p>
           <div class="chart-area">
@@ -149,7 +149,7 @@
 
       <div class="w-full xl:w-1/2 px-3">
         <div
-          class="w-full bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mb-8 xl:mb-0"
+          class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
           <p class="text-xl mb-4">{{ $t("dashboard.coinHolders") }}</p>
           <div class="chart-area">
@@ -168,7 +168,7 @@
 
       <div class="w-full mt-8 px-3">
         <div
-          class="w-full bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mb-8 xl:mb-0"
+          class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
           <p class="text-xl mb-4">{{ $t("dashboard.volume") }}</p>
           <div class="chart-area">
