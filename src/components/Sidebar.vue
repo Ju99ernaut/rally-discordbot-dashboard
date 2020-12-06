@@ -115,7 +115,7 @@
 div.router-link-active,
 div.router-link-exact-active {
   color: #3f83f8;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>
 
