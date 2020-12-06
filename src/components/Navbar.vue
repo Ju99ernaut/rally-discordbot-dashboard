@@ -90,42 +90,59 @@
             </svg>
           </template>
         </button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          class="fill-current mr-3 hover:text-blue-500"
+        <button
+          class="rounded-md mr-3 hover:text-blue-500 focus:outline-none"
+          @click="notificationsOpen = dropDownOpen ? false : !notificationsOpen"
+          aria-label="Toggle color mode"
         >
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path
-            d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"
-          />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            class="fill-current"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"
+            />
+          </svg>
+        </button>
         <img
           src="../assets/avatar.png"
           class="w-12 h-12 rounded-full shadow-lg"
-          @click="dropDownOpen = !dropDownOpen"
+          @click="dropDownOpen = notificationsOpen ? false : !dropDownOpen"
         />
       </div>
     </div>
 
+    <!-- notifications menu -->
+    <div
+      class="absolute bg-white dark:bg-gray-700 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
+      :class="notificationsOpen ? '' : 'hidden'"
+    >
+      <notifications />
+    </div>
+    <!-- notifications menu end -->
+
     <!-- dropdown menu -->
     <div
-      class="absolute bg-gray-100 dark:bg-gray-800 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
+      class="absolute bg-white dark:bg-gray-700 mt-1 shadow-xl text-gray-500 dark:text-gray-100 rounded-lg w-48 bottom-10 right-0 mr-6"
       :class="dropDownOpen ? '' : 'hidden'"
     >
       <router-link
         :to="{ path: 'settings' }"
-        class="block px-4 py-2 hover:bg-gray-700"
+        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
         >{{ $t("navbar.account") }}</router-link
       >
       <router-link
         :to="{ path: 'settings' }"
-        class="block px-4 py-2 hover:bg-gray-700"
+        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
         >{{ $t("navbar.settings") }}</router-link
       >
-      <button class="block px-4 py-2 hover:bg-gray-700">
+      <button
+        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+      >
         {{ $t("navbar.logout") }}
       </button>
     </div>
@@ -135,15 +152,20 @@
 
 <script>
 import { mapState } from "vuex";
+import Notifications from "./Notifications";
 
 export default {
   name: "Navbar",
+  components: {
+    Notifications,
+  },
   computed: {
     ...mapState(["sideBarOpen", "dark"]),
   },
   data() {
     return {
       dropDownOpen: false,
+      notificationsOpen: false,
     };
   },
   methods: {
