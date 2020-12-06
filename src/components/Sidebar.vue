@@ -10,7 +10,7 @@
       class="w-full shadow-md h-16 px-6 bg-gray-100 dark:bg-gray-800 flex px-4 items-center mb-8 mx-auto"
     >
       <img
-        src="../assets/PlatformProIcon.png"
+        src="@/assets/PlatformProIcon.png"
         class="w-12 h-12 bg-gray-800 rounded-full shadow-lg"
         @click="dropDownOpen = !dropDownOpen"
       />
