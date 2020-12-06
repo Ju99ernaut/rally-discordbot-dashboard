@@ -8,7 +8,7 @@ export default {
         extraOptions: Object,
         gradientColors: {
             type: Array,
-            default: () => ['rgba(72,72,176,0.2)', 'rgba(72,72,176,0.0)', 'rgba(119,52,169,0)'],
+            default: () => ['rgba(72,72,176,0.5)', 'rgba(72,72,176,0.05)', 'rgba(119,52,169,0)'],
             validator: val => {
                 return val.length > 2;
             }

@@ -288,8 +288,8 @@ export default {
           ],
         },
         gradientColors: [
-          "rgba(29,140,248,0.2)",
-          "rgba(29,140,248,0.0)",
+          "rgba(29,140,248,0.5)",
+          "rgba(29,140,248,0.05)",
           "rgba(29,140,248,0)",
         ],
         gradientStops: [1, 0.4, 0],
