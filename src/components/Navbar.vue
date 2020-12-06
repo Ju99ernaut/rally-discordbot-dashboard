@@ -92,8 +92,8 @@
         </button>
         <button
           class="rounded-md mr-3 hover:text-blue-500 focus:outline-none"
-          @click="notificationsOpen = dropDownOpen ? false : !notificationsOpen"
-          aria-label="Toggle color mode"
+          @click="toggleNotifications()"
+          aria-label="Toggle Notifications"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@
         <img
           src="../assets/avatar.png"
           class="w-12 h-12 rounded-full shadow-lg"
-          @click="dropDownOpen = notificationsOpen ? false : !dropDownOpen"
+          @click="toggleDropDown()"
         />
       </div>
     </div>
@@ -169,6 +169,14 @@ export default {
     };
   },
   methods: {
+    toggleDropDown() {
+      this.notificationsOpen = false;
+      this.dropDownOpen = !this.dropDownOpen;
+    },
+    toggleNotifications() {
+      this.dropDownOpen = false;
+      this.notificationsOpen = !this.notificationsOpen;
+    },
     toggleSidebar() {
       this.$store.dispatch("toggleSidebar");
     },
