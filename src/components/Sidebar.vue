@@ -7,14 +7,14 @@
     id="main-nav"
   >
     <div class="flex">
-      <Channels />
+      <Guilds />
       <div>
         <div
           class="w-full shadow-md h-16 px-6 bg-gray-100 dark:bg-gray-800 flex px-4 items-center mb-8 mx-auto"
         >
           <img
             src="@/assets/PlatformProIcon.png"
-            class="w-12 h-12 bg-gray-800 rounded-full shadow-lg"
+            class="w-12 h-12 bg-gray-300 dark:bg-gray-800 rounded-full shadow-lg"
             @click="dropDownOpen = !dropDownOpen"
           />
           <p class="font-semibold pl-4">PlatformPro</p>
@@ -129,12 +129,12 @@ div.router-link-exact-active {
 <script>
 import { mapState } from "vuex";
 
-import Channels from "./Channels";
+import Guilds from "./Guilds";
 
 export default {
   name: "Sidebar",
   components: {
-    Channels,
+    Guilds,
   },
   computed: {
     ...mapState(["sideBarOpen"]),
