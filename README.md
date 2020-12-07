@@ -6,7 +6,7 @@ Dashboard for managing rally discord bot built using `vuejs`
 * [charts](https://github.com/creativetimofficial/vue-black-dashboard)
 
 ## Screenshot
-![screehot](https://i.imgur.com/S2pSx5Q.png)
+![screehot](https://i.imgur.com/HFS92dE.png)
 
 ## TODO
 
