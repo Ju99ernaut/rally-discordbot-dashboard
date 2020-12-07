@@ -110,7 +110,7 @@
         </button>
         <img
           src="../assets/avatar.png"
-          class="w-12 h-12 rounded-full shadow-lg"
+          class="w-12 h-12 cursor-pointer rounded-full shadow-lg"
           @click="toggleDropDown()"
         />
       </div>
