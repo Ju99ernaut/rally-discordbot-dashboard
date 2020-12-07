@@ -121,7 +121,7 @@
       class="absolute bg-white dark:bg-gray-700 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
       :class="notificationsOpen ? '' : 'hidden'"
     >
-      <notifications />
+      <notifications :info="12" :warnings="5" :errors="1" />
     </div>
     <!-- notifications menu end -->
 
