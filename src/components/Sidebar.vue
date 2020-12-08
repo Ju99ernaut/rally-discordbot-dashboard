@@ -14,8 +14,7 @@
         >
           <img
             src="@/assets/PlatformProIcon.png"
-            class="w-12 h-12 bg-gray-300 dark:bg-gray-800 rounded-full shadow-lg"
-            @click="dropDownOpen = !dropDownOpen"
+            class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
           />
           <p class="font-semibold pl-4">PlatformPro</p>
         </div>

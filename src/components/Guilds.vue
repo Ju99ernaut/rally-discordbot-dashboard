@@ -5,15 +5,15 @@
   >
     <img
       src="../assets/avatar.png"
-      class="w-10 h-10 bg-gray-300 dark:bg-gray-800 rounded-full shadow-lg mt-3"
+      class="w-10 h-10 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
     />
     <div class="w-10 h-1 bg-gray-300 dark:bg-gray-800 mt-3"></div>
     <img
       src="@/assets/PlatformProIcon.png"
-      class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-800 rounded-full shadow-lg mt-3"
+      class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
     />
     <svg
-      class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-800 rounded-full shadow-lg mt-3"
+      class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
       fill="currentColor"
       viewBox="0 0 20 20"
     >
