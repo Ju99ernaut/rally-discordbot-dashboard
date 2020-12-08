@@ -4,7 +4,7 @@
       <breadcrumbs :name="$t('sidebar.commands')" />
 
       <div
-        class="relative inline-block w-10 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
+        class="relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
       >
         <input
           type="checkbox"
