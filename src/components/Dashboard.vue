@@ -10,7 +10,7 @@
       >
         <Navbar />
 
-        <div class="min-h-full p-6 bg-gray-200 dark:bg-gray-900">
+        <div class="min-h p-6 bg-gray-200 dark:bg-gray-900">
           <router-view />
         </div>
 
@@ -19,6 +19,12 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.min-h {
+  min-height: calc(100% - 8rem);
+}
+</style>
 
 <script>
 import { mapState } from "vuex";

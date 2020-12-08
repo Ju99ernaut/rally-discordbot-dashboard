@@ -13,7 +13,7 @@
           />
         </label>
         <div
-          class="ml-10 block relative inline-block w-10 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
+          class="ml-10 block relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
         >
           <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Enable/Disable</span>
