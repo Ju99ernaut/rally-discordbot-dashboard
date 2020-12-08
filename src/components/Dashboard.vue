@@ -10,7 +10,7 @@
       >
         <Navbar />
 
-        <div class="p-6 bg-gray-200 dark:bg-gray-900 mb-20">
+        <div class="min-h-full p-6 bg-gray-200 dark:bg-gray-900">
           <router-view />
         </div>
 
