@@ -1,7 +1,6 @@
 import Dashboard from '@/components/Dashboard';
 import DashboardHome from '@/pages/Home';
 import Commands from '@/pages/Commands';
-import Controls from '@/pages/Controls';
 import FeatureRequest from '@/pages/FeatureRequest';
 import Logs from '@/pages/Logs';
 import Settings from '@/pages/Settings';
@@ -17,7 +16,6 @@ export default [
             { path: '/', redirect: { name: 'DashboardHome' } },
             { path: 'home', name: 'DashboardHome', component: DashboardHome },
             { path: 'commands', name: 'Commands', component: Commands },
-            { path: 'controls', name: 'Controls', component: Controls },
             { path: 'features', name: 'FeatureRequest', component: FeatureRequest },
             { path: 'logs', name: 'Logs', component: Logs },
             { path: 'settings', name: 'Settings', component: Settings },
