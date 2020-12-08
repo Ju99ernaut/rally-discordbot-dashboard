@@ -1,7 +1,7 @@
 <template>
   <div class="w-full mt-8 px-3">
     <div
-      class="w-full flex justify-between rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
+      class="w-full flex justify-between rounded-lg shadow-md bg-white dark:bg-gray-800 p-4 mb-8 xl:mb-0"
     >
       <div>
         <p class="text-xl mb-1">{{ command }}</p>
@@ -11,7 +11,7 @@
         <div>
           <button
             type="button"
-            class="mr-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            class="mr-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
           >
             Edit
           </button>
