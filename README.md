@@ -24,6 +24,7 @@ Dashboard for managing rally discord bot built using `vuejs`
 - [ ] Feature request form
 - [ ] Commands modifiction
 - [ ] SSO
+- [ ] Tests
 
 ## Development
 
