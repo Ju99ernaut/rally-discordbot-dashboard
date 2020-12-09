@@ -19,6 +19,7 @@ Dashboard for managing rally discord bot built using `vuejs`
 - [x] Fetch API utils
 
 ### Implement
+- [ ] Discord API intergration
 - [ ] Rally API intergration
 - [ ] Bot setup panel
 - [ ] Feature request form
