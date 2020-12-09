@@ -10,7 +10,7 @@
           class="inline-block text-gray-500 lg:hidden flex items-center mr-4"
         >
           <button
-            class="hover:text-blue-500 hover:border-white focus:outline-none navbar-burger"
+            class="hover:text-red-500 hover:border-white focus:outline-none navbar-burger"
             @click="toggleSidebar()"
           >
             <svg
@@ -59,7 +59,7 @@
       <!-- right navbar -->
       <div class="flex items-center relative">
         <button
-          class="rounded-md mr-3 hover:text-blue-500 focus:outline-none"
+          class="rounded-md mr-3 hover:text-red-500 focus:outline-none"
           @click="toggleTheme()"
           aria-label="Toggle color mode"
         >
@@ -91,7 +91,7 @@
           </template>
         </button>
         <button
-          class="rounded-md mr-3 hover:text-blue-500 focus:outline-none"
+          class="rounded-md mr-3 hover:text-red-500 focus:outline-none"
           @click="toggleNotifications()"
           aria-label="Toggle Notifications"
         >
@@ -109,7 +109,7 @@
           </svg>
         </button>
         <img
-          src="../assets/avatar.png"
+          src="@/assets/avatar.png"
           class="w-12 h-12 cursor-pointer rounded-full shadow-lg"
           @click="toggleDropDown()"
         />
@@ -130,6 +130,11 @@
       class="absolute bg-white dark:bg-gray-700 mt-1 shadow-xl text-gray-500 dark:text-gray-100 rounded-lg w-48 bottom-10 right-0 mr-6"
       :class="dropDownOpen ? '' : 'hidden'"
     >
+      <router-link
+        :to="{ path: '/' }"
+        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+        >{{ $t("dashboard.home") }}</router-link
+      >
       <router-link
         :to="{ path: 'settings' }"
         class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
