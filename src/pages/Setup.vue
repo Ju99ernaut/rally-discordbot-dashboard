@@ -3,7 +3,7 @@
     <breadcrumbs :name="$t('sidebar.setup')" />
 
     <a
-      class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-blue-100 bg-blue-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+      class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
       href="#"
     >
       <div class="flex items-center">
@@ -18,7 +18,7 @@
     </a>
 
     <a
-      class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-blue-100 bg-blue-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+      class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
       href="#"
     >
       <div class="flex items-center">

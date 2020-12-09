@@ -24,7 +24,7 @@
           <router-link
             tag="div"
             :to="{ path: 'home' }"
-            class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
+            class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
           >
             <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
               <path
@@ -36,7 +36,7 @@
           <router-link
             tag="div"
             :to="{ path: 'setup' }"
-            class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
+            class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
           >
             <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
               <path
@@ -48,7 +48,7 @@
           <router-link
             tag="div"
             :to="{ path: 'commands' }"
-            class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
+            class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
           >
             <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
               <path
@@ -60,7 +60,7 @@
           <router-link
             tag="div"
             :to="{ path: 'features' }"
-            class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
+            class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
           >
             <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
               <path
@@ -78,7 +78,7 @@
           <router-link
             tag="div"
             :to="{ path: 'logs' }"
-            class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
+            class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
           >
             <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
               <path
@@ -90,7 +90,7 @@
           <router-link
             tag="div"
             :to="{ path: 'settings' }"
-            class="w-full flex items-center h-10 pl-4 hover:text-blue-400 rounded-lg cursor-pointer"
+            class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
           >
             <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
               <path
@@ -108,7 +108,7 @@
 <style scoped>
 div.router-link-active,
 div.router-link-exact-active {
-  color: #3f83f8;
+  color: #f83f3f;
   background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

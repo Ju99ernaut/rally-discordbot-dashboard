@@ -43,10 +43,10 @@
 <style scoped>
 .toggle-checkbox:checked {
   right: 0;
-  border-color: #d368d3;
+  border-color: #d36868;
 }
 .toggle-checkbox:checked + .toggle-label {
-  background-color: #d368d3;
+  background-color: #d36868;
 }
 </style>
 

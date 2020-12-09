@@ -14,7 +14,7 @@
           <li class="mb-2">
             <div class="flex items-center mb-1">
               <div
-                class="bg-blue-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
+                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
               ></div>
               <div class="flex-1 ml-4 font-medium">Oct 2020 - Sent 100,000</div>
             </div>
@@ -26,7 +26,7 @@
           <li class="mb-2">
             <div class="flex items-center mb-1">
               <div
-                class="bg-blue-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
+                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
               ></div>
               <div class="flex-1 ml-4 font-medium">May 2019 - More money</div>
             </div>
@@ -38,7 +38,7 @@
           <li class="mb-2">
             <div class="flex items-center mb-1">
               <div
-                class="bg-blue-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
+                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
               ></div>
               <div class="flex-1 ml-4 font-medium">
                 April 2019 - Liquidated 1,000,000,000,000
@@ -52,7 +52,7 @@
           <li class="mb-2">
             <div class="flex items-center mb-1">
               <div
-                class="bg-blue-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
+                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
               ></div>
               <div class="flex-1 ml-4 font-medium">
                 Feb 2018 - Recieved 1,000,000
@@ -66,7 +66,7 @@
           <li class="mb-2">
             <div class="flex items-center mb-1">
               <div
-                class="bg-blue-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
+                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
               ></div>
               <div class="flex-1 ml-4 font-medium">
                 May 2017 - User123 Flexed
