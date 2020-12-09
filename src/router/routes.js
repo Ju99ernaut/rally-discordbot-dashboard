@@ -2,13 +2,14 @@ import Dashboard from '@/components/Dashboard';
 import DashboardHome from '@/pages/Home';
 import Commands from '@/pages/Commands';
 import FeatureRequest from '@/pages/FeatureRequest';
+import Landing from '@/pages/Landing';
 import Logs from '@/pages/Logs';
 import Settings from '@/pages/Settings';
 import Setup from '@/pages/Setup';
 import NotFound from '@/pages/NotFound';
 
 export default [
-    { path: '/', redirect: { name: 'DashboardHome' } },
+    { path: '/', name: 'Homepage', component: Landing },
     {
         path: '/dashboard',
         component: Dashboard,
