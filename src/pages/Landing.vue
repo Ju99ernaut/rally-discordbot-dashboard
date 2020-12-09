@@ -38,7 +38,7 @@
               >
               <router-link
                 :to="{ path: 'dashboard' }"
-                class="px-6 py-3 rounded-3xl font-medium bg-gradient-to-b from-red-600 to-red-700 text-white outline-none focus:outline-none hover:shadow-md hover:from-true-gray-900 transition duration-200 ease-in-out"
+                class="px-6 py-3 rounded-3xl font-medium bg-gradient-to-b from-red-600 to-red-700 hover:from-red-900 text-white outline-none focus:outline-none hover:shadow-md hover:from-true-gray-900 transition duration-200 ease-in-out"
               >
                 Dashboard
               </router-link>
@@ -59,7 +59,7 @@
               Made with love by the Community.
             </div>
             <button
-              class="mt-6 px-8 py-4 rounded-full font-normal tracking-wide bg-gradient-to-b from-red-600 to-red-700 text-white outline-none focus:outline-none hover:shadow-lg hover:from-blue-700 transition duration-200 ease-in-out"
+              class="mt-6 px-8 py-4 rounded-full font-normal tracking-wide bg-gradient-to-b from-red-600 to-red-700 text-white outline-none focus:outline-none hover:shadow-lg hover:from-red-900 transition duration-200 ease-in-out"
             >
               <a
                 class="flex"
