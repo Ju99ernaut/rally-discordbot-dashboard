@@ -4,7 +4,7 @@
     id="channels-nav"
   >
     <img
-      src="../assets/avatar.png"
+      src="@/assets/avatar.png"
       class="w-10 h-10 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
     />
     <div class="w-10 h-1 bg-gray-300 dark:bg-gray-800 mt-3"></div>
