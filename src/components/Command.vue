@@ -23,11 +23,11 @@
             <input
               type="checkbox"
               name="toggle"
-              id="toggle"
+              :id="id"
               class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
             />
             <label
-              for="toggle"
+              :for="id"
               class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
             ></label>
           </div>
@@ -51,6 +51,7 @@
 export default {
   name: "Command",
   props: {
+    id: String,
     command: String,
     description: String,
   },
