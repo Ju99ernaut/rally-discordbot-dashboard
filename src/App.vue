@@ -6,7 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
-//import Request from "@/utils/HttpRequestFactory";
+import fetch from "@/utils/fetch";
 
 export default {
   name: "app",
@@ -19,6 +19,11 @@ export default {
     if (fragment.has("access_token")) {
       const accessToken = fragment.get("access_token");
       const tokenType = fragment.get("token_type");
+      //const urlState = fragment.get("state");
+      //const stateParam = localStorage.getItem("stateParam");
+      //if (stateParam !== atob(decodeURIComponent(urlState))) {
+      //  return console.log("CRSF attack!!!");
+      //}
 
       fetch("https://discord.com/api/users/@me", {
         headers: {
@@ -39,34 +44,6 @@ export default {
     } else {
       this.$store.dispatch("autoLogin");
     }
-
-    //if (fragment.has("access_token")) {
-    //  const accessToken = fragment.get("access_token");
-    //  const tokenType = fragment.get("token_type");
-    //  //const urlState = fragment.get("state");
-    //  //const stateParam = localStorage.getItem("stateParam");
-    //  //if (stateParam !== atob(decodeURIComponent(urlState))) {
-    //  //  return console.log("CRSF attack!!!");
-    //  //}
-    //
-    //  Request.defaults.headers = {
-    //    authorization: `${tokenType} ${accessToken}`,
-    //  };
-    //
-    //  const clb = (res) => {
-    //    const user = JSON.parse(res);
-    //    const { username, id } = user;
-    //    this.$store.dispatch("login", {
-    //      token: `${tokenType} ${accessToken}`,
-    //      userId: id,
-    //      user,
-    //      username,
-    //    });
-    //  };
-    //  const clbErr = console.error;
-    //
-    //  Request.get("https://discord.com/api/users/@me", clb, clbErr);
-    //}
     this.$store.dispatch("setState");
   },
 };
