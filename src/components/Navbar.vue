@@ -116,7 +116,7 @@
         />
         <a
           v-else
-          href="https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=code&scope=identify%20guilds"
+          href="https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdashboard%2Fhome&response_type=code&scope=identify%20guilds"
           class="text-lg font-medium hover:text-red-500 transition duration-150 ease-in-out"
           >Login</a
         >
