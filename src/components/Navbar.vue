@@ -110,7 +110,7 @@
         </button>
         <img
           v-if="auth"
-          src="@/assets/avatar.png"
+          :src="avatar"
           class="w-12 h-12 cursor-pointer rounded-full shadow-lg"
           @click="toggleDropDown()"
         />
@@ -184,6 +184,11 @@ export default {
     },
     username() {
       return this.user ? this.user.username : "Anonymous";
+    },
+    avatar() {
+      return this.user
+        ? `https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png`
+        : "";
     },
   },
   data() {
