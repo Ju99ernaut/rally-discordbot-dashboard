@@ -4,7 +4,7 @@
 
     <div class="lg:flex justify-between items-center mb-6">
       <p class="text-2xl font-semibold mb-2 lg:mb-0">
-        {{ $t("dashboard.welcome") }}, Anonymous!
+        {{ $t("dashboard.welcome") }}, {{ username }}!
       </p>
       <router-link
         tag="button"
@@ -176,6 +176,8 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import LineChart from "@/components/Charts/LineChart";
 import BarChart from "@/components/Charts/BarChart";
@@ -188,6 +190,12 @@ export default {
     Breadcrumbs,
     LineChart,
     BarChart,
+  },
+  computed: {
+    ...mapState(["user"]),
+    username() {
+      return this.user ? this.user.username : "Anonymous";
+    },
   },
   data() {
     return {
