@@ -5,7 +5,7 @@
   >
     <img
       v-if="auth"
-      src="@/assets/avatar.png"
+      :src="avatar"
       class="w-10 h-10 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
     />
     <svg
@@ -20,8 +20,11 @@
       />
     </svg>
     <div class="w-10 h-1 bg-gray-300 dark:bg-gray-800 mt-3"></div>
+
     <img
-      src="@/assets/PlatformProIcon.png"
+      v-for="guild in guilds.slice(0, 13)"
+      :key="guild.id"
+      :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
       class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
     />
     <a
@@ -42,12 +45,35 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import fetch from "@/utils/fetch";
 
 export default {
   name: "Guilds",
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "token"]),
     ...mapGetters({ auth: "ifAuthenticated" }),
+    avatar() {
+      return this.user
+        ? `https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png`
+        : "";
+    },
+  },
+  data() {
+    return {
+      guilds: [],
+    };
+  },
+  mounted() {
+    fetch("https://discord.com/api/users/@me/guilds", {
+      headers: {
+        authorization: this.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        this.guilds = response;
+      })
+      .catch(console.error);
   },
 };
 </script>
