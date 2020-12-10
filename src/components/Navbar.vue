@@ -109,10 +109,17 @@
           </svg>
         </button>
         <img
+          v-if="auth"
           src="@/assets/avatar.png"
           class="w-12 h-12 cursor-pointer rounded-full shadow-lg"
           @click="toggleDropDown()"
         />
+        <a
+          v-else
+          href="https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=code&scope=identify%20guilds"
+          class="text-lg font-medium hover:text-red-500 transition duration-150 ease-in-out"
+          >Login</a
+        >
       </div>
     </div>
 
@@ -121,7 +128,7 @@
       class="absolute bg-white dark:bg-gray-700 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
       :class="notificationsOpen ? '' : 'hidden'"
     >
-      <notifications :info="12" :warnings="5" :errors="1" />
+      <notifications :info="1" />
     </div>
     <!-- notifications menu end -->
 
@@ -130,20 +137,21 @@
       class="absolute bg-white dark:bg-gray-700 mt-1 shadow-xl text-gray-500 dark:text-gray-100 rounded-lg w-48 bottom-10 right-0 mr-6"
       :class="dropDownOpen ? '' : 'hidden'"
     >
-      <router-link
-        :to="{ path: '/' }"
+      <a
+        href="#"
         class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
-        >{{ $t("dashboard.home") }}</router-link
       >
-      <router-link
-        :to="{ path: 'settings' }"
-        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
-        >{{ $t("navbar.account") }}</router-link
-      >
+        {{ username }}
+      </a>
       <router-link
         :to="{ path: 'settings' }"
         class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
         >{{ $t("navbar.settings") }}</router-link
+      >
+      <router-link
+        :to="{ path: '/' }"
+        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+        >{{ $t("dashboard.home") }}</router-link
       >
       <button
         class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -156,7 +164,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Notifications from "./Notifications";
 
 export default {
@@ -165,7 +173,8 @@ export default {
     Notifications,
   },
   computed: {
-    ...mapState(["sideBarOpen", "dark"]),
+    ...mapState(["sideBarOpen", "dark", "username", "user"]),
+    ...mapGetters({ auth: "ifAuthenticaed" }),
   },
   data() {
     return {

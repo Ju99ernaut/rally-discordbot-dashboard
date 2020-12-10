@@ -10,13 +10,13 @@
       <Guilds />
       <div>
         <div
-          class="w-full shadow-md h-16 px-6 bg-gray-100 dark:bg-gray-800 flex px-4 items-center mb-8 mx-auto"
+          class="w-full h-16 px-6 bg-gray-100 dark:bg-gray-800 flex px-4 items-center mb-8 mx-auto"
         >
           <img
-            src="@/assets/PlatformProIcon.png"
+            src="@/assets/space.png"
             class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
           />
-          <p class="font-semibold pl-4">PlatformPro</p>
+          <p class="font-semibold pl-4">RallyBot</p>
         </div>
 
         <div class="mb-4 px-4 text-sm font-semibold">
@@ -34,6 +34,7 @@
             <span>{{ $t("sidebar.dashboard") }}</span>
           </router-link>
           <router-link
+            v-if="auth"
             tag="div"
             :to="{ path: 'setup' }"
             class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
@@ -88,6 +89,7 @@
             <span>{{ $t("sidebar.logs") }}</span>
           </router-link>
           <router-link
+            v-if="auth"
             tag="div"
             :to="{ path: 'settings' }"
             class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
@@ -114,7 +116,7 @@ div.router-link-exact-active {
 </style>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 import Guilds from "./Guilds";
 
@@ -125,6 +127,7 @@ export default {
   },
   computed: {
     ...mapState(["sideBarOpen"]),
+    ...mapGetters({ auth: "ifAuthenticaed" }),
   },
 };
 </script>
