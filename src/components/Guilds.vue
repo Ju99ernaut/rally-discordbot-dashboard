@@ -21,12 +21,14 @@
     </svg>
     <div class="w-10 h-1 bg-gray-300 dark:bg-gray-800 mt-3"></div>
 
-    <img
-      v-for="guild in guilds.slice(0, 13)"
-      :key="guild.id"
-      :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
-      class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
-    />
+    <div v-if="auth">
+      <img
+        v-for="guild in guilds.slice(0, 13)"
+        :key="guild.id"
+        :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
+        class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
+      />
+    </div>
     <a
       href="https://discord.com/api/oauth2/authorize?client_id=769334375023640578&permissions=268438560&scope=bot"
     >
@@ -64,16 +66,18 @@ export default {
     };
   },
   mounted() {
-    fetch("https://discord.com/api/users/@me/guilds", {
-      headers: {
-        authorization: this.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        this.guilds = response;
+    if (this.auth) {
+      fetch("https://discord.com/api/users/@me/guilds", {
+        headers: {
+          authorization: this.token,
+        },
       })
-      .catch(console.error);
+        .then((res) => res.json())
+        .then((response) => {
+          this.guilds = response;
+        })
+        .catch(console.error);
+    }
   },
 };
 </script>

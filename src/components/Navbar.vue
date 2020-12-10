@@ -214,6 +214,8 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout");
+      this.dropDownOpen = false;
+      this.notificationsOpen = false;
     },
   },
 };
