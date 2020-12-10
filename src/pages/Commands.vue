@@ -20,27 +20,27 @@
     </div>
 
     <Command
-      :id="switch1"
+      :id="'switch1'"
       :command="'#send'"
       :description="'send coin to someone else'"
     />
     <Command
-      :id="switch2"
+      :id="'switch2'"
       :command="'#donate'"
       :description="'doante coin to creator'"
     />
     <Command
-      :id="switch3"
+      :id="'switch3'"
       :command="'#flex'"
       :description="'display coin balance'"
     />
     <Command
-      :id="switch4"
+      :id="'switch4'"
       :command="'#top'"
       :description="'display members with the most coin'"
     />
     <Command
-      :id="switch5"
+      :id="'switch5'"
       :command="'#user'"
       :description="'shows user info'"
     />
