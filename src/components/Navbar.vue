@@ -116,7 +116,10 @@
         />
         <a
           v-else
-          href="https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdashboard%2Fhome&response_type=code&scope=identify%20guilds"
+          :href="
+            'https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdashboard%2Fhome&response_type=token&scope=identify%20guilds' +
+            `&state=${state}`
+          "
           class="text-lg font-medium hover:text-red-500 transition duration-150 ease-in-out"
           >Login</a
         >
@@ -154,6 +157,7 @@
         >{{ $t("dashboard.home") }}</router-link
       >
       <button
+        @click="logout()"
         class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
       >
         {{ $t("navbar.logout") }}
@@ -173,8 +177,14 @@ export default {
     Notifications,
   },
   computed: {
-    ...mapState(["sideBarOpen", "dark", "username", "user"]),
-    ...mapGetters({ auth: "ifAuthenticaed" }),
+    ...mapState(["sideBarOpen", "dark", "user", "stateParam"]),
+    ...mapGetters({ auth: "ifAuthenticated" }),
+    state() {
+      return btoa(this.stateParam);
+    },
+    username() {
+      return this.user ? this.user.username : "Anonymous";
+    },
   },
   data() {
     return {
@@ -196,6 +206,9 @@ export default {
     },
     toggleTheme() {
       this.$store.dispatch("toggleTheme");
+    },
+    logout() {
+      this.$store.dispatch("logout");
     },
   },
 };
