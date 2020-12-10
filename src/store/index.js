@@ -9,7 +9,6 @@ export default new Vuex.Store({
     state: {
         token: null,
         userId: null,
-        userDataUuid: null,
         user: null,
         sideBarOpen: false,
         dark: true
@@ -25,7 +24,7 @@ export default new Vuex.Store({
             return state.user;
         },
         ifAuthenticated(state) {
-            return state.token !== undefined && state.token !== null;
+            return !!state.token;
         }
     },
     mutations: {
@@ -35,25 +34,43 @@ export default new Vuex.Store({
         toggleTheme(state) {
             state.dark = !state.dark;
         },
-        authUser(state, userData) {
-            state.token = userData.token;
-            state.userId = userData.userId;
-            state.userDataUuid = userData.userDataUuid;
-            state.user = userData.user;
+        authUser(state, { token, userId, user }) {
+            state.token = token;
+            state.userId = userId;
+            state.user = user;
         },
         clearAuth(state) {
             state.token = null;
             state.userId = null;
-            state.userDataUuid = null;
             state.user = null;
         }
     },
     actions: {
-        toggleSidebar(context) {
-            context.commit('toggleSidebar')
+        toggleSidebar({ commit }) {
+            commit('toggleSidebar')
         },
-        toggleTheme(context) {
-            context.commit('toggleTheme')
+        toggleTheme({ commit }) {
+            commit('toggleTheme')
+        },
+        login({ commit }, { token, userId, user }) {
+            localStorage.setItem('token', token);
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('user', JSON.stringify(user));
+            commit('authUser', { token, userId, user });
+        },
+        logout({ commit }) {
+            commit('clearAuth');
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('user');
+        },
+        autoLogin({ commit }) {
+            const token = localStorage.getItem('token');
+            if (!token)
+                return;
+            const userId = localStorage.getItem('userId');
+            const user = JSON.parse(localStorage.getItem('user'));
+            commit('authUser', { token, userId, user });
         }
     }
 });
