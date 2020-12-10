@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-//import Request from './HttpRequestFactory';
-//import router from '../router/index';
+import generateRandomString from '@/utils/randomString';
 
 Vue.use(Vuex);
 
@@ -9,8 +8,8 @@ export default new Vuex.Store({
     state: {
         token: null,
         userId: null,
-        username: null,
         user: null,
+        stateParam: null,
         sideBarOpen: false,
         dark: true
     },
@@ -35,17 +34,18 @@ export default new Vuex.Store({
         toggleTheme(state) {
             state.dark = !state.dark;
         },
-        authUser(state, { token, userId, user, username }) {
+        authUser(state, { token, userId, user }) {
             state.token = token;
             state.userId = userId;
-            state.username = username;
             state.user = user;
         },
         clearAuth(state) {
             state.token = null;
             state.userId = null;
-            state.username = null;
             state.user = null;
+        },
+        setState(state, rndStr) {
+            state.stateParam = rndStr;
         }
     },
     actions: {
@@ -55,10 +55,9 @@ export default new Vuex.Store({
         toggleTheme({ commit }) {
             commit('toggleTheme')
         },
-        login({ commit }, { token, userId, user, username }) {
+        login({ commit }, { token, userId, user }) {
             localStorage.setItem('token', token);
             localStorage.setItem('userId', userId);
-            localStorage.setItem('username', username);
             localStorage.setItem('user', JSON.stringify(user));
             commit('authUser', { token, userId, user });
         },
@@ -66,7 +65,6 @@ export default new Vuex.Store({
             commit('clearAuth');
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
-            localStorage.removeItem('username');
             localStorage.removeItem('user');
         },
         autoLogin({ commit }) {
@@ -74,9 +72,13 @@ export default new Vuex.Store({
             if (!token)
                 return;
             const userId = localStorage.getItem('userId');
-            const username = localStorage.getItem('username');
             const user = JSON.parse(localStorage.getItem('user'));
-            commit('authUser', { token, userId, user, username });
+            commit('authUser', { token, userId, user });
+        },
+        setState({ commit }) {
+            const rndStr = generateRandomString();
+            localStorage.setItem('stateParam', rndStr);
+            commit('setState', rndStr);
         }
     }
 });
