@@ -148,7 +148,7 @@ export default ({
         const typeJson = this.defaults.contentTypeJson;
         const headers = this.defaults.headers || {};
         const params = this.defaults.params;
-        const reqHead = 'X-Requested-With';
+        //const reqHead = 'X-Requested-With';
         const typeHead = 'Content-Type';
         const bodyObj = opts.body || {};
         let fetchOptions;
@@ -158,9 +158,9 @@ export default ({
             bodyObj[param] = params[param];
         }
 
-        if (isUndefined(headers[reqHead])) {
-            headers[reqHead] = 'XMLHttpRequest';
-        }
+        //if (isUndefined(headers[reqHead])) {
+        //    headers[reqHead] = 'XMLHttpRequest';
+        //}
 
         // With `fetch`, have to send FormData without any 'Content-Type'
         // https://stackoverflow.com/questions/39280438/fetch-missing-boundary-in-multipart-form-data-post
