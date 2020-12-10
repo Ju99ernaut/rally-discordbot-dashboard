@@ -127,7 +127,7 @@ export default {
   },
   computed: {
     ...mapState(["sideBarOpen"]),
-    ...mapGetters({ auth: "ifAuthenticaed" }),
+    ...mapGetters({ auth: "ifAuthenticated" }),
   },
 };
 </script>
