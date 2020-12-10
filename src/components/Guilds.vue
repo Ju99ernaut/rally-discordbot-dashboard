@@ -47,7 +47,7 @@ export default {
   name: "Guilds",
   computed: {
     ...mapState(["user"]),
-    ...mapGetters({ auth: "ifAuthenticaed" }),
+    ...mapGetters({ auth: "ifAuthenticated" }),
   },
 };
 </script>
