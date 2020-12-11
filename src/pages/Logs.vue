@@ -11,70 +11,27 @@
           style="left: 7px"
         ></div>
         <ul class="list-none m-0 p-0">
-          <li class="mb-2">
-            <div class="flex items-center mb-1">
-              <div
-                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
-              ></div>
-              <div class="flex-1 ml-4 font-medium">Oct 2020 - Sent 100,000</div>
-            </div>
-            <div class="ml-12">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Dignissimos tenetur, suscipit atque et nulla dolores unde maiores.
-            </div>
-          </li>
-          <li class="mb-2">
-            <div class="flex items-center mb-1">
-              <div
-                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
-              ></div>
-              <div class="flex-1 ml-4 font-medium">May 2019 - More money</div>
-            </div>
-            <div class="ml-12">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Dignissimos tenetur, suscipit atque et nulla dolores unde maiores.
-            </div>
-          </li>
-          <li class="mb-2">
+          <li class="mb-2" v-for="log in logs" :key="log.id">
             <div class="flex items-center mb-1">
               <div
                 class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
               ></div>
               <div class="flex-1 ml-4 font-medium">
-                April 2019 - Liquidated 1,000,000,000,000
+                {{ log.completedDate || log.createdDate }}
               </div>
             </div>
             <div class="ml-12">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Dignissimos tenetur, suscipit atque et nulla dolores unde maiores.
-            </div>
-          </li>
-          <li class="mb-2">
-            <div class="flex items-center mb-1">
-              <div
-                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
-              ></div>
-              <div class="flex-1 ml-4 font-medium">
-                Feb 2018 - Recieved 1,000,000
-              </div>
-            </div>
-            <div class="ml-12">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Dignissimos tenetur, suscipit atque et nulla dolores unde maiores.
-            </div>
-          </li>
-          <li class="mb-2">
-            <div class="flex items-center mb-1">
-              <div
-                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
-              ></div>
-              <div class="flex-1 ml-4 font-medium">
-                May 2017 - User123 Flexed
-              </div>
-            </div>
-            <div class="ml-12">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Dignissimos tenetur, suscipit atque et nulla dolores unde maiores.
+              {{ log.status }} - {{ log.actionType }}
+              {{
+                log.actionAmountOfCoin
+                  ? ": " + log.actionAmountOfCoin + " coins"
+                  : ""
+              }}
+              {{
+                log.actionCostInCents
+                  ? ": " + log.actionCostInCents + " cents"
+                  : ""
+              }}
             </div>
           </li>
         </ul>
@@ -97,17 +54,13 @@ export default {
       logs: [],
     };
   },
-  //mounted() {
-  //  fetch("https://api.rally.io/v1/", {
-  //                  headers: {
-  //                      authorization: token,
-  //                  },
-  //              })
-  //              .then((res) => res.json())
-  //              .then((response) => {
-  //                  this.coins = response;
-  //              })
-  //              .catch(console.error);
-  //},
+  mounted() {
+    fetch("https://api.rally.io/v1/creator_coins/PRO/network_activity")
+      .then((res) => res.json())
+      .then((response) => {
+        this.logs = response;
+      })
+      .catch(console.error);
+  },
 };
 </script>
