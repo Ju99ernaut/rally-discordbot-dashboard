@@ -7,7 +7,7 @@
         class="relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
       >
         <input
-          checked
+          checked="true"
           type="checkbox"
           name="toggle"
           id="toggle"
@@ -24,26 +24,31 @@
       :id="'switch1'"
       :command="'#send'"
       :description="'send coin to someone else'"
+      :checked="true"
     />
     <Command
       :id="'switch2'"
       :command="'#donate'"
       :description="'doante coin to creator'"
+      :checked="true"
     />
     <Command
       :id="'switch3'"
       :command="'#flex'"
       :description="'display coin balance'"
+      :checked="false"
     />
     <Command
       :id="'switch4'"
       :command="'#top'"
       :description="'display members with the most coin'"
+      :checked="true"
     />
     <Command
       :id="'switch5'"
       :command="'#user'"
       :description="'shows user info'"
+      :checked="true"
     />
   </div>
 </template>

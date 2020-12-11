@@ -18,7 +18,7 @@
           <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Enable/Disable</span>
             <input
-              checked
+              checked="true"
               type="checkbox"
               name="toggle"
               id="toggle"
