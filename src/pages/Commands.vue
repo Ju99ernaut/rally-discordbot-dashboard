@@ -7,6 +7,7 @@
         class="relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
       >
         <input
+          checked
           type="checkbox"
           name="toggle"
           id="toggle"

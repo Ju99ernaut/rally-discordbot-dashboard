@@ -21,6 +21,7 @@
             class="relative inline-block w-10 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
           >
             <input
+              checked
               type="checkbox"
               name="toggle"
               :id="id"
