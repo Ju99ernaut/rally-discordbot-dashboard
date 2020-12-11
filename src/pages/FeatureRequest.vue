@@ -24,6 +24,7 @@
         <input
           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
           placeholder="Title"
+          v-model="title"
         />
       </label>
       <label class="block mt-4 text-sm">
@@ -32,9 +33,11 @@
           class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
           rows="3"
           placeholder="Enter some long form content."
+          v-model="description"
         ></textarea>
       </label>
       <button
+        @click="submitRequest"
         type="button"
         class="mt-5 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
       >
@@ -46,11 +49,27 @@
 
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
+//import fetch from "@/utils/fetch";
 
 export default {
   name: "FeatureRequest",
   components: {
     Breadcrumbs,
+  },
+  data() {
+    return {
+      title: "",
+      description: "",
+    };
+  },
+  methods: {
+    submitRequest() {
+      //const obj = {
+      // title: this.title,
+      // description: this.description,
+      //};
+      //fetch...
+    },
   },
 };
 </script>
