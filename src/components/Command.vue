@@ -21,7 +21,7 @@
             class="relative inline-block w-10 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
           >
             <input
-              checked
+              :checked="checked"
               type="checkbox"
               name="toggle"
               :id="id"
@@ -55,6 +55,7 @@ export default {
     id: String,
     command: String,
     description: String,
+    checked: Boolean,
   },
 };
 </script>
