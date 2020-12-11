@@ -45,6 +45,7 @@ export default {
       this.$store.dispatch("autoLogin");
     }
     this.$store.dispatch("setState");
+    this.$store.dispatch("setCoins");
   },
 };
 </script>
