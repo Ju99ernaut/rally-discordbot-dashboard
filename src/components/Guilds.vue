@@ -26,14 +26,14 @@
         v-for="guild in guilds"
         :key="guild.id"
         :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
-        class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
+        class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 hover:shadow-md rounded-full shadow-lg mt-3"
       />
     </div>
     <a
       href="https://discord.com/api/oauth2/authorize?client_id=769334375023640578&permissions=268438560&scope=bot"
     >
       <svg
-        class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
+        class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-900 hover:text-red-500 rounded-full shadow-lg mt-3"
         fill="currentColor"
         viewBox="0 0 20 20"
       >
