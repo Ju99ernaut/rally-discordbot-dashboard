@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import generateRandomString from '@/utils/randomString';
+import fetch from '@/utils/fetch';
 
 Vue.use(Vuex);
 
@@ -9,6 +10,7 @@ export default new Vuex.Store({
         token: null,
         userId: null,
         user: null,
+        guilds: [],
         stateParam: null,
         sideBarOpen: false,
         dark: true
@@ -46,6 +48,12 @@ export default new Vuex.Store({
         },
         setState(state, rndStr) {
             state.stateParam = rndStr;
+        },
+        setGuilds(state, guilds) {
+            state.guilds = guilds;
+        },
+        clearGuilds(state) {
+            state.guilds = [];
         }
     },
     actions: {
@@ -55,30 +63,45 @@ export default new Vuex.Store({
         toggleTheme({ commit }) {
             commit('toggleTheme')
         },
-        login({ commit }, { token, userId, user }) {
+        login({ commit, dispatch }, { token, userId, user }) {
             localStorage.setItem('token', token);
             localStorage.setItem('userId', userId);
             localStorage.setItem('user', JSON.stringify(user));
             commit('authUser', { token, userId, user });
+            dispatch('setGuilds', token);
         },
         logout({ commit }) {
             commit('clearAuth');
+            commit('clearGuilds');
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
             localStorage.removeItem('user');
         },
-        autoLogin({ commit }) {
+        autoLogin({ commit, dispatch }) {
             const token = localStorage.getItem('token');
             if (!token)
                 return;
             const userId = localStorage.getItem('userId');
             const user = JSON.parse(localStorage.getItem('user'));
             commit('authUser', { token, userId, user });
+            dispatch('setGuilds', token);
         },
         setState({ commit }) {
             const rndStr = generateRandomString();
             localStorage.setItem('stateParam', rndStr);
             commit('setState', rndStr);
+        },
+        setGuilds({ commit }, token) {
+            fetch("https://discord.com/api/users/@me/guilds", {
+                    headers: {
+                        authorization: token,
+                    },
+                })
+                .then((res) => res.json())
+                .then((response) => {
+                    commit('setGuilds', response.slice(0, 13));
+                })
+                .catch(console.error);
         }
     }
 });

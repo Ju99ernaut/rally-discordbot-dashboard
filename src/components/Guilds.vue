@@ -23,7 +23,7 @@
 
     <div v-if="auth">
       <img
-        v-for="guild in guilds.slice(0, 13)"
+        v-for="guild in guilds"
         :key="guild.id"
         :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
         class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
@@ -47,37 +47,17 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import fetch from "@/utils/fetch";
 
 export default {
   name: "Guilds",
   computed: {
-    ...mapState(["user", "token"]),
+    ...mapState(["user", "token", "guilds"]),
     ...mapGetters({ auth: "ifAuthenticated" }),
     avatar() {
       return this.user
         ? `https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png`
         : "";
     },
-  },
-  data() {
-    return {
-      guilds: [],
-    };
-  },
-  mounted() {
-    if (this.auth) {
-      fetch("https://discord.com/api/users/@me/guilds", {
-        headers: {
-          authorization: this.token,
-        },
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          this.guilds = response;
-        })
-        .catch(console.error);
-    }
   },
 };
 </script>
