@@ -44,12 +44,16 @@
 
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
-//import fetch from "@/utils/fetch";
+import fetch from "@/utils/fetch";
+import { mapState } from "vuex";
 
 export default {
   name: "Logs",
   components: {
     Breadcrumbs,
+  },
+  computed: {
+    ...mapState(["coins", "currentCoin"]),
   },
   data() {
     return {
@@ -57,7 +61,11 @@ export default {
     };
   },
   mounted() {
-    fetch("https://api.rally.io/v1/creator_coins/PRO/network_activity")
+    fetch(
+      `https://api.rally.io/v1/creator_coins/${
+        this.coins[this.currentCoin].coinSymbol
+      }/network_activity`
+    )
       .then((res) => res.json())
       .then((response) => {
         this.logs = response;
