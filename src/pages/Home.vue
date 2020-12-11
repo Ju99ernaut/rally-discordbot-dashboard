@@ -19,11 +19,11 @@
       <span class="text-gray-700 dark:text-gray-400"> Creator Coin </span>
       <select
         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+        @change="setCoin"
       >
-        <option>BTC</option>
-        <option>CHEWS</option>
-        <option>CHOU</option>
-        <option>PRO</option>
+        <option v-for="coin in coins" :key="coin.rnbUserId">
+          {{ coin.coinSymbol }}
+        </option>
       </select>
     </label>
 
@@ -49,7 +49,7 @@
             {{ $t("dashboard.balance") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ 6,389
+            $ {{ balance || 0 }}
           </p>
         </div>
       </div>
@@ -71,7 +71,7 @@
             {{ $t("dashboard.donations") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ 46,760.89
+            $ {{ donations || 0 }}
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@
             {{ $t("dashboard.buys") }}/{{ $t("dashboard.sells") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            376
+            $ {{ volume || 0 }}
           </p>
         </div>
       </div>
@@ -115,7 +115,7 @@
             {{ $t("dashboard.holders") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            35
+            {{ holders || 0 }}
           </p>
         </div>
       </div>
@@ -206,14 +206,13 @@ export default {
     BarChart,
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "coins", "currentCoin"]),
     username() {
       return this.user ? this.user.username : "Anonymous";
     },
   },
   data() {
     return {
-      coins: [],
       balance: "",
       donations: "",
       volume: "",
@@ -307,17 +306,38 @@ export default {
       },
     };
   },
-  //mounted() {
-  //  fetch("https://api.rally.io/v1/", {
-  //                  headers: {
-  //                      authorization: token,
-  //                  },
-  //              })
-  //              .then((res) => res.json())
-  //              .then((response) => {
-  //                  this.coins = response;
-  //              })
-  //              .catch(console.error);
-  //},
+  methods: {
+    getCoinInfo() {
+      fetch(
+        `https://api.rally.io/v1/users/rally/${
+          this.coins[this.currentCoin].rnbUserId
+        }/balance`
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          let bal = 0;
+          if (response.forEach)
+            response.forEach((amt) => (bal += parseFloat(amt.estimatedInUsd)));
+          else bal = parseFloat(response.estimatedInUsd);
+          this.balance = bal.toFixed();
+        })
+        .catch(console.error);
+      fetch(
+        `https://api.rally.io/v1/creator_coins/${
+          this.coins[this.currentCoin].coinSymbol
+        }/summary`
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          this.volume = response.totalSupportVolume;
+          this.holders = response.totalSupporters;
+        })
+        .catch(console.error);
+    },
+    setCoin(e) {
+      this.$store.commit("setCurrentCoin", e.target.selectedIndex);
+      this.getCoinInfo();
+    },
+  },
 };
 </script>
