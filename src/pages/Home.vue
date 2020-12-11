@@ -190,7 +190,7 @@
 <script>
 import { mapState } from "vuex";
 
-//import fetch from "@/utils/fetch";
+import fetch from "@/utils/fetch";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import LineChart from "@/components/Charts/LineChart";
