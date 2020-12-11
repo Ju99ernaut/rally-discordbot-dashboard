@@ -11,6 +11,7 @@ export default new Vuex.Store({
         userId: null,
         user: null,
         guilds: [],
+        currentGuild: null,
         stateParam: null,
         sideBarOpen: false,
         dark: true
@@ -51,6 +52,9 @@ export default new Vuex.Store({
         },
         setGuilds(state, guilds) {
             state.guilds = guilds;
+        },
+        setCurrentGuild(state, guildId) {
+            state.currentGuild = guildId;
         },
         clearGuilds(state) {
             state.guilds = [];
