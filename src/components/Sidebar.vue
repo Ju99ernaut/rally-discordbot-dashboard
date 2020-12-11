@@ -12,11 +12,20 @@
         <div
           class="w-full h-16 px-6 bg-gray-100 dark:bg-gray-800 flex px-4 items-center mb-8 mx-auto"
         >
-          <img
-            src="@/assets/space.png"
-            class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
-          />
-          <p class="font-semibold pl-4">RallyBot</p>
+          <template v-if="currentGuild !== null">
+            <img
+              :src="`https://cdn.discordapp.com/icons/${guilds[currentGuild].id}/${guilds[currentGuild].icon}.png`"
+              class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
+            />
+            <p class="font-semibold pl-4">{{ guilds[currentGuild].name }}</p>
+          </template>
+          <template v-else>
+            <img
+              src="@/assets/space.png"
+              class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
+            />
+            <p class="font-semibold pl-4">RallyBot</p>
+          </template>
         </div>
 
         <div class="mb-4 px-4 text-sm font-semibold">
@@ -126,7 +135,7 @@ export default {
     Guilds,
   },
   computed: {
-    ...mapState(["sideBarOpen"]),
+    ...mapState(["sideBarOpen", "currentGuild", "guilds"]),
     ...mapGetters({ auth: "ifAuthenticated" }),
   },
 };
