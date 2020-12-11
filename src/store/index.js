@@ -12,6 +12,8 @@ export default new Vuex.Store({
         user: null,
         guilds: [],
         currentGuild: null,
+        coins: [],
+        currentCoin: [],
         stateParam: null,
         sideBarOpen: false,
         dark: true
@@ -58,6 +60,12 @@ export default new Vuex.Store({
         },
         clearGuilds(state) {
             state.guilds = [];
+        },
+        setCoins(state, coins) {
+            state.coins = coins;
+        },
+        setCurrentCoin(state, coinId) {
+            state.currentCoin = coinId;
         }
     },
     actions: {
@@ -106,6 +114,14 @@ export default new Vuex.Store({
                     commit('setGuilds', response.slice(0, 13));
                 })
                 .catch(console.error);
-        }
+        },
+        setCoins({ commit }) {
+            fetch("https://api.rally.io/v1/creator_coins")
+                .then((res) => res.json())
+                .then((response) => {
+                    commit('setCoins', response);
+                })
+                .catch(console.error);
+        },
     }
 });
