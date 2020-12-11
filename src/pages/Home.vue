@@ -15,6 +15,18 @@
       </router-link>
     </div>
 
+    <label class="block mb-5 text-sm">
+      <span class="text-gray-700 dark:text-gray-400"> Creator Coin </span>
+      <select
+        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+      >
+        <option>BTC</option>
+        <option>CHEWS</option>
+        <option>CHOU</option>
+        <option>PRO</option>
+      </select>
+    </label>
+
     <!-- Cards -->
     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
       <!-- Card -->
@@ -178,6 +190,8 @@
 <script>
 import { mapState } from "vuex";
 
+//import fetch from "@/utils/fetch";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import LineChart from "@/components/Charts/LineChart";
 import BarChart from "@/components/Charts/BarChart";
@@ -199,6 +213,11 @@ export default {
   },
   data() {
     return {
+      coins: [],
+      balance: "",
+      donations: "",
+      volume: "",
+      holders: "",
       purpleLineChart: {
         extraOptions: chartConfigs.purpleChartOptions,
         chartData: {
@@ -288,6 +307,17 @@ export default {
       },
     };
   },
-  mounted() {},
+  //mounted() {
+  //  fetch("https://api.rally.io/v1/", {
+  //                  headers: {
+  //                      authorization: token,
+  //                  },
+  //              })
+  //              .then((res) => res.json())
+  //              .then((response) => {
+  //                  this.coins = response;
+  //              })
+  //              .catch(console.error);
+  //},
 };
 </script>

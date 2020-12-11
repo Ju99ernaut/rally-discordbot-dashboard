@@ -85,11 +85,29 @@
 
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
+//import fetch from "@/utils/fetch";
 
 export default {
   name: "Logs",
   components: {
     Breadcrumbs,
   },
+  data() {
+    return {
+      logs: [],
+    };
+  },
+  //mounted() {
+  //  fetch("https://api.rally.io/v1/", {
+  //                  headers: {
+  //                      authorization: token,
+  //                  },
+  //              })
+  //              .then((res) => res.json())
+  //              .then((response) => {
+  //                  this.coins = response;
+  //              })
+  //              .catch(console.error);
+  //},
 };
 </script>
