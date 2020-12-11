@@ -23,10 +23,12 @@
 
     <div v-if="auth">
       <img
-        v-for="guild in guilds"
+        v-for="(guild, index) in guilds"
         :key="guild.id"
         :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
-        class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 hover:shadow-md rounded-full shadow-lg mt-3"
+        class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
+        :class="currentGuild === index ? 'active' : ''"
+        @click="setGuild(index)"
       />
     </div>
     <a
@@ -45,18 +47,30 @@
   </div>
 </template>
 
+<style scoped>
+.active {
+  box-sizing: content-box;
+  border: 2px solid #f83f3f;
+}
+</style>
+
 <script>
 import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Guilds",
   computed: {
-    ...mapState(["user", "token", "guilds"]),
+    ...mapState(["user", "token", "guilds", "currentGuild"]),
     ...mapGetters({ auth: "ifAuthenticated" }),
     avatar() {
       return this.user
         ? `https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png`
         : "";
+    },
+  },
+  methods: {
+    setGuild(guildId) {
+      this.$store.commit("setCurrentGuild", guildId);
     },
   },
 };
