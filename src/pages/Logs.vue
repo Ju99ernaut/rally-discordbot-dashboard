@@ -11,29 +11,31 @@
           style="left: 7px"
         ></div>
         <ul class="list-none m-0 p-0">
-          <li class="mb-2" v-for="log in logs" :key="log.id">
-            <div class="flex items-center mb-1">
-              <div
-                class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
-              ></div>
-              <div class="flex-1 ml-4 font-medium">
-                {{ log.completedDate || log.createdDate }}
+          <template v-if="logs">
+            <li class="mb-2" v-for="log in logs" :key="log.id">
+              <div class="flex items-center mb-1">
+                <div
+                  class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
+                ></div>
+                <div class="flex-1 ml-4 font-medium">
+                  {{ log.completedDate || log.createdDate }}
+                </div>
               </div>
-            </div>
-            <div class="ml-12">
-              {{ log.status }} - {{ log.actionType }}
-              {{
-                log.actionAmountOfCoin
-                  ? ": " + log.actionAmountOfCoin + " coins"
-                  : ""
-              }}
-              {{
-                log.actionCostInCents
-                  ? ": " + log.actionCostInCents + " cents"
-                  : ""
-              }}
-            </div>
-          </li>
+              <div class="ml-12">
+                {{ log.status }} - {{ log.actionType }}
+                {{
+                  log.actionAmountOfCoin
+                    ? ": " + log.actionAmountOfCoin + " coins"
+                    : ""
+                }}
+                {{
+                  log.actionCostInCents
+                    ? ": " + log.actionCostInCents + " cents"
+                    : ""
+                }}
+              </div>
+            </li>
+          </template>
         </ul>
       </div>
     </div>
