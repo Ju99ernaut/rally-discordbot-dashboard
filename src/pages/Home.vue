@@ -21,7 +21,11 @@
         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
         @change="setCoin"
       >
-        <option v-for="coin in coins" :key="coin.rnbUserId">
+        <option
+          v-for="(coin, index) in coins"
+          :key="coin.rnbUserId"
+          :selected="index === currentCoin"
+        >
           {{ coin.coinSymbol }}
         </option>
       </select>
@@ -338,6 +342,9 @@ export default {
       this.$store.commit("setCurrentCoin", e.target.selectedIndex);
       this.getCoinInfo();
     },
+  },
+  mounted() {
+    this.getCoinInfo();
   },
 };
 </script>
