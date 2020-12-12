@@ -74,6 +74,7 @@
               <a
                 class="flex"
                 href="https://discord.com/api/oauth2/authorize?client_id=769334375023640578&permissions=268438560&scope=bot"
+                target="_blank"
               >
                 <svg
                   class="w-5 h-5 mr-2"
