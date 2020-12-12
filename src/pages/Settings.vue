@@ -8,8 +8,9 @@
         <label class="block w-1/2 text-sm">
           <span class="text-gray-700 dark:text-gray-400">Prefix</span>
           <input
+            disabled
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="prefix-"
+            placeholder="$"
           />
         </label>
         <div
@@ -18,6 +19,7 @@
           <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Enable/Disable</span>
             <input
+              disabled
               checked="true"
               type="checkbox"
               name="toggle"
@@ -32,8 +34,9 @@
         </div>
       </div>
       <button
+        disabled
         type="button"
-        class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+        class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
       >
         Reset
       </button>
