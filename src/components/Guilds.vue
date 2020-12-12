@@ -33,6 +33,7 @@
     </div>
     <a
       href="https://discord.com/api/oauth2/authorize?client_id=769334375023640578&permissions=268438560&scope=bot"
+      target="_blank"
     >
       <svg
         class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-900 hover:text-red-500 rounded-full shadow-lg mt-3"
@@ -69,8 +70,11 @@ export default {
     },
   },
   methods: {
-    setGuild(guildId) {
-      this.$store.commit("setCurrentGuild", guildId);
+    setGuild(guildIdx) {
+      this.$store.commit("setCurrentGuild", {
+        guildIdx,
+        guildId: this.guilds[guildIdx].id,
+      });
     },
   },
 };
