@@ -344,6 +344,7 @@ export default {
     },
   },
   mounted() {
+    //TODO cache component
     this.getCoinInfo();
   },
 };

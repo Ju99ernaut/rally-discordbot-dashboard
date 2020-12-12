@@ -61,6 +61,7 @@ export default {
     };
   },
   mounted() {
+    //TODO cache component
     fetch(
       `https://api.rally.io/v1/creator_coins/${
         this.coins[this.currentCoin].coinSymbol
