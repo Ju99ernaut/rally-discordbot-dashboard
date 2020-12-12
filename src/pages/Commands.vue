@@ -7,6 +7,7 @@
         class="relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
       >
         <input
+          disabled
           checked="true"
           type="checkbox"
           name="toggle"
@@ -22,32 +23,68 @@
 
     <Command
       :id="'switch1'"
-      :command="'#send'"
-      :description="'send coin to someone else'"
+      :command="'help'"
+      :description="'List all available commands'"
       :checked="true"
     />
     <Command
       :id="'switch2'"
-      :command="'#donate'"
-      :description="'doante coin to creator'"
+      :command="'set_channel_mapping'"
+      :description="'<coin name> <coin amount> <channel name>. Set a mapping between coin and channel. Channel membership will be constantly updated.'"
       :checked="true"
     />
     <Command
       :id="'switch3'"
-      :command="'#flex'"
-      :description="'display coin balance'"
-      :checked="false"
+      :command="'one_time_channel_mapping'"
+      :description="'<coin name> <coin amount> <channel name>. Grant/Deny access to a channel instantly'"
+      :checked="true"
     />
     <Command
       :id="'switch4'"
-      :command="'#top'"
-      :description="'display members with the most coin'"
+      :command="'unset_channel_mapping'"
+      :description="'<coin name> <coin amount> <channel name>. Unset a mapping between a coin and channel'"
       :checked="true"
     />
     <Command
       :id="'switch5'"
-      :command="'#user'"
-      :description="'shows user info'"
+      :command="'get_channel_mappings'"
+      :description="'Get channel mappings'"
+      :checked="true"
+    />
+    <Command
+      :id="'switch5'"
+      :command="'set_rally_id'"
+      :description="'Set your rally id'"
+      :checked="true"
+    />
+    <Command
+      :id="'switch6'"
+      :command="'set_role_mapping'"
+      :description="'<coin name> <coin ammount> <role name>. Set a mapping between coin and role. Roles will be constantly updated'"
+      :checked="true"
+    />
+    <Command
+      :id="'switch7'"
+      :command="'one_time_role_mapping'"
+      :description="'<coin name> <coin amount> <role name>. Set a mapping to be applied one instantly'"
+      :checked="true"
+    />
+    <Command
+      :id="'switch8'"
+      :command="'unset_role_mapping'"
+      :description="'<coin name> <coin amount> <role name>. Unset a mapping between a coin and role'"
+      :checked="true"
+    />
+    <Command
+      :id="'switch9'"
+      :command="'get_role_mappings'"
+      :description="'Get role mappings'"
+      :checked="true"
+    />
+    <Command
+      :id="'switch10'"
+      :command="'update'"
+      :description="'Force an immediate update'"
       :checked="true"
     />
   </div>
