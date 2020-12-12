@@ -12,8 +12,9 @@ export default new Vuex.Store({
         user: null,
         guilds: [],
         currentGuild: null,
+        currentGuildId: null,
         coins: [],
-        currentCoin: [],
+        currentCoin: 0,
         stateParam: null,
         sideBarOpen: false,
         dark: true
@@ -55,11 +56,14 @@ export default new Vuex.Store({
         setGuilds(state, guilds) {
             state.guilds = guilds;
         },
-        setCurrentGuild(state, guildId) {
-            state.currentGuild = guildId;
+        setCurrentGuild(state, { guildIdx, guildId }) {
+            state.currentGuild = guildIdx;
+            state.currentGuildId = guildId;
         },
         clearGuilds(state) {
             state.guilds = [];
+            state.currentGuild = null;
+            state.currentGuildId = null;
         },
         setCoins(state, coins) {
             state.coins = coins;
