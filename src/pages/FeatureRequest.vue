@@ -5,6 +5,7 @@
     <a
       class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
       href="https://github.com/Ju99ernaut/rally-discordbot-dashboard/issues"
+      target="_blank"
     >
       <div class="flex items-center">
         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
