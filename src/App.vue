@@ -19,6 +19,7 @@ export default {
     if (fragment.has("access_token")) {
       const accessToken = fragment.get("access_token");
       const tokenType = fragment.get("token_type");
+      //TODO CSRF and token expiration
       //const urlState = fragment.get("state");
       //const stateParam = localStorage.getItem("stateParam");
       //if (stateParam !== atob(decodeURIComponent(urlState))) {
