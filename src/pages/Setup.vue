@@ -4,7 +4,8 @@
 
     <a
       class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-      href="#"
+      :href="`https://discord.com/channels/${currentGuildId || ''}`"
+      target="_blank"
     >
       <div class="flex items-center">
         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -19,7 +20,8 @@
 
     <a
       class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-      href="#"
+      :href="`https://discord.com/channels/${currentGuildId || ''}`"
+      target="_blank"
     >
       <div class="flex items-center">
         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -34,7 +36,8 @@
 
     <a
       class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-      href="#"
+      :href="`https://discord.com/channels/${currentGuildId}`"
+      target="_blank"
     >
       <div class="flex items-center">
         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -50,12 +53,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default {
   name: "Setup",
   components: {
     Breadcrumbs,
+  },
+  computed: {
+    ...mapState(["currentGuildId"]),
   },
 };
 </script>
