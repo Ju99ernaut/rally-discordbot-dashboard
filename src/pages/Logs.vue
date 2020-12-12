@@ -3,7 +3,9 @@
     <breadcrumbs :name="$t('sidebar.logs')" />
 
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-      <p class="text-xl mb-4">Rally Network {{ $t("sidebar.logs") }}</p>
+      <p class="text-xl mb-4">
+        Rally {{ $t("logs.network") }} {{ $t("sidebar.logs") }}
+      </p>
       <!-- component -->
       <div class="relative m-8">
         <div

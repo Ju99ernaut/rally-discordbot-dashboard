@@ -14,7 +14,7 @@
             type="button"
             class="mr-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
           >
-            Edit
+            {{ $t("commands.edit") }}
           </button>
         </div>
         <div>

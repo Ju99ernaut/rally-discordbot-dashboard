@@ -13,13 +13,13 @@
         <p
           class="dark:text-gray-300 text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal"
         >
-          Sorry, the page you are looking for could not be found.
+          {{ $t("notFound.main") }}.
         </p>
         <router-link
           class="bg-transparent dark:text-gray-300 text-grey-darkest font-bold uppercase tracking-wide py-3 px-6 border-2 border-grey-light hover:border-grey rounded-lg"
           :to="{ path: '/' }"
           tag="button"
-          >Go Home</router-link
+          >{{ $t("notFound.goHome") }}</router-link
         >
       </div>
     </div>
