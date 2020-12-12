@@ -1,4 +1,8 @@
 export default {
+    home: "/",
+    dashboard: "/dashboard/home",
+    clientId: "",
+    botUrl: "",
     colors: {
         default: "#344675",
         primary: "#42b883",
