@@ -287,5 +287,29 @@ export default {
       roleMappings: [{ coin: "CHEWS", amount: "250", role: "VVVIP" }],
     };
   },
+  methods: {
+    //for add and edit
+    addChannelMapping() {
+      //set channel mapping endpoint
+      //fetch..
+      //refresh channel mappings
+    },
+    addRoleMapping() {
+      //set role mapping endpoint
+      //fetch..
+      //refresh role mappings
+    },
+    //for delete
+    removeChannelMapping() {
+      //remove channel mapping endpoint
+      //fetch..
+      //refresh channel mappings
+    },
+    removeRoleMapping() {
+      //remove role mapping endpoint
+      //fetch..
+      //refresh role mappings
+    },
+  },
 };
 </script>
