@@ -13,6 +13,7 @@
             disabled
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="$"
+            @change="onPrefixChange"
           />
         </label>
         <div
@@ -29,6 +30,7 @@
               name="toggle"
               id="toggle"
               class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+              @change="onBotToggle"
             />
             <label
               for="toggle"
@@ -41,6 +43,7 @@
         disabled
         type="button"
         class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+        @click="onReset"
       >
         {{ $t("settings.reset") }}
       </button>
@@ -65,6 +68,28 @@ export default {
   name: "Settings",
   components: {
     Breadcrumbs,
+  },
+  data() {
+    return {
+      prefix: "",
+    };
+  },
+  methods: {
+    onBotToggle() {
+      //toggle bot endpoint
+      //fetch...
+    },
+    onPrefixChange() {
+      //change prefix endpoint
+      //fetch...
+    },
+    onReset() {
+      //change settings to default
+      //if bot off switch on,
+      //fetch...
+      //change prefix to $
+      //fetch...
+    },
   },
 };
 </script>
