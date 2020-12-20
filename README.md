@@ -23,6 +23,7 @@ Dashboard for managing rally discord bot built using `vuejs`
 - [ ] Rally API intergration
 - [ ] Rally role bot API intergration(bot setup, commands, set role mapping, get role mappings etc)
 - [ ] Feature request form
+- [ ] Notification system
 - [ ] SSO
 - [ ] Tests
 
