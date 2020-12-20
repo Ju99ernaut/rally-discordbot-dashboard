@@ -14,13 +14,16 @@
         "logs": "View Logs",
         "balance": "Balance",
         "donations": "Donations",
+        "rewards": "Rewards",
         "buys": "Buys",
         "sells": "Sells",
         "holders": "Holders",
         "coinBalance": "Coin Balance",
         "coinHolders": "Coin Holders",
         "volume": "Buys/Sells Volume",
-        "creatorCoin": "Creator Coin"
+        "creatorCoin": "Creator Coin",
+        "loading": "Loading",
+        "default": "Set as default"
     },
     "setup": {
         "go": "Let's go",
@@ -47,7 +50,8 @@
         "submit": "Submit"
     },
     "logs": {
-        "network": "Network"
+        "network": "Network",
+        "refresh": "Refresh"
     },
     "settings": {
         "general": "General",
