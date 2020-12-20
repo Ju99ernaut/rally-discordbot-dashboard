@@ -14,13 +14,14 @@ export default new Vuex.Store({
         currentGuild: null,
         currentGuildId: null,
         coins: [],
+        defaultCoin: null,
         currentCoin: 0,
         stateParam: null,
         sideBarOpen: false,
-        dark: true
+        dark: true,
     },
     getters: {
-        sideBarOpe(state) {
+        sideBarOpen(state) {
             return state.sideBarOpen;
         },
         dark(state) {
@@ -39,6 +40,7 @@ export default new Vuex.Store({
         },
         toggleTheme(state) {
             state.dark = !state.dark;
+            localStorage.setItem('preferedTheme', state.dark ? 'dark' : 'light');
         },
         authUser(state, { token, userId, user }) {
             state.token = token;
@@ -70,6 +72,9 @@ export default new Vuex.Store({
         },
         setCurrentCoin(state, coinId) {
             state.currentCoin = coinId;
+        },
+        setDefaultCoin(state, coin) {
+            state.defaultCoin = coin;
         }
     },
     actions: {
@@ -115,6 +120,12 @@ export default new Vuex.Store({
                 })
                 .then((res) => res.json())
                 .then((response) => {
+                    if (response.code === 0) {
+                        const loginUrl = 'https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdashboard%2Fhome&response_type=token&scope=identify%20guilds' +
+                            `&state=${this.stateParam}`;
+                        window.location.replace(loginUrl);
+                        return;
+                    }
                     commit('setGuilds', response.slice(0, 13));
                 })
                 .catch(console.error);
@@ -126,6 +137,22 @@ export default new Vuex.Store({
                     commit('setCoins', response);
                 })
                 .catch(console.error);
+        },
+        setDefaultCoin({ commit }, coin) {
+            localStorage.setItem('defaultCoin', JSON.stringify(coin));
+            commit('setDefaultCoin', coin);
+        },
+        getDefaultCoin({ commit }) {
+            const coin = localStorage.getItem('defaultCoin');
+            if (!coin)
+                return;
+            commit('setDefaultCoin', JSON.parse(coin));
+        },
+        setPreferedTheme() {
+            const theme = localStorage.getItem('preferedTheme');
+            if (!theme)
+                return;
+            this.state.dark = theme === 'dark';
         },
     }
 });
