@@ -15,21 +15,46 @@
       </router-link>
     </div>
 
-    <label class="block mb-5 text-sm">
-      <span class="text-gray-700 dark:text-gray-400"> Creator Coin </span>
-      <select
-        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
-        @change="setCoin"
-      >
-        <option
-          v-for="(coin, index) in coins"
-          :key="coin.rnbUserId"
-          :selected="index === currentCoin"
+    <div class="lg:flex justify-between items-center mb-6">
+      <div class="w-full xl:w-4/6">
+        <label class="block mb-5 text-sm">
+          <span class="text-gray-700 dark:text-gray-400"> Creator Coin </span>
+          <select
+            ref="coins"
+            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+            @change="setCoin"
+          >
+            <template v-if="coins.length">
+              <option
+                v-for="(coin, index) in coins"
+                :key="coin.rnbUserId"
+                :value="coin.coinSymbol"
+                :selected="index === currentCoin"
+              >
+                {{ coin.coinSymbol }}
+              </option>
+            </template>
+            <option v-else>{{ $t("dashboard.loading") }}...</option>
+          </select>
+        </label>
+      </div>
+      <div class="flex justify-end w-full xl:w-1/6 py-5">
+        <button
+          @click="getCoinInfo()"
+          class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
         >
-          {{ coin.coinSymbol }}
-        </option>
-      </select>
-    </label>
+          {{ $t("logs.refresh") }}
+        </button>
+      </div>
+      <div class="flex justify-end w-full xl:w-1/6 py-5">
+        <button
+          @click="setDefaultCoin"
+          class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
+        >
+          {{ $t("dashboard.default") }}
+        </button>
+      </div>
+    </div>
 
     <!-- Cards -->
     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
@@ -72,10 +97,10 @@
         </div>
         <div>
           <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-            {{ $t("dashboard.donations") }}
+            {{ $t("dashboard.rewards") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ {{ donations || 0 }}
+            $ {{ rewards || 0 }}
           </p>
         </div>
       </div>
@@ -210,7 +235,7 @@ export default {
     BarChart,
   },
   computed: {
-    ...mapState(["user", "coins", "currentCoin"]),
+    ...mapState(["user", "coins", "currentCoin", "defaultCoin"]),
     username() {
       return this.user ? this.user.username : "Anonymous";
     },
@@ -219,6 +244,7 @@ export default {
     return {
       balance: "",
       donations: "",
+      rewards: "",
       volume: "",
       holders: "",
       purpleLineChart: {
@@ -311,12 +337,14 @@ export default {
     };
   },
   methods: {
-    getCoinInfo() {
-      fetch(
-        `https://api.rally.io/v1/users/rally/${
-          this.coins[this.currentCoin].rnbUserId
-        }/balance`
-      )
+    setDefaultCoin() {
+      this.$store.dispatch("setDefaultCoin", this.coins[this.currentCoin]);
+      //set default coin on API
+      //fetch...
+    },
+    getCoinInfo(defaultCoin = null) {
+      const coin = defaultCoin || this.coins[this.currentCoin];
+      fetch(`https://api.rally.io/v1/users/rally/${coin.rnbUserId}/balance`)
         .then((res) => res.json())
         .then((response) => {
           let bal = 0;
@@ -326,15 +354,18 @@ export default {
           this.balance = bal.toFixed();
         })
         .catch(console.error);
-      fetch(
-        `https://api.rally.io/v1/creator_coins/${
-          this.coins[this.currentCoin].coinSymbol
-        }/summary`
-      )
+      fetch(`https://api.rally.io/v1/creator_coins/${coin.coinSymbol}/summary`)
         .then((res) => res.json())
         .then((response) => {
           this.volume = response.totalSupportVolume;
           this.holders = response.totalSupporters;
+        })
+        .catch(console.error);
+
+      fetch(`https://api.rally.io/v1/creator_coins/${coin.coinSymbol}/rewards`)
+        .then((res) => res.json())
+        .then((response) => {
+          this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
         })
         .catch(console.error);
     },
@@ -343,9 +374,19 @@ export default {
       this.getCoinInfo();
     },
   },
-  mounted() {
-    //TODO cache component
-    this.getCoinInfo();
+  watch: {
+    coins() {
+      if (this.defaultCoin) {
+        this.getCoinInfo(this.defaultCoin);
+        this.$nextTick(() => {
+          const sel = this.$refs.coins;
+          sel.value = this.defaultCoin.coinSymbol;
+          sel.dispatchEvent(new Event("change"));
+        });
+        return;
+      }
+      this.getCoinInfo();
+    },
   },
 };
 </script>
