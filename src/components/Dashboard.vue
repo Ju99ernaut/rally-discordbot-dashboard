@@ -12,7 +12,9 @@
 
         <div class="min-h p-6 bg-gray-200 dark:bg-gray-900">
           <keep-alive include="DashboardHome,Logs" :max="2">
-            <router-view />
+            <fade-transition>
+              <router-view />
+            </fade-transition>
           </keep-alive>
         </div>
 
@@ -35,6 +37,8 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import { FadeTransition } from "vue2-transitions";
+
 export default {
   name: "Dashboard",
   computed: {
@@ -44,6 +48,7 @@ export default {
     Sidebar,
     Navbar,
     Footer,
+    FadeTransition,
   },
 };
 </script>

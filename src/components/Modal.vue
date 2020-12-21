@@ -28,7 +28,7 @@
         </svg>
         <span class="text-sm">(Esc)</span>
       </div>
-      <SlideYUpTransition :duration="animationDuraion">
+      <slide-y-up-transition :duration="animationDuraion">
         <!-- component -->
         <div
           class="max-w-sm dark:bg-gray-800 bg-white shadow rounded-lg mx-auto text-center p-12"
@@ -125,7 +125,7 @@
           </div>
           <!-- Buttons Link -->
         </div>
-      </SlideYUpTransition>
+      </slide-y-up-transition>
     </div>
   </div>
 </template>

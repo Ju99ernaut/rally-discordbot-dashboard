@@ -126,42 +126,46 @@
     </div>
 
     <!-- notifications menu -->
-    <div
-      class="absolute bg-white dark:bg-gray-700 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
-      :class="notificationsOpen ? '' : 'hidden'"
-    >
-      <notifications :info="1" />
-    </div>
+    <zoom-center-transition>
+      <div
+        class="absolute bg-white dark:bg-gray-700 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
+        :class="notificationsOpen ? '' : 'hidden'"
+      >
+        <notifications :info="1" />
+      </div>
+    </zoom-center-transition>
     <!-- notifications menu end -->
 
     <!-- dropdown menu -->
-    <div
-      class="absolute bg-white dark:bg-gray-700 mt-1 shadow-xl text-gray-500 dark:text-gray-100 rounded-lg w-48 bottom-10 right-0 mr-6"
-      :class="dropDownOpen ? '' : 'hidden'"
-    >
-      <a
-        href="#"
-        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+    <zoom-center-transition>
+      <div
+        class="absolute bg-white dark:bg-gray-700 mt-1 shadow-xl text-gray-500 dark:text-gray-100 rounded-lg w-48 bottom-10 right-0 mr-6"
+        :class="dropDownOpen ? '' : 'hidden'"
       >
-        {{ username }}
-      </a>
-      <router-link
-        :to="{ path: 'settings' }"
-        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
-        >{{ $t("navbar.settings") }}</router-link
-      >
-      <router-link
-        :to="{ path: '/' }"
-        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
-        >{{ $t("dashboard.home") }}</router-link
-      >
-      <button
-        @click="logout()"
-        class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
-      >
-        {{ $t("navbar.logout") }}
-      </button>
-    </div>
+        <a
+          href="#"
+          class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+        >
+          {{ username }}
+        </a>
+        <router-link
+          :to="{ path: 'settings' }"
+          class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+          >{{ $t("navbar.settings") }}</router-link
+        >
+        <router-link
+          :to="{ path: '/' }"
+          class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+          >{{ $t("dashboard.home") }}</router-link
+        >
+        <button
+          @click="logout()"
+          class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+        >
+          {{ $t("navbar.logout") }}
+        </button>
+      </div>
+    </zoom-center-transition>
     <!-- dropdown menu end -->
   </div>
 </template>
@@ -170,10 +174,13 @@
 import { mapState, mapGetters } from "vuex";
 import Notifications from "./Notifications";
 
+import { ZoomCenterTransition } from "vue2-transitions";
+
 export default {
   name: "Navbar",
   components: {
     Notifications,
+    ZoomCenterTransition,
   },
   computed: {
     ...mapState(["sideBarOpen", "dark", "user", "stateParam"]),
