@@ -2,9 +2,31 @@
   <div id="setup">
     <breadcrumbs :name="$t('sidebar.setup')" />
 
+    <Modal
+      :show.sync="modalVisible"
+      :closeBtn="true"
+      mdlTitle="Title"
+      mdlContent="For string content only"
+      :mdlType="modalType"
+    >
+      <div slot="mdlBody">For Html content</div>
+      <button
+        slot="actionBtn"
+        type="button"
+        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        :class="
+          modalType === 'info'
+            ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500 '
+            : 'bg-red-600 hover:bg-red-700 focus:ring-red-500 '
+        "
+      >
+        Deactivate
+      </button>
+    </Modal>
+
     <a
       class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-red"
-      :href="`https://discord.com/channels/${currentGuildId}`"
+      :href="`https://discord.com/channels/${currentGuildId || ''}`"
       target="_blank"
     >
       <div class="flex items-center">
@@ -81,6 +103,7 @@
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
                     <button
+                      @click="addChannelMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit"
                     >
@@ -96,6 +119,7 @@
                       </svg>
                     </button>
                     <button
+                      @click="removeChannelMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete"
                     >
@@ -145,6 +169,8 @@
                 </td>
                 <td class="px-4 py-3">
                   <button
+                    @click="addChannelMapping"
+                    disabled
                     type="button"
                     class="w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
                   >
@@ -187,6 +213,7 @@
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
                     <button
+                      @click="addRoleMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit"
                     >
@@ -202,6 +229,7 @@
                       </svg>
                     </button>
                     <button
+                      @click="removeRoleMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete"
                     >
@@ -251,6 +279,7 @@
                 </td>
                 <td class="px-4 py-3">
                   <button
+                    @click="addRoleMapping"
                     disabled
                     type="button"
                     class="w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
@@ -270,11 +299,13 @@
 <script>
 import { mapState } from "vuex";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Modal from "@/components/Modal";
 
 export default {
   name: "Setup",
   components: {
     Breadcrumbs,
+    Modal,
   },
   computed: {
     ...mapState(["currentGuildId"]),
@@ -285,27 +316,37 @@ export default {
         { coin: "CHEWS", amount: "100", channel: "Chewy hideout" },
       ],
       roleMappings: [{ coin: "CHEWS", amount: "250", role: "VVVIP" }],
+      modalVisible: false,
+      modalType: "warning",
     };
   },
   methods: {
     //for add and edit
     addChannelMapping() {
+      this.modalType = "info";
+      this.modalVisible = true;
       //set channel mapping endpoint
       //fetch..
       //refresh channel mappings
     },
     addRoleMapping() {
+      this.modalType = "info";
+      this.modalVisible = true;
       //set role mapping endpoint
       //fetch..
       //refresh role mappings
     },
     //for delete
     removeChannelMapping() {
+      this.modalType = "warning";
+      this.modalVisible = true;
       //remove channel mapping endpoint
       //fetch..
       //refresh channel mappings
     },
     removeRoleMapping() {
+      this.modalType = "warning";
+      this.modalVisible = true;
       //remove role mapping endpoint
       //fetch..
       //refresh role mappings
