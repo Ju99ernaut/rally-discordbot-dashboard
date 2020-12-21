@@ -4,11 +4,15 @@ import App from './App.vue';
 import store from './store';
 import router from './router';
 
-import i18n from "./i18n"
-import './registerServiceWorker'
+import i18n from './i18n';
+import './registerServiceWorker';
+
+import Toast from 'vue-toast-notification';
 
 import '@/assets/css/tailwind.css';
+import 'vue-toast-notification/dist/theme-default.css';
 
+Vue.use(Toast);
 Vue.config.productionTip = false;
 
 new Vue({
