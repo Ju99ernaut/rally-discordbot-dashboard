@@ -5,11 +5,11 @@
     <Modal
       :show.sync="modalVisible"
       :closeBtn="true"
-      mdlTitle="Title"
-      mdlContent="For string content only"
+      :mdlTitle="modalTitle"
+      :mdlContent="modalContent"
       :mdlType="modalType"
     >
-      <div slot="mdlBody">For Html content</div>
+      <!--<div slot="mdlBody">For Html content</div>-->
       <button
         slot="actionBtn"
         type="button"
@@ -19,8 +19,9 @@
             ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500 '
             : 'bg-red-600 hover:bg-red-700 focus:ring-red-500 '
         "
+        @click="confirm(id)"
       >
-        Deactivate
+        Confirm
       </button>
     </Modal>
 
@@ -102,7 +103,7 @@
                 <td class="px-4 py-3">{{ channelMap.channel }}</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button
+                    <!--<button
                       @click="addChannelMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit"
@@ -117,7 +118,7 @@
                           d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
                         ></path>
                       </svg>
-                    </button>
+                    </button>-->
                     <button
                       @click="removeChannelMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -143,34 +144,33 @@
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
                     <input
-                      disabled
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="COIN"
+                      v-model="channelMapping.coin"
                     />
                   </label>
                 </td>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
                     <input
-                      disabled
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="100"
+                      v-model="channelMapping.amount"
                     />
                   </label>
                 </td>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
                     <input
-                      disabled
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Channel1"
+                      v-model="channelMapping.channel"
                     />
                   </label>
                 </td>
                 <td class="px-4 py-3">
                   <button
                     @click="addChannelMapping"
-                    disabled
                     type="button"
                     class="w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
                   >
@@ -212,7 +212,7 @@
                 <td class="px-4 py-3">{{ roleMap.role }}</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button
+                    <!--<button
                       @click="addRoleMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit"
@@ -227,7 +227,7 @@
                           d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
                         ></path>
                       </svg>
-                    </button>
+                    </button>-->
                     <button
                       @click="removeRoleMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -253,34 +253,33 @@
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
                     <input
-                      disabled
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="COIN"
+                      v-model="roleMapping.coin"
                     />
                   </label>
                 </td>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
                     <input
-                      disabled
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="100"
+                      v-model="roleMapping.amount"
                     />
                   </label>
                 </td>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
                     <input
-                      disabled
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Role1"
+                      v-model="roleMapping.role"
                     />
                   </label>
                 </td>
                 <td class="px-4 py-3">
                   <button
                     @click="addRoleMapping"
-                    disabled
                     type="button"
                     class="w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
                   >
@@ -316,8 +315,13 @@ export default {
         { coin: "CHEWS", amount: "100", channel: "Chewy hideout" },
       ],
       roleMappings: [{ coin: "CHEWS", amount: "250", role: "VVVIP" }],
+      roleMapping: { coin: "", amount: "", role: "" },
+      channelMapping: { coin: "", amount: "", channel: "" },
       modalVisible: false,
       modalType: "warning",
+      modalTitle: "Warning",
+      modalContent: "",
+      id: 0,
     };
   },
   methods: {
@@ -325,31 +329,67 @@ export default {
     addChannelMapping() {
       this.modalType = "info";
       this.modalVisible = true;
+      this.modalTitle = "Info";
+      this.modalContent = "You are about to add a new channel mapping";
+      this.id = 0;
       //set channel mapping endpoint
-      //fetch..
-      //refresh channel mappings
     },
     addRoleMapping() {
       this.modalType = "info";
       this.modalVisible = true;
+      this.modalTitle = "Info";
+      this.modalContent = "You are about to add a new role mapping";
+      this.id = 2;
       //set role mapping endpoint
-      //fetch..
-      //refresh role mappings
     },
     //for delete
     removeChannelMapping() {
       this.modalType = "warning";
       this.modalVisible = true;
+      this.modalTitle = "Warning";
+      this.modalContent = "You are about to delete a channel mapping";
+      this.id = 1;
       //remove channel mapping endpoint
-      //fetch..
-      //refresh channel mappings
     },
     removeRoleMapping() {
       this.modalType = "warning";
       this.modalVisible = true;
+      this.modalTitle = "Warning";
+      this.modalContent = "You are about to delete a role mapping";
+      this.id = 3;
       //remove role mapping endpoint
+    },
+    //send a request
+    confirm(id) {
+      this.modalVisible = false;
+      let endpoint, message, data;
+      switch (id) {
+        case 0:
+          message = "Added new channel mapping";
+          endpoint = "";
+          data = this.channelMapping;
+          break;
+        case 1:
+          message = "Channel mapping deleted";
+          endpoint = "";
+          break;
+        case 2:
+          message = "Added new role mapping";
+          endpoint = "";
+          data = this.roleMapping;
+          break;
+        case 3:
+          message = "Role mapping deleted";
+          endpoint = "";
+          break;
+        default:
+          break;
+      }
       //fetch..
-      //refresh role mappings
+      //refresh role or channel mappings
+      console.log(data || "no data: delete");
+      this.$toast.success(message + endpoint);
+      //this.$toast.error("An error was encountered. Please try again");
     },
   },
 };

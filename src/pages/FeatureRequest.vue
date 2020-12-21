@@ -69,12 +69,13 @@ export default {
   },
   methods: {
     submitRequest() {
-      //const obj = {
-      // title: this.title,
-      // description: this.description,
-      //};
+      const obj = {
+        title: this.title,
+        description: this.description,
+      };
+      console.log(obj);
       //fetch...
-      //this.$toast.success("Feature request recorded");
+      this.$toast.success("Feature request recorded");
       //this.$toast.error("An error was encountered. Please try again");
     },
   },
