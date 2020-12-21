@@ -10,7 +10,7 @@ import './registerServiceWorker';
 import Toast from 'vue-toast-notification';
 
 import '@/assets/css/tailwind.css';
-import 'vue-toast-notification/dist/theme-default.css';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 Vue.use(Toast);
 Vue.config.productionTip = false;
