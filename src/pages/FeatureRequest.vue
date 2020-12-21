@@ -74,6 +74,8 @@ export default {
       // description: this.description,
       //};
       //fetch...
+      //this.$toast.success("Feature request recorded");
+      //this.$toast.error("An error was encountered. Please try again");
     },
   },
 };

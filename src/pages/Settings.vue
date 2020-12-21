@@ -78,10 +78,14 @@ export default {
     onBotToggle() {
       //toggle bot endpoint
       //fetch...
+      //this.$toast.success("Bot has been toggled");
+      //this.$toast.error("An error was encountered. Please try again");
     },
     onPrefixChange() {
       //change prefix endpoint
       //fetch...
+      //this.$toast.success("Prefix has been updated");
+      //this.$toast.error("An error was encountered. Please try again");
     },
     onReset() {
       //change settings to default
@@ -89,6 +93,8 @@ export default {
       //fetch...
       //change prefix to $
       //fetch...
+      //this.$toast.success("Reset all settings");
+      //this.$toast.error("An error was encountered. Please try again");
     },
   },
 };

@@ -341,6 +341,7 @@ export default {
       this.$store.dispatch("setDefaultCoin", this.coins[this.currentCoin]);
       //set default coin on API
       //fetch...
+      this.$toast.success("Default coin set!");
     },
     getCoinInfo(defaultCoin = null) {
       const coin = defaultCoin || this.coins[this.currentCoin];
@@ -368,6 +369,7 @@ export default {
           this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
         })
         .catch(console.error);
+      this.$toast.info("Refreshing...");
     },
     setCoin(e) {
       this.$store.commit("setCurrentCoin", e.target.selectedIndex);
@@ -382,6 +384,7 @@ export default {
           const sel = this.$refs.coins;
           sel.value = this.defaultCoin.coinSymbol;
           sel.dispatchEvent(new Event("change"));
+          this.$toast.success("Loaded creator coin symbols");
         });
         return;
       }

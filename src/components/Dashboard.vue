@@ -11,11 +11,11 @@
         <Navbar />
 
         <div class="min-h p-6 bg-gray-200 dark:bg-gray-900">
-          <keep-alive include="DashboardHome,Logs" :max="2">
-            <fade-transition>
+          <fade-transition>
+            <keep-alive include="DashboardHome,Logs" :max="2">
               <router-view />
-            </fade-transition>
-          </keep-alive>
+            </keep-alive>
+          </fade-transition>
         </div>
 
         <Footer />

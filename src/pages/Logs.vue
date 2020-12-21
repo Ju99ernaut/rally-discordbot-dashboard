@@ -126,6 +126,7 @@ export default {
           this.logs = response;
         })
         .catch(console.error);
+      this.$toast.info("Refreshing...");
     },
   },
   mounted() {
