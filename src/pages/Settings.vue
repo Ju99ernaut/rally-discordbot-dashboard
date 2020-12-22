@@ -71,20 +71,22 @@ export default {
   },
   data() {
     return {
-      prefix: "",
+      defaultPrefix: "$",
     };
   },
   methods: {
-    onBotToggle() {
+    onBotToggle(e) {
       //toggle bot endpoint
       //fetch...
-      //this.$toast.success("Bot has been toggled");
+      console.log(e.target.checked);
+      this.$toast.success("Bot has been toggled");
       //this.$toast.error("An error was encountered. Please try again");
     },
-    onPrefixChange() {
+    onPrefixChange(e) {
       //change prefix endpoint
       //fetch...
-      //this.$toast.success("Prefix has been updated");
+      console.log(e.target.value);
+      this.$toast.success("Prefix has been updated");
       //this.$toast.error("An error was encountered. Please try again");
     },
     onReset() {
@@ -93,7 +95,7 @@ export default {
       //fetch...
       //change prefix to $
       //fetch...
-      //this.$toast.success("Reset all settings");
+      this.$toast.success("Reset all settings");
       //this.$toast.error("An error was encountered. Please try again");
     },
   },
