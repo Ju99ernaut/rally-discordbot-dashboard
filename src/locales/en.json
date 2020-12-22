@@ -18,11 +18,12 @@
         "buys": "Buys",
         "sells": "Sells",
         "holders": "Holders",
-        "coinBalance": "Coin Balance",
-        "coinHolders": "Coin Holders",
-        "volume": "Buys/Sells Volume",
+        "prices": "Prices",
+        "marketCaps": "Market Caps",
+        "volumes": "Volumes",
         "creatorCoin": "Creator Coin",
         "loading": "Loading",
+        "period": "Period",
         "default": "Set as default"
     },
     "setup": {
