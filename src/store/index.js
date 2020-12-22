@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import generateRandomString from '@/utils/randomString';
 import fetch from '@/utils/fetch';
+import queryString from '@/utils/queryString';
+import config from '@/config';
 
 Vue.use(Vuex);
 
@@ -113,7 +115,7 @@ export default new Vuex.Store({
             commit('setState', rndStr);
         },
         setGuilds({ commit }, token) {
-            fetch("https://discord.com/api/users/@me/guilds", {
+            fetch(`${config.discordApi}/users/@me/guilds`, {
                     headers: {
                         authorization: token,
                     },
@@ -121,9 +123,14 @@ export default new Vuex.Store({
                 .then((res) => res.json())
                 .then((response) => {
                     if (response.code === 0) {
-                        const loginUrl = 'https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdashboard%2Fhome&response_type=token&scope=identify%20guilds' +
-                            `&state=${this.stateParam}`;
-                        window.location.replace(loginUrl);
+                        const loginParams = {
+                            client_id: config.clientId,
+                            redirect_uri: config.home,
+                            response_type: "token",
+                            scope: "identify%20guilds",
+                            state: this.state,
+                        };
+                        window.location.replace(`${config.discordApi}/oauth2/authorize${queryString(loginParams)}`);
                         return;
                     }
                     commit('setGuilds', response.slice(0, 13));
@@ -131,7 +138,7 @@ export default new Vuex.Store({
                 .catch(console.error);
         },
         setCoins({ commit }) {
-            fetch("https://api.rally.io/v1/creator_coins")
+            fetch(`${config.rallyApi}/creator_coins`)
                 .then((res) => res.json())
                 .then((response) => {
                     commit('setCoins', response);
