@@ -7,6 +7,7 @@
 <script>
 import { mapState } from "vuex";
 import fetch from "@/utils/fetch";
+import config from "@/config";
 
 export default {
   name: "app",
@@ -26,7 +27,7 @@ export default {
       //  return console.log("CRSF attack!!!");
       //}
 
-      fetch("https://discord.com/api/users/@me", {
+      fetch(`${config.discordApi}/users/@me`, {
         headers: {
           authorization: `${tokenType} ${accessToken}`,
         },

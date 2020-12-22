@@ -115,10 +115,7 @@
         />
         <a
           v-else
-          :href="
-            'https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdashboard%2Fhome&response_type=token&scope=identify%20guilds' +
-            `&state=${state}`
-          "
+          :href="loginUrl"
           class="text-lg font-medium hover:text-red-500 transition duration-150 ease-in-out"
           >{{ $t("navbar.login") }}</a
         >
@@ -173,6 +170,8 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import Notifications from "./Notifications";
+import config from "@/config";
+import queryString from "@/utils/queryString";
 
 import { ZoomCenterTransition } from "vue2-transitions";
 
@@ -193,14 +192,25 @@ export default {
     },
     avatar() {
       return this.user
-        ? `https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png`
+        ? `${this.cdn}/avatars/${this.user.id}/${this.user.avatar}.png`
         : "";
+    },
+    loginUrl() {
+      const loginParams = {
+        client_id: config.clientId,
+        redirect_uri: config.home,
+        response_type: "token",
+        scope: "identify%20guilds",
+        state: this.state,
+      };
+      return `${config.discordApi}/oauth2/authorize${queryString(loginParams)}`;
     },
   },
   data() {
     return {
       dropDownOpen: false,
       notificationsOpen: false,
+      cdn: config.discordCdn,
     };
   },
   methods: {

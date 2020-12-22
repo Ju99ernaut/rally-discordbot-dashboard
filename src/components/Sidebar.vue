@@ -15,7 +15,7 @@
           >
             <template v-if="currentGuild !== null">
               <img
-                :src="`https://cdn.discordapp.com/icons/${guilds[currentGuild].id}/${guilds[currentGuild].icon}.png`"
+                :src="`${cdn}/icons/${guilds[currentGuild].id}/${guilds[currentGuild].icon}.png`"
                 class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
               />
               <p class="font-semibold pl-4">{{ guilds[currentGuild].name }}</p>
@@ -130,6 +130,7 @@ div.router-link-exact-active {
 import { mapState, mapGetters } from "vuex";
 
 import Guilds from "./Guilds";
+import config from "@/config";
 
 import { CollapseTransition } from "vue2-transitions";
 
@@ -142,6 +143,11 @@ export default {
   computed: {
     ...mapState(["sideBarOpen", "currentGuild", "guilds"]),
     ...mapGetters({ auth: "ifAuthenticated" }),
+  },
+  data() {
+    return {
+      cdn: config.discordCdn,
+    };
   },
 };
 </script>

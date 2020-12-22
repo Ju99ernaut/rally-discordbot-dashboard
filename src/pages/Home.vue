@@ -345,7 +345,7 @@ export default {
     },
     getCoinInfo(defaultCoin = null) {
       const coin = defaultCoin || this.coins[this.currentCoin];
-      fetch(`https://api.rally.io/v1/users/rally/${coin.rnbUserId}/balance`)
+      fetch(`${config.rallyApi}/users/rally/${coin.rnbUserId}/balance`)
         .then((res) => res.json())
         .then((response) => {
           let bal = 0;
@@ -355,7 +355,7 @@ export default {
           this.balance = bal.toFixed();
         })
         .catch(console.error);
-      fetch(`https://api.rally.io/v1/creator_coins/${coin.coinSymbol}/summary`)
+      fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/summary`)
         .then((res) => res.json())
         .then((response) => {
           this.volume = response.totalSupportVolume;
@@ -363,7 +363,7 @@ export default {
         })
         .catch(console.error);
 
-      fetch(`https://api.rally.io/v1/creator_coins/${coin.coinSymbol}/rewards`)
+      fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/rewards`)
         .then((res) => res.json())
         .then((response) => {
           this.rewards = parseFloat(response.lastOneHourEarned).toFixed();

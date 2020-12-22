@@ -39,10 +39,7 @@
               >
               <a
                 v-else
-                :href="
-                  'https://discord.com/api/oauth2/authorize?client_id=786246670530773023&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=token&scope=identify%20guilds' +
-                  `&state=${state}`
-                "
+                :href="loginUrl"
                 class="mr-5 text-lg font-medium text-true-gray-800 dark:text-gray-100 hover:text-cool-gray-700 transition duration-150 ease-in-out"
                 >{{ $t("navbar.login") }}</a
               >
@@ -71,11 +68,7 @@
             <button
               class="mt-6 px-8 py-4 rounded-full font-normal tracking-wide bg-gradient-to-b from-red-600 to-red-700 text-white outline-none focus:outline-none hover:shadow-lg hover:from-red-900 transition duration-200 ease-in-out"
             >
-              <a
-                class="flex"
-                href="https://discord.com/api/oauth2/authorize?client_id=769334375023640578&permissions=268438560&scope=bot"
-                target="_blank"
-              >
+              <a class="flex" :href="botUrl" target="_blank">
                 <svg
                   class="w-5 h-5 mr-2"
                   fill="currentColor"
@@ -100,6 +93,8 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import queryString from "@/utils/queryString";
+import config from "@/config";
 
 export default {
   name: "Landing",
@@ -112,6 +107,21 @@ export default {
     username() {
       return this.user ? this.user.username : "Anonymous";
     },
+    loginUrl() {
+      const loginParams = {
+        client_id: config.clientId,
+        redirect_uri: config.home,
+        response_type: "token",
+        scope: "identify%20guilds",
+        state: this.state,
+      };
+      return `${config.discordApi}/oauth2/authorize${queryString(loginParams)}`;
+    },
+  },
+  data() {
+    return {
+      botUrl: config.botUrl,
+    };
   },
 };
 </script>

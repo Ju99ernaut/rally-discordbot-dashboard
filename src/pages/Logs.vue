@@ -99,6 +99,7 @@
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
 import fetch from "@/utils/fetch";
+import config from "@/config";
 import { mapState } from "vuex";
 
 export default {
@@ -117,7 +118,7 @@ export default {
   methods: {
     refresh() {
       fetch(
-        `https://api.rally.io/v1/creator_coins/${
+        `${config.rallyApi}/creator_coins/${
           this.coins[this.currentCoin].coinSymbol
         }/network_activity`
       )

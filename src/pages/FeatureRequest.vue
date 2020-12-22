@@ -4,7 +4,7 @@
 
     <a
       class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 bg-red-500 rounded-lg shadow-md focus:outline-none focus:shadow-outline-red"
-      href="https://github.com/Ju99ernaut/rally-discordbot-dashboard/issues"
+      :href="issues"
       target="_blank"
     >
       <div class="flex items-center">
@@ -54,6 +54,7 @@
 
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
+import config from "@/config";
 //import fetch from "@/utils/fetch";
 
 export default {
@@ -65,6 +66,7 @@ export default {
     return {
       title: "",
       description: "",
+      issues: `${config.githubHome}/issues`,
     };
   },
   methods: {

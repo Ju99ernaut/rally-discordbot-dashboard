@@ -25,16 +25,13 @@
       <img
         v-for="(guild, index) in guilds"
         :key="guild.id"
-        :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`"
+        :src="`${cdn}/icons/${guild.id}/${guild.icon}.png`"
         class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
         :class="currentGuild === index ? 'active' : ''"
         @click="setGuild(index)"
       />
     </div>
-    <a
-      href="https://discord.com/api/oauth2/authorize?client_id=769334375023640578&permissions=268438560&scope=bot"
-      target="_blank"
-    >
+    <a :href="botUrl" target="_blank">
       <svg
         class="w-10 h-10 cursor-pointer bg-gray-300 dark:bg-gray-900 hover:text-red-500 rounded-full shadow-lg mt-3"
         fill="currentColor"
@@ -57,6 +54,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import config from "@/config";
 
 export default {
   name: "Guilds",
@@ -65,9 +63,15 @@ export default {
     ...mapGetters({ auth: "ifAuthenticated" }),
     avatar() {
       return this.user
-        ? `https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png`
+        ? `${this.cdn}/avatars/${this.user.id}/${this.user.avatar}.png`
         : "";
     },
+  },
+  data() {
+    return {
+      botUrl: config.botUrl,
+      cdn: config.discordCdn,
+    };
   },
   methods: {
     setGuild(guildIdx) {
