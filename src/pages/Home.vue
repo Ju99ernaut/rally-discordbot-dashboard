@@ -410,6 +410,7 @@ export default {
         days: this.days,
       };
       coinData(endpoint, chartParams, this.setChartData);
+      this.$toast.info("Updating market data...");
     },
     setPeriod(e) {
       this.days = e.target.value;
