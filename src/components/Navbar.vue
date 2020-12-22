@@ -128,7 +128,7 @@
         class="absolute bg-white dark:bg-gray-700 shadow-xl text-gray-500 dark:text-gray-100 rounded-b-lg w-48 bottom-10 right-0 mr-6"
         :class="notificationsOpen ? '' : 'hidden'"
       >
-        <notifications :info="1" />
+        <notifications />
       </div>
     </zoom-center-transition>
     <!-- notifications menu end -->
