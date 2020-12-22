@@ -150,12 +150,26 @@
       </div>
     </div>
 
+    <label class="w-full xl:w-1/4 block mb-3 text-sm">
+      <span class="text-gray-700 dark:text-gray-400">{{
+        $t("dashboard.period")
+      }}</span>
+      <select
+        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+        @change="setPeriod"
+      >
+        <option value="1" selected="true">24h</option>
+        <option value="7">7D</option>
+        <option value="30">1M</option>
+      </select>
+    </label>
+
     <div class="flex flex-wrap -mx-3">
       <div class="w-full xl:w-1/2 px-3">
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">{{ $t("dashboard.coinBalance") }}</p>
+          <p class="text-xl mb-4">Rally {{ $t("dashboard.marketCaps") }}</p>
           <div class="chart-area">
             <line-chart
               style="height: 100%"
@@ -174,7 +188,7 @@
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">{{ $t("dashboard.coinHolders") }}</p>
+          <p class="text-xl mb-4">Rally {{ $t("dashboard.volumes") }}</p>
           <div class="chart-area">
             <bar-chart
               style="height: 100%"
@@ -193,7 +207,7 @@
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">{{ $t("dashboard.volume") }}</p>
+          <p class="text-xl mb-4">Rally {{ $t("dashboard.prices") }}</p>
           <div class="chart-area">
             <line-chart
               style="height: 100%"
@@ -220,6 +234,7 @@
 import { mapState } from "vuex";
 
 import fetch from "@/utils/fetch";
+import coinData from "@/utils/coinData";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import LineChart from "@/components/Charts/LineChart";
@@ -239,34 +254,14 @@ export default {
     username() {
       return this.user ? this.user.username : "Anonymous";
     },
-  },
-  data() {
-    return {
-      balance: "",
-      donations: "",
-      rewards: "",
-      volume: "",
-      holders: "",
-      purpleLineChart: {
+    purpleLineChart() {
+      return {
         extraOptions: chartConfigs.purpleChartOptions,
         chartData: {
-          labels: [
-            "JAN",
-            "FEB",
-            "MAR",
-            "APR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AUG",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DEC",
-          ],
+          labels: this.priceLabels,
           datasets: [
             {
-              label: "Data",
+              label: "Price",
               fill: true,
               borderColor: config.colors.default,
               borderWidth: 2,
@@ -278,20 +273,22 @@ export default {
               pointBorderWidth: 20,
               pointHoverRadius: 4,
               pointHoverBorderWidth: 15,
-              pointRadius: 4,
-              data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
+              pointRadius: 0,
+              data: this.priceData,
             },
           ],
         },
         gradientStops: [1, 0.2, 0],
-      },
-      greenLineChart: {
+      };
+    },
+    greenLineChart() {
+      return {
         extraOptions: chartConfigs.greenChartOptions,
         chartData: {
-          labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
+          labels: this.capLabels,
           datasets: [
             {
-              label: "My First dataset",
+              label: "Market Cap",
               fill: true,
               borderColor: config.colors.primary,
               borderWidth: 2,
@@ -303,27 +300,29 @@ export default {
               pointBorderWidth: 20,
               pointHoverRadius: 4,
               pointHoverBorderWidth: 15,
-              pointRadius: 4,
-              data: [90, 27, 60, 12, 80],
+              pointRadius: 0,
+              data: this.capData,
             },
           ],
         },
         gradientColors: config.colors.primaryGradient,
         gradientStops: [1, 0.4, 0],
-      },
-      blueBarChart: {
+      };
+    },
+    blueBarChart() {
+      return {
         extraOptions: chartConfigs.barChartOptions,
         chartData: {
-          labels: ["USA", "GER", "AUS", "UK", "RO", "BR"],
+          labels: this.volumeLabels,
           datasets: [
             {
-              label: "Countries",
+              label: "Volume",
               fill: true,
               borderColor: config.colors.info,
               borderWidth: 2,
               borderDash: [],
               borderDashOffset: 0.0,
-              data: [53, 20, 10, 80, 100, 45],
+              data: this.volumeData,
             },
           ],
         },
@@ -333,7 +332,25 @@ export default {
           "rgba(29,140,248,0)",
         ],
         gradientStops: [1, 0.4, 0],
-      },
+      };
+    },
+  },
+  data() {
+    return {
+      balance: "",
+      donations: "",
+      rewards: "",
+      volume: "",
+      holders: "",
+      coinId: "rally-2",
+      vs_currency: "usd",
+      days: 1,
+      priceData: [],
+      priceLabels: [],
+      volumeData: [],
+      volumeLabels: [],
+      capData: [],
+      capLabels: [],
     };
   },
   methods: {
@@ -375,6 +392,31 @@ export default {
       this.$store.commit("setCurrentCoin", e.target.selectedIndex);
       this.getCoinInfo();
     },
+    setChartData(res) {
+      const prices = res.prices.map((price) => price[1]); //"prices": [[timestamp, price],...]
+      const marketCaps = res.market_caps.map((cap) => cap[1]); //"market_caps:[[timestamp, market_cap],...]"
+      const volumes = res.total_volumes.map((vol) => vol[1]); //"total_volumes:[[timestamp, total_volume],...]"
+      this.priceLabels = Array(prices.length).fill("");
+      this.capLabels = Array(marketCaps.length).fill("");
+      this.volumeLabels = Array(volumes.length).fill("");
+      this.priceData = prices;
+      this.capData = marketCaps;
+      this.volumeData = volumes;
+    },
+    getMarketData() {
+      const endpoint = `coins/${this.coinId}/market_chart`;
+      const chartParams = {
+        vs_currency: this.vs_currency,
+        days: this.days,
+      };
+      coinData(endpoint, chartParams, this.setChartData);
+    },
+    setPeriod(e) {
+      this.days = e.target.value;
+    },
+  },
+  mounted() {
+    this.getMarketData();
   },
   watch: {
     coins() {
@@ -389,6 +431,9 @@ export default {
         return;
       }
       this.getCoinInfo();
+    },
+    days() {
+      this.getMarketData();
     },
   },
 };
