@@ -133,7 +133,8 @@ export default new Vuex.Store({
                         window.location.replace(`${config.discordApi}/oauth2/authorize${queryString(loginParams)}`);
                         return;
                     }
-                    commit('setGuilds', response.slice(0, 13));
+                    //check if owner or admin
+                    commit('setGuilds', response.filter(guild => guild.owner || (guild.permissions & 0x8) === 0x8));
                 })
                 .catch(console.error);
         },
