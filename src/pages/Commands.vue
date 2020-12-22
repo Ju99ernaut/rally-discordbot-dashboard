@@ -21,6 +21,7 @@
       </div>
     </div>
 
+    <!-- Ideally get commands from API the use v-for -->
     <Command
       :id="'switch1'"
       :command="'help'"
