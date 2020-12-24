@@ -20,74 +20,17 @@
         ></label>
       </div>
     </div>
-
-    <!-- Ideally get commands from API the use v-for -->
-    <Command
-      :id="'switch1'"
-      :command="'help'"
-      :description="'List all available commands'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch2'"
-      :command="'set_channel_mapping'"
-      :description="'<coin name> <coin amount> <channel name>. Set a mapping between coin and channel. Channel membership will be constantly updated.'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch3'"
-      :command="'one_time_channel_mapping'"
-      :description="'<coin name> <coin amount> <channel name>. Grant/Deny access to a channel instantly'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch4'"
-      :command="'unset_channel_mapping'"
-      :description="'<coin name> <coin amount> <channel name>. Unset a mapping between a coin and channel'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch5'"
-      :command="'get_channel_mappings'"
-      :description="'Get channel mappings'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch5'"
-      :command="'set_rally_id'"
-      :description="'Set your rally id'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch6'"
-      :command="'set_role_mapping'"
-      :description="'<coin name> <coin ammount> <role name>. Set a mapping between coin and role. Roles will be constantly updated'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch7'"
-      :command="'one_time_role_mapping'"
-      :description="'<coin name> <coin amount> <role name>. Set a mapping to be applied one instantly'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch8'"
-      :command="'unset_role_mapping'"
-      :description="'<coin name> <coin amount> <role name>. Unset a mapping between a coin and role'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch9'"
-      :command="'get_role_mappings'"
-      :description="'Get role mappings'"
-      :checked="true"
-    />
-    <Command
-      :id="'switch10'"
-      :command="'update'"
-      :description="'Force an immediate update'"
-      :checked="true"
-    />
+    <template v-if="commands.length">
+      <Command
+        v-for="(command, idx) in commands"
+        :key="idx"
+        :id="idx.toString()"
+        :command="command.name"
+        :description="command.description"
+        :checked="true"
+      />
+    </template>
+    <template v-else>Loading...</template>
   </div>
 </template>
 
@@ -105,11 +48,28 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Command from "@/components/Command";
 
+import config from "@/config";
+import fetch from "@/utils/fetch";
+
 export default {
   name: "Commands",
   components: {
     Breadcrumbs,
     Command,
+  },
+  data() {
+    return {
+      commands: [],
+    };
+  },
+  mounted() {
+    fetch(`${config.botApi}/commands`)
+      .then((res) => res.json())
+      .then((response) => {
+        this.commands = response;
+      })
+      .catch(console.error);
+    this.$toast.info("Loading commands");
   },
 };
 </script>
