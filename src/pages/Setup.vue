@@ -377,7 +377,7 @@ export default {
             guildId: this.currentGuildId,
           })}`;
           body = JSON.stringify(this.channelMapping);
-          method = "post";
+          method = "POST";
           break;
         case 1:
           message = "Channel mapping deleted";
@@ -385,7 +385,7 @@ export default {
             guildId: this.currentGuildId,
           })}`;
           body = JSON.stringify(this.channelMappings[this.channelMappingsIdx]);
-          method = "delete";
+          method = "DELETE";
           break;
         case 2:
           message = "Added new role mapping";
@@ -393,7 +393,7 @@ export default {
             guildId: this.currentGuildId,
           })}`;
           body = JSON.stringify(this.roleMapping);
-          method = "post";
+          method = "POST";
           break;
         case 3:
           message = "Role mapping deleted";
@@ -401,17 +401,17 @@ export default {
             guildId: this.currentGuildId,
           })}`;
           body = JSON.stringify(this.roleMappings[this.roleMappingsIdx]);
-          method = "delete";
+          method = "DELETE";
           break;
         default:
           break;
       }
       fetch(`${config.botApi}${endpoint}`, {
+        method,
         headers: {
           authorization: this.token,
-          method,
-          body,
         },
+        body,
       })
         .then((res) => res.json())
         .then((response) => {

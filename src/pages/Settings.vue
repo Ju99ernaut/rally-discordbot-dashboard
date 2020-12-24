@@ -67,6 +67,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import config from "@/config";
 import fetch from "@/utils/fetch";
 import queryString from "@/utils/queryString";
+import randomString from "@/utils/randomString";
 
 export default {
   name: "Settings",
@@ -92,17 +93,15 @@ export default {
           guildId: this.currentGuildId,
         })}`,
         {
+          method: "post",
           headers: {
             authorization: this.token,
-            method: "post",
-            body: JSON.stringify({
-              prefix: this.botEnabled ? this.currentPrefix : "randomprefix",
-            }),
           },
+          body: JSON.stringify({
+            prefix: this.botEnabled ? this.currentPrefix : randomString(),
+          }),
         }
-      )
-        .then(() => (this.botEnabled = !this.botEnabled))
-        .catch(console.error);
+      ).catch(console.error);
       this.$toast.success("Bot has been toggled");
       //this.$toast.error("An error was encountered. Please try again");
     },
@@ -114,11 +113,11 @@ export default {
           guildId: this.currentGuildId,
         })}`,
         {
+          method: "post",
           headers: {
             authorization: this.token,
-            method: "post",
-            body: JSON.stringify({ prefix: this.currentPrefix }),
           },
+          body: JSON.stringify({ prefix: this.currentPrefix }),
         }
       )
         .then((res) => res.json())
@@ -137,11 +136,11 @@ export default {
           guildId: this.currentGuildId,
         })}`,
         {
+          method: "post",
           headers: {
             authorization: this.token,
-            method: "post",
-            body: JSON.stringify({ prefix: this.defaultPrefix }),
           },
+          body: JSON.stringify({ prefix: this.defaultPrefix }),
         }
       )
         .then((res) => res.json())
