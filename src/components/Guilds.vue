@@ -69,7 +69,7 @@ export default {
   },
   data() {
     return {
-      botUrl: config.botUrl,
+      botUrl: `https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&permissions=268438560&scope=bot`,
       cdn: config.discordCdn,
     };
   },
