@@ -98,8 +98,8 @@
                 :key="index"
                 class="text-gray-700 dark:text-gray-400"
               >
-                <td class="px-4 py-3">{{ channelMap.coin }}</td>
-                <td class="px-4 py-3">{{ channelMap.amount }}</td>
+                <td class="px-4 py-3">{{ channelMap.coinKind }}</td>
+                <td class="px-4 py-3">{{ channelMap.requiredBalance }}</td>
                 <td class="px-4 py-3">{{ channelMap.channel }}</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
@@ -120,7 +120,7 @@
                       </svg>
                     </button>-->
                     <button
-                      @click="removeChannelMapping"
+                      @click="removeChannelMapping(index)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete"
                     >
@@ -146,7 +146,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="COIN"
-                      v-model="channelMapping.coin"
+                      v-model="channelMapping.coinKind"
                     />
                   </label>
                 </td>
@@ -155,7 +155,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="100"
-                      v-model="channelMapping.amount"
+                      v-model="channelMapping.requiredBalance"
                     />
                   </label>
                 </td>
@@ -207,9 +207,9 @@
                 :key="index"
                 class="text-gray-700 dark:text-gray-400"
               >
-                <td class="px-4 py-3">{{ roleMap.coin }}</td>
-                <td class="px-4 py-3">{{ roleMap.amount }}</td>
-                <td class="px-4 py-3">{{ roleMap.role }}</td>
+                <td class="px-4 py-3">{{ roleMap.coinKind }}</td>
+                <td class="px-4 py-3">{{ roleMap.requiredBalance }}</td>
+                <td class="px-4 py-3">{{ roleMap.roleName }}</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
                     <!--<button
@@ -229,7 +229,7 @@
                       </svg>
                     </button>-->
                     <button
-                      @click="removeRoleMapping"
+                      @click="removeRoleMapping(index)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete"
                     >
@@ -255,7 +255,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="COIN"
-                      v-model="roleMapping.coin"
+                      v-model="roleMapping.coinKind"
                     />
                   </label>
                 </td>
@@ -264,7 +264,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="100"
-                      v-model="roleMapping.amount"
+                      v-model="roleMapping.requiredBalance"
                     />
                   </label>
                 </td>
@@ -273,7 +273,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Role1"
-                      v-model="roleMapping.role"
+                      v-model="roleMapping.roleName"
                     />
                   </label>
                 </td>
@@ -300,6 +300,10 @@ import { mapState } from "vuex";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Modal from "@/components/Modal";
 
+import config from "@/config";
+import fetch from "@/utils/fetch";
+import queryString from "@/utils/queryString";
+
 export default {
   name: "Setup",
   components: {
@@ -307,16 +311,16 @@ export default {
     Modal,
   },
   computed: {
-    ...mapState(["currentGuildId"]),
+    ...mapState(["currentGuildId", "token"]),
   },
   data() {
     return {
-      channelMappings: [
-        { coin: "CHEWS", amount: "100", channel: "Chewy hideout" },
-      ],
-      roleMappings: [{ coin: "CHEWS", amount: "250", role: "VVVIP" }],
-      roleMapping: { coin: "", amount: "", role: "" },
-      channelMapping: { coin: "", amount: "", channel: "" },
+      channelMappingsIdx: null,
+      channelMappings: [],
+      roleMappingsIdx: null,
+      roleMappings: [],
+      roleMapping: { coinKind: "", requiredBalance: "", roleName: "" },
+      channelMapping: { coinKind: "", requiredBalance: "", channel: "" },
       modalVisible: false,
       modalType: "warning",
       modalTitle: "Warning",
@@ -343,54 +347,113 @@ export default {
       //set role mapping endpoint
     },
     //for delete
-    removeChannelMapping() {
+    removeChannelMapping(idx) {
       this.modalType = "warning";
       this.modalVisible = true;
       this.modalTitle = "Warning";
       this.modalContent = "You are about to delete a channel mapping";
+      this.channelMappingsIdx = idx;
       this.id = 1;
       //remove channel mapping endpoint
     },
-    removeRoleMapping() {
+    removeRoleMapping(idx) {
       this.modalType = "warning";
       this.modalVisible = true;
       this.modalTitle = "Warning";
       this.modalContent = "You are about to delete a role mapping";
+      this.roleMappingsIdx = idx;
       this.id = 3;
       //remove role mapping endpoint
     },
     //send a request
     confirm(id) {
+      if (!this.currentGuildId) return;
       this.modalVisible = false;
-      let endpoint, message, data;
+      let endpoint, message, body, method;
       switch (id) {
         case 0:
           message = "Added new channel mapping";
-          endpoint = "";
-          data = this.channelMapping;
+          endpoint = `/mappings/channels${queryString({
+            guildId: this.currentGuildId,
+          })}`;
+          body = JSON.stringify(this.channelMapping);
+          method = "post";
           break;
         case 1:
           message = "Channel mapping deleted";
-          endpoint = "";
+          endpoint = `/mappings/channels${queryString({
+            guildId: this.currentGuildId,
+          })}`;
+          body = JSON.stringify(this.channelMappings[this.channelMappingsIdx]);
+          method = "delete";
           break;
         case 2:
           message = "Added new role mapping";
-          endpoint = "";
-          data = this.roleMapping;
+          endpoint = `/mappings/roles${queryString({
+            guildId: this.currentGuildId,
+          })}`;
+          body = JSON.stringify(this.roleMapping);
+          method = "post";
           break;
         case 3:
           message = "Role mapping deleted";
-          endpoint = "";
+          endpoint = `/mappings/roles${queryString({
+            guildId: this.currentGuildId,
+          })}`;
+          body = JSON.stringify(this.roleMappings[this.roleMappingsIdx]);
+          method = "delete";
           break;
         default:
           break;
       }
-      //fetch..
-      //refresh role or channel mappings
-      console.log(data || "no data: delete");
-      this.$toast.success(message + endpoint);
-      //this.$toast.error("An error was encountered. Please try again");
+      fetch(`${config.botApi}${endpoint}`, {
+        headers: {
+          authorization: this.token,
+          method,
+          body,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (id >= 2) this.roleMappings = response;
+          else this.channelMappings = response;
+        })
+        .catch(() =>
+          this.$toast.error("An error was encountered. Please try again")
+        );
+      this.$toast.info(message);
     },
+    refresh(val) {
+      fetch(`${config.botApi}/mappings/channels/${val}`, {
+        headers: {
+          authorization: this.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          this.channelMappings = response;
+        })
+        .catch(console.error);
+      fetch(`${config.botApi}/mappings/roles/${val}`, {
+        headers: {
+          authorization: this.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          this.roleMappings = response;
+        })
+        .catch(console.error);
+      this.$toast.info("Refreshing...");
+    },
+  },
+  watch: {
+    currentGuildId(val) {
+      this.refresh(val);
+    },
+  },
+  mounted() {
+    this.currentGuildId && this.refresh(this.currentGuildId);
   },
 };
 </script>

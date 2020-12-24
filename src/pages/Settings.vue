@@ -10,9 +10,9 @@
             $t("settings.prefix")
           }}</span>
           <input
-            disabled
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="$"
+            v-model="currentPrefix"
             @change="onPrefixChange"
           />
         </label>
@@ -24,12 +24,12 @@
               >{{ $t("settings.enable") }}/{{ $t("settings.disable") }}</span
             >
             <input
-              disabled
               checked="true"
               type="checkbox"
               name="toggle"
               id="toggle"
               class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+              v-model="botEnabled"
               @change="onBotToggle"
             />
             <label
@@ -40,7 +40,6 @@
         </div>
       </div>
       <button
-        disabled
         type="button"
         class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
         @click="onReset"
@@ -62,42 +61,119 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 import Breadcrumbs from "@/components/Breadcrumbs";
+
+import config from "@/config";
+import fetch from "@/utils/fetch";
+import queryString from "@/utils/queryString";
 
 export default {
   name: "Settings",
   components: {
     Breadcrumbs,
   },
+  computed: {
+    ...mapState(["currentGuildId", "token"]),
+  },
   data() {
     return {
       defaultPrefix: "$",
+      currentPrefix: "",
+      botEnabled: true,
     };
   },
   methods: {
-    onBotToggle(e) {
+    onBotToggle() {
       //toggle bot endpoint
-      //fetch...
-      console.log(e.target.checked);
+      if (!this.currentGuildId) return;
+      fetch(
+        `${config.botApi}/mappings/prefix${queryString({
+          guildId: this.currentGuildId,
+        })}`,
+        {
+          headers: {
+            authorization: this.token,
+            method: "post",
+            body: JSON.stringify({
+              prefix: this.botEnabled ? this.currentPrefix : "randomprefix",
+            }),
+          },
+        }
+      )
+        .then(() => (this.botEnabled = !this.botEnabled))
+        .catch(console.error);
       this.$toast.success("Bot has been toggled");
       //this.$toast.error("An error was encountered. Please try again");
     },
-    onPrefixChange(e) {
+    onPrefixChange() {
       //change prefix endpoint
-      //fetch...
-      console.log(e.target.value);
+      if (!this.currentGuildId) return;
+      fetch(
+        `${config.botApi}/mappings/prefix${queryString({
+          guildId: this.currentGuildId,
+        })}`,
+        {
+          headers: {
+            authorization: this.token,
+            method: "post",
+            body: JSON.stringify({ prefix: this.currentPrefix }),
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          this.currentPrefix = response.prefix;
+        })
+        .catch(console.error);
       this.$toast.success("Prefix has been updated");
       //this.$toast.error("An error was encountered. Please try again");
     },
     onReset() {
       //change settings to default
-      //if bot off switch on,
-      //fetch...
-      //change prefix to $
-      //fetch...
+      if (!this.currentGuildId) return;
+      fetch(
+        `${config.botApi}/mappings/prefix${queryString({
+          guildId: this.currentGuildId,
+        })}`,
+        {
+          headers: {
+            authorization: this.token,
+            method: "post",
+            body: JSON.stringify({ prefix: this.defaultPrefix }),
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          this.currentPrefix = response.prefix;
+        })
+        .catch(console.error);
+      this.botEnabled = true;
       this.$toast.success("Reset all settings");
       //this.$toast.error("An error was encountered. Please try again");
     },
+    refresh(val) {
+      fetch(`${config.botApi}/mappings/prefix/${val}`, {
+        headers: {
+          authorization: this.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          this.currentPrefix = response.prefix;
+        })
+        .catch(console.error);
+      this.$toast.info("Refreshing...");
+    },
+  },
+  watch: {
+    currentGuildId(val) {
+      this.refresh(val);
+    },
+  },
+  mounted() {
+    this.currentGuildId && this.refresh(this.currentGuildId);
   },
 };
 </script>
