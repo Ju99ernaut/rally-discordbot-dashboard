@@ -14,18 +14,17 @@ export default {
   computed: {
     ...mapState(["dark"]),
   },
-  mounted() {
+  beforeMount() {
     const fragment = new URLSearchParams(window.location.hash.slice(1));
 
     if (fragment.has("access_token")) {
       const accessToken = fragment.get("access_token");
       const tokenType = fragment.get("token_type");
-      //TODO CSRF and token expiration
-      //const urlState = fragment.get("state");
-      //const stateParam = localStorage.getItem("stateParam");
-      //if (stateParam !== atob(decodeURIComponent(urlState))) {
-      //  return console.log("CRSF attack!!!");
-      //}
+      const urlState = fragment.get("state");
+      const stateParam = localStorage.getItem("stateParam");
+      if (stateParam !== atob(decodeURIComponent(urlState))) {
+        return console.log("CRSF attack!!!");
+      }
 
       fetch(`${config.discordApi}/users/@me`, {
         headers: {
@@ -47,9 +46,12 @@ export default {
       this.$store.dispatch("autoLogin");
     }
     this.$store.dispatch("setPreferedTheme");
-    this.$store.dispatch("setState");
     this.$store.dispatch("getDefaultCoin");
     this.$store.dispatch("setCoins");
+  },
+  mounted() {
+    this.$store.dispatch("setState");
+    window.location.hash = "";
   },
 };
 </script>
