@@ -23,6 +23,7 @@ export default {
       const urlState = fragment.get("state");
       const stateParam = localStorage.getItem("stateParam");
       if (stateParam !== atob(decodeURIComponent(urlState))) {
+        this.$toast.error("You may be under a CRSF attack please login again");
         return console.log("CRSF attack!!!");
       }
 
@@ -51,6 +52,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("setState");
+    this.$toast.info("State has been reset");
     window.location.hash = "";
   },
 };
