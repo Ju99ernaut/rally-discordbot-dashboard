@@ -12,7 +12,7 @@
 
         <div class="min-h p-6 bg-gray-200 dark:bg-gray-900">
           <fade-transition>
-            <keep-alive include="DashboardHome,Logs" :max="2">
+            <keep-alive include="DashboardHome,Logs,Commands" :max="3">
               <router-view />
             </keep-alive>
           </fade-transition>
