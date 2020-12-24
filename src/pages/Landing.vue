@@ -112,7 +112,7 @@ export default {
         client_id: config.clientId,
         redirect_uri: config.home,
         response_type: "token",
-        scope: "identify%20guilds",
+        scope: "identify guilds",
         state: this.state,
       };
       return `${config.discordApi}/oauth2/authorize${queryString(loginParams)}`;
