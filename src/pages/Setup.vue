@@ -143,11 +143,23 @@
               <tr>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
-                    <input
-                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    <select
+                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
                       placeholder="COIN"
                       v-model="channelMapping.coinKind"
-                    />
+                    >
+                      <template v-if="coins.length">
+                        <option
+                          v-for="(coin, index) in coins"
+                          :key="coin.rnbUserId"
+                          :value="coin.coinSymbol"
+                          :selected="index === currentCoin"
+                        >
+                          {{ coin.coinSymbol }}
+                        </option>
+                      </template>
+                      <option v-else>{{ $t("dashboard.loading") }}...</option>
+                    </select>
                   </label>
                 </td>
                 <td class="px-3 py-3">
@@ -155,6 +167,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="100"
+                      type="number"
                       v-model="channelMapping.requiredBalance"
                     />
                   </label>
@@ -252,11 +265,23 @@
               <tr>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
-                    <input
-                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    <select
+                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
                       placeholder="COIN"
                       v-model="roleMapping.coinKind"
-                    />
+                    >
+                      <template v-if="coins.length">
+                        <option
+                          v-for="(coin, index) in coins"
+                          :key="coin.rnbUserId"
+                          :value="coin.coinSymbol"
+                          :selected="index === currentCoin"
+                        >
+                          {{ coin.coinSymbol }}
+                        </option>
+                      </template>
+                      <option v-else>{{ $t("dashboard.loading") }}...</option>
+                    </select>
                   </label>
                 </td>
                 <td class="px-3 py-3">
@@ -264,6 +289,7 @@
                     <input
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="100"
+                      type="number"
                       v-model="roleMapping.requiredBalance"
                     />
                   </label>
@@ -311,7 +337,7 @@ export default {
     Modal,
   },
   computed: {
-    ...mapState(["currentGuildId", "token"]),
+    ...mapState(["currentGuildId", "token", "coins"]),
   },
   data() {
     return {
