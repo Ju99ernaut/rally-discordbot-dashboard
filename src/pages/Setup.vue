@@ -150,10 +150,9 @@
                     >
                       <template v-if="coins.length">
                         <option
-                          v-for="(coin, index) in coins"
+                          v-for="coin in coins"
                           :key="coin.rnbUserId"
                           :value="coin.coinSymbol"
-                          :selected="index === currentCoin"
                         >
                           {{ coin.coinSymbol }}
                         </option>
@@ -272,10 +271,9 @@
                     >
                       <template v-if="coins.length">
                         <option
-                          v-for="(coin, index) in coins"
+                          v-for="coin in coins"
                           :key="coin.rnbUserId"
                           :value="coin.coinSymbol"
-                          :selected="index === currentCoin"
                         >
                           {{ coin.coinSymbol }}
                         </option>
