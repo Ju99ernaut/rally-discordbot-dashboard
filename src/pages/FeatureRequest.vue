@@ -55,7 +55,8 @@
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
 import config from "@/config";
-//import fetch from "@/utils/fetch";
+import fetch from "@/utils/fetch";
+import queryString from "@/utils/queryString";
 
 export default {
   name: "FeatureRequest",
@@ -72,11 +73,22 @@ export default {
   methods: {
     submitRequest() {
       const obj = {
-        title: this.title,
-        description: this.description,
+        "entry.400743370": this.title,
+        "entry.291791210": this.description,
       };
-      console.log(obj);
-      //fetch...
+      fetch(
+        "https://docs.google.com/forms/d/e/" +
+          "1FAIpQLSewYQ-mTzq3lr9Cw6cxCARUvnu_24QCvpWkfWKOdP79FhjKpQ/formResponse" +
+          queryString(obj),
+        {
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      this.title = "";
+      this.description = "";
       this.$toast.success("Feature request recorded");
       //this.$toast.error("An error was encountered. Please try again");
     },
