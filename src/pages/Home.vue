@@ -388,6 +388,19 @@ export default {
         .catch(console.error);
       this.$toast.info("Refreshing...");
     },
+    getDefaultCoinInfo() {
+      if (this.defaultCoin) {
+        this.getCoinInfo(this.defaultCoin);
+        this.$nextTick(() => {
+          const sel = this.$refs.coins;
+          sel.value = this.defaultCoin.coinSymbol;
+          sel.dispatchEvent(new Event("change"));
+          this.$toast.success("Loaded creator coin symbols");
+        });
+        return;
+      }
+      this.getCoinInfo();
+    },
     setCoin(e) {
       this.$store.commit("setCurrentCoin", e.target.selectedIndex);
       this.getCoinInfo();
@@ -418,20 +431,11 @@ export default {
   },
   mounted() {
     this.getMarketData();
+    this.getDefaultCoinInfo();
   },
   watch: {
     coins() {
-      if (this.defaultCoin) {
-        this.getCoinInfo(this.defaultCoin);
-        this.$nextTick(() => {
-          const sel = this.$refs.coins;
-          sel.value = this.defaultCoin.coinSymbol;
-          sel.dispatchEvent(new Event("change"));
-          this.$toast.success("Loaded creator coin symbols");
-        });
-        return;
-      }
-      this.getCoinInfo();
+      this.getDefaultCoinInfo();
     },
     days() {
       this.getMarketData();
