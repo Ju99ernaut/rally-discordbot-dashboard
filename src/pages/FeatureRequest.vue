@@ -90,7 +90,6 @@ export default {
       this.title = "";
       this.description = "";
       this.$toast.success("Feature request recorded");
-      //this.$toast.error("An error was encountered. Please try again");
     },
   },
 };
