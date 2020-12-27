@@ -1,9 +1,9 @@
 import { register } from 'register-service-worker'
 
-if (process.env.NODE_ENV === 'production') {
-    register(`${process.env.BASE_URL}service-worker.js`, {
+if (!window.webpackHotUpdate) {
+    register('/service-worker.js', {
         registrationOptions: {
-            scope: process.env.BASE_URL,
+            scope: './',
         },
         ready() {
             console.log(
