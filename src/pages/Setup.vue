@@ -398,7 +398,7 @@ export default {
       let endpoint, message, body, method;
       switch (id) {
         case 0:
-          message = "Added new channel mapping";
+          message = "Creating new channel mapping";
           endpoint = `/mappings/channels${queryString({
             guildId: this.currentGuildId,
           })}`;
@@ -406,7 +406,7 @@ export default {
           method = "POST";
           break;
         case 1:
-          message = "Channel mapping deleted";
+          message = "Deleting channel mapping";
           endpoint = `/mappings/channels${queryString({
             guildId: this.currentGuildId,
           })}`;
@@ -414,7 +414,7 @@ export default {
           method = "DELETE";
           break;
         case 2:
-          message = "Added new role mapping";
+          message = "Creating new role mapping";
           endpoint = `/mappings/roles${queryString({
             guildId: this.currentGuildId,
           })}`;
@@ -422,7 +422,7 @@ export default {
           method = "POST";
           break;
         case 3:
-          message = "Role mapping deleted";
+          message = "Deleting role mapping";
           endpoint = `/mappings/roles${queryString({
             guildId: this.currentGuildId,
           })}`;
@@ -441,12 +441,11 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
-          if (id >= 2) this.roleMappings = response;
-          else this.channelMappings = response;
+          if (!response.length) return;
+          if (id >= 2) this.roleMappings = response[0].coinKind ? response : [];
+          else this.channelMappings = response[0].coinKind ? response : [];
         })
-        .catch(() =>
-          this.$toast.error("An error was encountered. Please try again")
-        );
+        .catch(console.error);
       this.$toast.info(message);
     },
     refresh(val) {
@@ -459,9 +458,11 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
-          this.channelMappings = response;
+          if (!response.length) return;
+          this.channelMappings = response[0].coinKind ? response : [];
         })
         .catch(console.error);
+
       fetch(`${config.botApi}/mappings/roles/${val}`, {
         headers: {
           authorization: this.token,
@@ -469,7 +470,8 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
-          this.roleMappings = response;
+          if (!response.length) return;
+          this.roleMappings = response[0].coinKind ? response : [];
         })
         .catch(console.error);
       this.$toast.info("Refreshing...");

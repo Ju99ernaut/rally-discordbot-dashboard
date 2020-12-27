@@ -75,7 +75,8 @@ export default {
       fetch(`${config.botApi}/commands`)
         .then((res) => res.json())
         .then((response) => {
-          this.commands = response;
+          if (!response.length) return;
+          this.commands = response[0].name ? response : [];
         })
         .catch(console.error);
       this.$toast.info("Loading commands");

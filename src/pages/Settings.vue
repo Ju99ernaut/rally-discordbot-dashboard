@@ -89,6 +89,7 @@ export default {
     onBotToggle() {
       //toggle bot endpoint
       if (!this.currentGuildId || !this.auth) return;
+
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -104,11 +105,11 @@ export default {
         }
       ).catch(console.error);
       this.$toast.success("Bot has been toggled");
-      //this.$toast.error("An error was encountered. Please try again");
     },
     onPrefixChange() {
       //change prefix endpoint
       if (!this.currentGuildId || !this.auth) return;
+
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -123,15 +124,21 @@ export default {
       )
         .then((res) => res.json())
         .then((response) => {
-          this.currentPrefix = response.prefix;
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.$toast.success(
+              "Prefix has been updated to ",
+              this.currentPrefix
+            );
+          } else
+            this.$toast.error("An error was encountered. Please try again");
         })
         .catch(console.error);
-      this.$toast.success("Prefix has been updated");
-      //this.$toast.error("An error was encountered. Please try again");
     },
     onReset() {
       //change settings to default
       if (!this.currentGuildId || !this.auth) return;
+
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -146,12 +153,14 @@ export default {
       )
         .then((res) => res.json())
         .then((response) => {
-          this.currentPrefix = response.prefix;
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.botEnabled = true;
+            this.$toast.success("All settings have been reset");
+          } else
+            this.$toast.error("An error was encountered. Please try again");
         })
         .catch(console.error);
-      this.botEnabled = true;
-      this.$toast.success("Reset all settings");
-      //this.$toast.error("An error was encountered. Please try again");
     },
     refresh(val) {
       if (!this.auth) return;
@@ -163,10 +172,13 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
-          this.currentPrefix = response.prefix;
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.$toast.info("Settings refreshed");
+          } else
+            this.$toast.error("An error was encountered. Please try again");
         })
         .catch(console.error);
-      this.$toast.info("Refreshing...");
     },
   },
   watch: {
