@@ -61,7 +61,7 @@
 </style>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 import config from "@/config";
@@ -76,6 +76,7 @@ export default {
   },
   computed: {
     ...mapState(["currentGuildId", "token"]),
+    ...mapGetters({ auth: "ifAuthenticated" }),
   },
   data() {
     return {
@@ -87,7 +88,7 @@ export default {
   methods: {
     onBotToggle() {
       //toggle bot endpoint
-      if (!this.currentGuildId) return;
+      if (!this.currentGuildId || !this.auth) return;
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -107,7 +108,7 @@ export default {
     },
     onPrefixChange() {
       //change prefix endpoint
-      if (!this.currentGuildId) return;
+      if (!this.currentGuildId || !this.auth) return;
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -130,7 +131,7 @@ export default {
     },
     onReset() {
       //change settings to default
-      if (!this.currentGuildId) return;
+      if (!this.currentGuildId || !this.auth) return;
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -153,6 +154,8 @@ export default {
       //this.$toast.error("An error was encountered. Please try again");
     },
     refresh(val) {
+      if (!this.auth) return;
+
       fetch(`${config.botApi}/mappings/prefix/${val}`, {
         headers: {
           authorization: this.token,

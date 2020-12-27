@@ -198,7 +198,7 @@ export default {
     loginUrl() {
       const loginParams = {
         client_id: config.clientId,
-        redirect_uri: config.dashboard,
+        redirect_uri: `${config.home}dashboard/home`,
         response_type: "token",
         scope: "identify guilds",
         state: this.state,
