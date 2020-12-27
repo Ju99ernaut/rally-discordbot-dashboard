@@ -364,6 +364,7 @@ export default {
           this.balance = bal.toFixed();
         })
         .catch(console.error);
+
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/summary`)
         .then((res) => res.json())
         .then((response) => {
@@ -378,7 +379,7 @@ export default {
           this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
         })
         .catch(console.error);
-      this.$toast.info("Refreshing...");
+      this.$toast.info("Refreshing coin info...");
     },
     getDefaultCoinInfo() {
       if (this.defaultCoin) {
