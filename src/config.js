@@ -1,6 +1,5 @@
 export default {
     home: "https://rally-discordbot-dashboard.netlify.app/",
-    dashboard: "https://rally-discordbot-dashboard.netlify.app/dashboard/home/",
     clientId: "786246670530773023",
     botApi: "https://rally-discordbot-api.herokuapp.com",
     rallyApi: "https://api.rally.io/v1",
