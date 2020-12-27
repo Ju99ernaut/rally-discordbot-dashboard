@@ -320,7 +320,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Modal from "@/components/Modal";
 
@@ -336,6 +336,7 @@ export default {
   },
   computed: {
     ...mapState(["currentGuildId", "token", "coins"]),
+    ...mapGetters({ auth: "ifAuthenticated" }),
   },
   data() {
     return {
@@ -391,7 +392,8 @@ export default {
     },
     //send a request
     confirm(id) {
-      if (!this.currentGuildId) return;
+      if (!this.currentGuildId || !this.auth) return;
+
       this.modalVisible = false;
       let endpoint, message, body, method;
       switch (id) {
@@ -448,6 +450,8 @@ export default {
       this.$toast.info(message);
     },
     refresh(val) {
+      if (!this.auth) return;
+
       fetch(`${config.botApi}/mappings/channels/${val}`, {
         headers: {
           authorization: this.token,

@@ -1,6 +1,5 @@
 export default {
     home: "http://localhost:8080/",
-    dashboard: "http://localhost:8080/dashboard/home/",
     clientId: "786246670530773023",
     botApi: "http://localhost:8000",
     rallyApi: "https://api.rally.io/v1",
