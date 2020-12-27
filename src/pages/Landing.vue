@@ -114,7 +114,9 @@ export default {
       return btoa(this.stateParam);
     },
     username() {
-      return this.user ? this.user.username : "Anonymous";
+      return this.user
+        ? `${this.user.username}#${this.user.discriminator}`
+        : "Anonymous";
     },
     loginUrl() {
       const loginParams = {
