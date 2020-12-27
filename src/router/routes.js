@@ -1,12 +1,12 @@
-import Dashboard from '@/components/Dashboard';
-import DashboardHome from '@/pages/Home';
-import Commands from '@/pages/Commands';
-import FeatureRequest from '@/pages/FeatureRequest';
-import Landing from '@/pages/Landing';
-import Logs from '@/pages/Logs';
-import Settings from '@/pages/Settings';
-import Setup from '@/pages/Setup';
-import NotFound from '@/pages/NotFound';
+const Landing = () => import('@/pages/Landing');
+const Dashboard = () => import('@/components/Dashboard');
+const DashboardHome = () => import('@/pages/Home');
+const Commands = () => import('@/pages/Commands');
+const FeatureRequest = () => import('@/pages/FeatureRequest');
+const Logs = () => import('@/pages/Logs');
+const Settings = () => import('@/pages/Settings');
+const Setup = () => import('@/pages/Setup');
+const NotFound = () => import('@/pages/NotFound');
 
 export default [
     { path: '/', name: 'Homepage', component: Landing },

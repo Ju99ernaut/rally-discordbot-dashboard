@@ -38,7 +38,7 @@
         :checked="true"
       />
     </template>
-    <template v-else>Loading...</template>
+    <template v-else><div class="w-full mt-8 px-3">Loading...</div></template>
   </div>
 </template>
 
