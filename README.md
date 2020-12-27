@@ -70,19 +70,19 @@ npm run lint
 
 ## Configuration
 
+Add `BASE_URL/` and `BASE_URL/dashboard/home` to your discord app's redirect URIs
+
 Fill in the `config.js` file
 
 | Setting | Description |
 |---------|-------------|
 | home | `Base URL of the dashboard site` |
-| dashboard | `Base URL + /dashboard/home/` |
 | clientId | `discord client ID` |
 | githubHome | `repo homepage` |
-### config.js
+### `config.js` example
 ```js
 export default {
     home: "http://localhost:8080/",
-    dashboard: "http://localhost:8080/dashboard/home/",
     clientId: "786246670530773023",
     botApi: "http://localhost:8000",
     rallyApi: "https://api.rally.io/v1",
