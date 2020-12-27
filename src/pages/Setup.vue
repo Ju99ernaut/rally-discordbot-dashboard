@@ -73,7 +73,7 @@
       <span>{{ $t("setup.go") }} &RightArrow;</span>
     </a>
 
-    <div class="flex flex-wrap -mx-3">
+    <div class="hidden sm:flex flex-wrap -mx-3">
       <div class="w-full xl:w-1/2 px-3">
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"

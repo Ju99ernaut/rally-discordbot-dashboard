@@ -15,7 +15,7 @@
       </router-link>
     </div>
 
-    <div class="lg:flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-6">
       <div class="w-full xl:w-4/6">
         <label class="block mb-5 text-sm">
           <span class="text-gray-700 dark:text-gray-400"> Creator Coin </span>
@@ -38,7 +38,7 @@
           </select>
         </label>
       </div>
-      <div class="flex justify-end w-full xl:w-1/6 py-5">
+      <div class="hidden sm:flex justify-end w-1/2 xl:w-1/6 py-5">
         <button
           @click="getCoinInfo()"
           class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
@@ -46,7 +46,7 @@
           {{ $t("logs.refresh") }}
         </button>
       </div>
-      <div class="flex justify-end w-full xl:w-1/6 py-5">
+      <div class="hidden sm:flex justify-end w-1/2 xl:w-1/6 py-5">
         <button
           @click="setDefaultCoin"
           class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
@@ -175,8 +175,6 @@
               style="height: 100%"
               chart-id="green-line-chart"
               :chart-data="greenLineChart.chartData"
-              :gradient-colors="greenLineChart.gradientColors"
-              :gradient-stops="greenLineChart.gradientStops"
               :extra-options="greenLineChart.extraOptions"
             >
             </line-chart>
@@ -194,8 +192,6 @@
               style="height: 100%"
               chart-id="blue-bar-chart"
               :chart-data="blueBarChart.chartData"
-              :gradient-colors="blueBarChart.gradientColors"
-              :gradient-stops="blueBarChart.gradientStops"
               :extra-options="blueBarChart.extraOptions"
             >
             </bar-chart>
@@ -213,7 +209,6 @@
               style="height: 100%"
               chart-id="purple-line-chart"
               :chart-data="purpleLineChart.chartData"
-              :gradient-stops="purpleLineChart.gradientStops"
               :extra-options="purpleLineChart.extraOptions"
             >
             </line-chart>
@@ -263,6 +258,7 @@ export default {
             {
               label: "Price",
               fill: true,
+              backgroundColor: "rgba(52,70,117,0.2)",
               borderColor: config.colors.default,
               borderWidth: 2,
               borderDash: [],
@@ -278,7 +274,6 @@ export default {
             },
           ],
         },
-        gradientStops: [1, 0.2, 0],
       };
     },
     greenLineChart() {
@@ -290,6 +285,7 @@ export default {
             {
               label: "Market Cap",
               fill: true,
+              backgroundColor: "rgba(0,242,195,0.1)",
               borderColor: config.colors.primary,
               borderWidth: 2,
               borderDash: [],
@@ -305,8 +301,6 @@ export default {
             },
           ],
         },
-        gradientColors: config.colors.primaryGradient,
-        gradientStops: [1, 0.4, 0],
       };
     },
     blueBarChart() {
@@ -318,6 +312,7 @@ export default {
             {
               label: "Volume",
               fill: true,
+              backgroundColor: "rgba(29,140,248,0.1)",
               borderColor: config.colors.info,
               borderWidth: 2,
               borderDash: [],
@@ -326,12 +321,6 @@ export default {
             },
           ],
         },
-        gradientColors: [
-          "rgba(29,140,248,0.5)",
-          "rgba(29,140,248,0.05)",
-          "rgba(29,140,248,0)",
-        ],
-        gradientStops: [1, 0.4, 0],
       };
     },
   },
@@ -362,6 +351,9 @@ export default {
     },
     getCoinInfo(defaultCoin = null) {
       const coin = defaultCoin || this.coins[this.currentCoin];
+
+      if (!coin) return;
+
       fetch(`${config.rallyApi}/users/rally/${coin.rnbUserId}/balance`)
         .then((res) => res.json())
         .then((response) => {
