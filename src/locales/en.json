@@ -1,8 +1,7 @@
 {
     "landing": {
         "main": "Creator Coin Discord Bot",
-        "sub": "Made with love by the Community",
-        "add": "Add"
+        "sub": "Made with love by the Community"
     },
     "notFound": {
         "main": "Sorry, the page you are looking for could not be found",
