@@ -5,6 +5,7 @@ export const basicOptions = {
     },
     responsive: true,
 };
+
 export let blueChartOptions = {
     ...basicOptions,
     tooltips: {
@@ -63,7 +64,7 @@ export let purpleChartOptions = {
             barPercentage: 1.6,
             gridLines: {
                 drawBorder: false,
-                color: 'rgba(29,140,248,0.1)',
+                color: 'rgba(225,78,202,0.1)',
                 zeroLineColor: "transparent",
             },
             ticks: {
@@ -104,7 +105,7 @@ export let orangeChartOptions = {
             barPercentage: 1.6,
             gridLines: {
                 drawBorder: false,
-                color: 'rgba(29,140,248,0.1)',
+                color: 'rgba(220,53,69,0.1)',
                 zeroLineColor: "transparent",
             },
             ticks: {
@@ -126,8 +127,8 @@ export let orangeChartOptions = {
             }
         }]
     }
-
 }
+
 export let greenChartOptions = {
     ...basicOptions,
     tooltips: {
@@ -145,7 +146,7 @@ export let greenChartOptions = {
             barPercentage: 1.6,
             gridLines: {
                 drawBorder: false,
-                color: 'rgba(29,140,248,0.1)',
+                color: 'rgba(0,242,195,0.1)',
                 zeroLineColor: "transparent",
             },
             ticks: {
@@ -207,5 +208,4 @@ export let barChartOptions = {
             }
         }]
     }
-
 }

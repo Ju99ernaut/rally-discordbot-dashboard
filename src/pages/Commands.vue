@@ -20,6 +20,14 @@
         ></label>
       </div>
     </div>
+
+    <button
+      @click="refresh"
+      class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
+    >
+      {{ $t("logs.refresh") }}
+    </button>
+
     <template v-if="commands.length">
       <Command
         v-for="(command, idx) in commands"
@@ -62,14 +70,19 @@ export default {
       commands: [],
     };
   },
+  methods: {
+    refresh() {
+      fetch(`${config.botApi}/commands`)
+        .then((res) => res.json())
+        .then((response) => {
+          this.commands = response;
+        })
+        .catch(console.error);
+      this.$toast.info("Loading commands");
+    },
+  },
   mounted() {
-    fetch(`${config.botApi}/commands`)
-      .then((res) => res.json())
-      .then((response) => {
-        this.commands = response;
-      })
-      .catch(console.error);
-    this.$toast.info("Loading commands");
+    this.refresh();
   },
 };
 </script>

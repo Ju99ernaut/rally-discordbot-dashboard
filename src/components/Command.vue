@@ -7,7 +7,7 @@
         <p class="text-lg mb-1">{{ command }}</p>
         <p class="text-sm mb-1">{{ description }}</p>
       </div>
-      <div class="flex mt-3">
+      <div class="hidden sm:flex mt-3">
         <div>
           <button
             disabled

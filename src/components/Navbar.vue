@@ -1,7 +1,7 @@
 <template>
   <div class="sticky top-0 z-40">
     <div
-      class="w-full h-16 px-6 shadow-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-between"
+      class="w-full h-20 md:h-16 px-6 shadow-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-between"
     >
       <!-- left navbar -->
       <div class="flex">
