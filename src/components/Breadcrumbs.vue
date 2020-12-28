@@ -3,7 +3,9 @@
   <nav class="text-sm font-semibold mb-6" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex">
       <li class="flex items-center text-red-500">
-        <a href="#" class="text-gray-700">{{ $t("dashboard.home") }}</a>
+        <a href="#" class="text-gray-700 dark:text-gray-400">{{
+          $t("dashboard.home")
+        }}</a>
         <svg
           class="fill-current w-3 h-3 mx-3"
           xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +17,7 @@
         </svg>
       </li>
       <li class="flex items-center">
-        <a href="#" class="text-gray-600">{{ name }}</a>
+        <a href="#" class="text-gray-700 dark:text-gray-400">{{ name }}</a>
       </li>
     </ol>
   </nav>

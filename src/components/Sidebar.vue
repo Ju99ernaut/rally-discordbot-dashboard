@@ -15,6 +15,7 @@
           >
             <template v-if="currentGuild !== null">
               <img
+                alt="guild-icon"
                 :src="`${cdn}/icons/${guilds[currentGuild].id}/${guilds[currentGuild].icon}.png`"
                 class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
               />
@@ -22,6 +23,7 @@
             </template>
             <template v-else>
               <img
+                alt="rally-logo"
                 src="@/assets/space.png"
                 class="w-12 h-12 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg"
               />

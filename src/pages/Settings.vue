@@ -19,7 +19,7 @@
         <div
           class="ml-10 block relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
         >
-          <label class="block text-sm">
+          <div class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400"
               >{{ $t("settings.enable") }}/{{ $t("settings.disable") }}</span
             >
@@ -36,11 +36,12 @@
               for="toggle"
               class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
             ></label>
-          </label>
+          </div>
         </div>
       </div>
       <button
         type="button"
+        name="reset"
         class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
         @click="onReset"
       >

@@ -22,6 +22,7 @@
     </div>
 
     <button
+      name="refresh"
       @click="refresh"
       class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
     >

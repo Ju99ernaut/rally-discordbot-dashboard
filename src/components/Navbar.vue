@@ -10,6 +10,7 @@
           class="inline-block text-gray-500 lg:hidden flex items-center mr-4"
         >
           <button
+            name="toggle-sidebar"
             class="hover:text-red-500 hover:border-white focus:outline-none navbar-burger"
             @click="toggleSidebar()"
           >
@@ -58,6 +59,7 @@
       <!-- right navbar -->
       <div class="flex items-center relative">
         <button
+          name="toggle-theme"
           class="rounded-md mr-3 hover:text-red-500 focus:outline-none"
           @click="toggleTheme()"
           aria-label="Toggle color mode"
@@ -90,6 +92,7 @@
           </template>
         </button>
         <button
+          name="toggle-notifications"
           class="rounded-md mr-3 hover:text-red-500 focus:outline-none"
           @click="toggleNotifications()"
           aria-label="Toggle Notifications"
@@ -110,6 +113,7 @@
         <img
           v-if="auth"
           :src="avatar"
+          alt="avatar"
           class="w-12 h-12 cursor-pointer rounded-full shadow-lg"
           @click="toggleDropDown()"
         />
@@ -156,6 +160,7 @@
           >{{ $t("dashboard.home") }}</router-link
         >
         <button
+          name="logout"
           @click="logout()"
           class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
         >

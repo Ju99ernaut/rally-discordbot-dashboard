@@ -19,6 +19,7 @@
           class="bg-transparent dark:text-gray-300 text-grey-darkest font-bold uppercase tracking-wide py-3 px-6 border-2 border-grey-light hover:border-grey rounded-lg"
           :to="{ path: '/' }"
           tag="button"
+          name="to-home"
           >{{ $t("notFound.goHome") }}</router-link
         >
       </div>
@@ -26,7 +27,7 @@
     <div
       class="relative pb-full md:flex p-8 md:pb-0 md:min-h-screen w-full md:w-1/2"
     >
-      <img src="@/assets/page_not_found_red.svg" />
+      <img alt="illustration" src="@/assets/page_not_found_red.svg" />
     </div>
   </div>
 </template>
