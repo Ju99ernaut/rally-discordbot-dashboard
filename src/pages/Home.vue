@@ -7,6 +7,7 @@
         {{ $t("dashboard.welcome") }}, {{ username }}!
       </p>
       <router-link
+        name="to-logs"
         tag="button"
         :to="{ path: 'logs' }"
         class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
@@ -40,6 +41,7 @@
       </div>
       <div class="hidden sm:flex justify-end w-1/2 xl:w-1/6 py-5">
         <button
+          name="get-coin-info"
           @click="getCoinInfo()"
           class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
         >
@@ -48,6 +50,7 @@
       </div>
       <div class="hidden sm:flex justify-end w-1/2 xl:w-1/6 py-5">
         <button
+          name="set-default-coin"
           @click="setDefaultCoin"
           class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
         >
@@ -364,6 +367,7 @@ export default {
           this.balance = bal.toFixed();
         })
         .catch(console.error);
+
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/summary`)
         .then((res) => res.json())
         .then((response) => {
@@ -378,7 +382,7 @@ export default {
           this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
         })
         .catch(console.error);
-      this.$toast.info("Refreshing...");
+      this.$toast.info("Refreshing coin info...");
     },
     getDefaultCoinInfo() {
       if (this.defaultCoin) {

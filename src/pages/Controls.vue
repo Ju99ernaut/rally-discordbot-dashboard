@@ -2,7 +2,7 @@
   <div id="controls">
     <breadcrumbs :name="$t('sidebar.controls')" />
 
-    <placeholder />
+    <Placeholder />
   </div>
 </template>
 

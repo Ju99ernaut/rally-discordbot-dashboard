@@ -6,6 +6,7 @@
     <img
       v-if="auth"
       :src="avatar"
+      alt="avatar"
       class="w-10 h-10 bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
     />
     <svg
@@ -26,6 +27,7 @@
         v-for="(guild, index) in guilds"
         :key="guild.id"
         :src="`${cdn}/icons/${guild.id}/${guild.icon}.png`"
+        alt="guild-icon"
         class="w-8 h-8 cursor-pointer bg-gray-300 dark:bg-gray-900 rounded-full shadow-lg mt-3"
         :class="currentGuild === index ? 'active' : ''"
         @click="setGuild(index)"

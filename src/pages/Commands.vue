@@ -22,6 +22,7 @@
     </div>
 
     <button
+      name="refresh"
       @click="refresh"
       class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
     >
@@ -75,7 +76,8 @@ export default {
       fetch(`${config.botApi}/commands`)
         .then((res) => res.json())
         .then((response) => {
-          this.commands = response;
+          if (!response.length) return;
+          this.commands = response[0].name ? response : [];
         })
         .catch(console.error);
       this.$toast.info("Loading commands");

@@ -4,7 +4,11 @@
       <div
         class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
       >
-        <img src="@/assets/blank_canvas.svg" class="placeholder" />
+        <img
+          alt="placeholder"
+          src="@/assets/blank_canvas.svg"
+          class="placeholder"
+        />
       </div>
     </div>
   </div>

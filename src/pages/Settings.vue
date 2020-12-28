@@ -19,7 +19,7 @@
         <div
           class="ml-10 block relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
         >
-          <label class="block text-sm">
+          <div class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400"
               >{{ $t("settings.enable") }}/{{ $t("settings.disable") }}</span
             >
@@ -36,11 +36,12 @@
               for="toggle"
               class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
             ></label>
-          </label>
+          </div>
         </div>
       </div>
       <button
         type="button"
+        name="reset"
         class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
         @click="onReset"
       >
@@ -89,6 +90,7 @@ export default {
     onBotToggle() {
       //toggle bot endpoint
       if (!this.currentGuildId || !this.auth) return;
+
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -104,11 +106,11 @@ export default {
         }
       ).catch(console.error);
       this.$toast.success("Bot has been toggled");
-      //this.$toast.error("An error was encountered. Please try again");
     },
     onPrefixChange() {
       //change prefix endpoint
       if (!this.currentGuildId || !this.auth) return;
+
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -123,15 +125,21 @@ export default {
       )
         .then((res) => res.json())
         .then((response) => {
-          this.currentPrefix = response.prefix;
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.$toast.success(
+              "Prefix has been updated to ",
+              this.currentPrefix
+            );
+          } else
+            this.$toast.error("An error was encountered. Please try again");
         })
         .catch(console.error);
-      this.$toast.success("Prefix has been updated");
-      //this.$toast.error("An error was encountered. Please try again");
     },
     onReset() {
       //change settings to default
       if (!this.currentGuildId || !this.auth) return;
+
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
           guildId: this.currentGuildId,
@@ -146,12 +154,14 @@ export default {
       )
         .then((res) => res.json())
         .then((response) => {
-          this.currentPrefix = response.prefix;
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.botEnabled = true;
+            this.$toast.success("All settings have been reset");
+          } else
+            this.$toast.error("An error was encountered. Please try again");
         })
         .catch(console.error);
-      this.botEnabled = true;
-      this.$toast.success("Reset all settings");
-      //this.$toast.error("An error was encountered. Please try again");
     },
     refresh(val) {
       if (!this.auth) return;
@@ -163,10 +173,13 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
-          this.currentPrefix = response.prefix;
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.$toast.info("Settings refreshed");
+          } else
+            this.$toast.error("An error was encountered. Please try again");
         })
         .catch(console.error);
-      this.$toast.info("Refreshing...");
     },
   },
   watch: {
