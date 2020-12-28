@@ -1,11 +1,12 @@
 {
     "name": "rally-discordbot-dashboard",
-    "short_name": "dashboard",
+    "short_name": "rallybot-dashboard",
     "description": "Dashboard for managing RallyRoleBot Discord Bot",
     "lang": "en",
     "start_url": "/",
     "display": "standalone",
     "theme_color": "#121317",
+    "background_color": "#121317",
     "icons": [{
             "src": "\/img\/icons\/android-icon-36x36.png",
             "sizes": "36x36",
