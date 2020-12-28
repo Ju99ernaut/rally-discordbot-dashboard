@@ -1,4 +1,6 @@
-const Landing = () => import('@/pages/Landing');
+//Common views
+import Landing from '@/pages/Landing';
+
 const Dashboard = () => import('@/components/Dashboard');
 const DashboardHome = () => import('@/pages/Home');
 const Commands = () => import('@/pages/Commands');
