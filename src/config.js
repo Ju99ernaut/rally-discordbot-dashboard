@@ -1,7 +1,7 @@
 export default {
-    home: "http://127.0.0.1:8080/",
+    home: "https://rally-discordbot-dashboard.netlify.app/",
     clientId: "786246670530773023",
-    botApi: "http://127.0.0.1:8000",
+    botApi: "https://rally-discordbot-api.herokuapp.com",
     rallyApi: "https://api.rally.io/v1",
     coingeckoApi: "https://api.coingecko.com/api/v3",
     discordApi: "https://discord.com/api",
