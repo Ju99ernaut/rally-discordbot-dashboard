@@ -50,5 +50,9 @@ export default {
     Footer,
     FadeTransition,
   },
+  beforeMount() {
+    this.$store.dispatch("getDefaultCoin");
+    this.$store.dispatch("setCoins");
+  },
 };
 </script>

@@ -47,8 +47,6 @@ export default {
       this.$store.dispatch("autoLogin");
     }
     this.$store.dispatch("setPreferedTheme");
-    this.$store.dispatch("getDefaultCoin");
-    this.$store.dispatch("setCoins");
   },
   mounted() {
     this.$store.dispatch("setState");
