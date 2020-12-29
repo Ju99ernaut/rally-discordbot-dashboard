@@ -101,11 +101,18 @@ export default {
             authorization: this.token,
           },
           body: JSON.stringify({
-            prefix: this.botEnabled ? this.currentPrefix : randomString(),
+            prefix: this.botEnabled ? this.defaultPrefix : randomString(),
           }),
         }
       )
-        .then(() => this.$toast.success("Bot has been toggled"))
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.prefix) {
+            this.currentPrefix = response.prefix;
+            this.$toast.success(`Bot has been toggled`);
+          } else
+            this.$toast.error("An error was encountered. Please try again");
+        })
         .catch(() =>
           this.$toast.warn("Failed to toggle bot. Are you offline?")
         );
@@ -130,9 +137,9 @@ export default {
         .then((response) => {
           if (response.prefix) {
             this.currentPrefix = response.prefix;
+            this.botEnabled = this.currentPrefix.length < 15 ? true : false;
             this.$toast.success(
-              "Prefix has been updated to ",
-              this.currentPrefix
+              `Prefix has been updated to ${this.currentPrefix}`
             );
           } else
             this.$toast.error("An error was encountered. Please try again");
@@ -180,6 +187,7 @@ export default {
         .then((response) => {
           if (response.prefix) {
             this.currentPrefix = response.prefix;
+            this.botEnabled = this.currentPrefix.length < 15 ? true : false;
             this.$toast.info("Settings refreshed");
           } else
             this.$toast.error("An error was encountered. Please try again");
