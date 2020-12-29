@@ -42,7 +42,11 @@ export default {
             username: user.username,
           });
         })
-        .catch(console.error);
+        .catch(() =>
+          this.$toast.error(
+            "Failed to login. Please check connection and try again!"
+          )
+        );
     } else {
       this.$store.dispatch("autoLogin");
     }

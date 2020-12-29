@@ -433,6 +433,9 @@ export default {
         default:
           break;
       }
+
+      this.$toast.info(message);
+
       fetch(`${config.botApi}${endpoint}`, {
         method,
         headers: {
@@ -446,11 +449,14 @@ export default {
           if (id >= 2) this.roleMappings = response[0].coinKind ? response : [];
           else this.channelMappings = response[0].coinKind ? response : [];
         })
-        .catch(console.error);
-      this.$toast.info(message);
+        .catch(() =>
+          this.$toast.warn("Failed to complete action. Are you offline?")
+        );
     },
     refresh(val) {
       if (!this.auth) return;
+
+      this.$toast.info("Refreshing...");
 
       fetch(`${config.botApi}/mappings/channels/${val}`, {
         headers: {
@@ -462,7 +468,9 @@ export default {
           if (!response.length) return;
           this.channelMappings = response[0].coinKind ? response : [];
         })
-        .catch(console.error);
+        .catch(() =>
+          this.$toast.warn("Failed to get data channel. Are you offline?")
+        );
 
       fetch(`${config.botApi}/mappings/roles/${val}`, {
         headers: {
@@ -474,8 +482,9 @@ export default {
           if (!response.length) return;
           this.roleMappings = response[0].coinKind ? response : [];
         })
-        .catch(console.error);
-      this.$toast.info("Refreshing...");
+        .catch(() =>
+          this.$toast.warn("Failed to get role mappings. Are you offline?")
+        );
     },
   },
   watch: {

@@ -104,8 +104,11 @@ export default {
             prefix: this.botEnabled ? this.currentPrefix : randomString(),
           }),
         }
-      ).catch(console.error);
-      this.$toast.success("Bot has been toggled");
+      )
+        .then(() => this.$toast.success("Bot has been toggled"))
+        .catch(() =>
+          this.$toast.warn("Failed to toggle bot. Are you offline?")
+        );
     },
     onPrefixChange() {
       //change prefix endpoint
@@ -134,7 +137,9 @@ export default {
           } else
             this.$toast.error("An error was encountered. Please try again");
         })
-        .catch(console.error);
+        .catch(() =>
+          this.$toast.warn("Failed to change prefix. Are you offline?")
+        );
     },
     onReset() {
       //change settings to default
@@ -161,7 +166,7 @@ export default {
           } else
             this.$toast.error("An error was encountered. Please try again");
         })
-        .catch(console.error);
+        .catch(() => this.$toast.warn("Failed to reset. Are you offline?"));
     },
     refresh(val) {
       if (!this.auth) return;
@@ -179,7 +184,7 @@ export default {
           } else
             this.$toast.error("An error was encountered. Please try again");
         })
-        .catch(console.error);
+        .catch(() => this.$toast.warn("Failed to refresh. Are you offline?"));
     },
   },
   watch: {

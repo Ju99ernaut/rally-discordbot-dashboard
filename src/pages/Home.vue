@@ -42,7 +42,7 @@
       <div class="hidden sm:flex justify-end w-1/2 xl:w-1/6 py-5">
         <button
           name="get-coin-info"
-          @click="getCoinInfo()"
+          @click="refresh()"
           class="bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
         >
           {{ $t("logs.refresh") }}
@@ -366,7 +366,9 @@ export default {
           else bal = parseFloat(response.estimatedInUsd);
           this.balance = bal.toFixed();
         })
-        .catch(console.error);
+        .catch(() =>
+          this.$toast.warn("Failed to get balance. Are you offline?")
+        );
 
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/summary`)
         .then((res) => res.json())
@@ -374,15 +376,22 @@ export default {
           this.volume = response.totalSupportVolume;
           this.holders = response.totalSupporters;
         })
-        .catch(console.error);
+        .catch(() =>
+          this.$toast.warn("Failed to get summary. Are you offline?")
+        );
 
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/rewards`)
         .then((res) => res.json())
         .then((response) => {
           this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
         })
-        .catch(console.error);
-      this.$toast.info("Refreshing coin info...");
+        .catch(() =>
+          this.$toast.warn("Failed to get rewards. Are you offline?")
+        );
+    },
+    refresh() {
+      this.$toast.info("Refreshing creator coin info...");
+      this.getCoinInfo();
     },
     getDefaultCoinInfo() {
       if (this.defaultCoin) {
@@ -413,13 +422,13 @@ export default {
       this.volumeData = volumes;
     },
     getMarketData() {
+      this.$toast.info("Updating market data...");
       const endpoint = `coins/${this.coinId}/market_chart`;
       const chartParams = {
         vs_currency: this.vs_currency,
         days: this.days,
       };
       coinData(endpoint, chartParams, this.setChartData);
-      this.$toast.info("Updating market data...");
     },
     setPeriod(e) {
       this.days = e.target.value;

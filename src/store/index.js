@@ -136,7 +136,7 @@ export default new Vuex.Store({
                     //check if owner or admin
                     commit('setGuilds', response.filter(guild => guild.owner || (guild.permissions & 0x8) === 0x8));
                 })
-                .catch(console.error);
+                .catch(() => console.log("Failed to get guilds list."));
         },
         setCoins({ commit }) {
             fetch(`${config.rallyApi}/creator_coins`)
@@ -144,7 +144,7 @@ export default new Vuex.Store({
                 .then((response) => {
                     commit('setCoins', response);
                 })
-                .catch(console.error);
+                .catch(() => console.log("Failed to get coins"));
         },
         setDefaultCoin({ commit }, coin) {
             localStorage.setItem('defaultCoin', JSON.stringify(coin));

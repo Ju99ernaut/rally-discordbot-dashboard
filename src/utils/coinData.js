@@ -8,5 +8,5 @@ export default (endpoint, params = {}, clb = () => {}) => {
         .then((response) => {
             clb(response);
         })
-        .catch(console.error);
+        .catch(() => console.log("Failed to get market data."));
 };

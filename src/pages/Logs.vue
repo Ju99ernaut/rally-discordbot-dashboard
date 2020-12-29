@@ -118,6 +118,7 @@ export default {
   },
   methods: {
     refresh() {
+      this.$toast.info("Refreshing...");
       fetch(
         `${config.rallyApi}/creator_coins/${
           this.coins[this.currentCoin].coinSymbol
@@ -127,8 +128,7 @@ export default {
         .then((response) => {
           this.logs = response;
         })
-        .catch(console.error);
-      this.$toast.info("Refreshing...");
+        .catch(() => this.$toast.warn("Failed to refresh. Are you offline?"));
     },
   },
   mounted() {

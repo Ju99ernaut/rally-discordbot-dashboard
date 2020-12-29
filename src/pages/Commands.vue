@@ -73,14 +73,18 @@ export default {
   },
   methods: {
     refresh() {
+      this.$toast.info("Loading commands");
       fetch(`${config.botApi}/commands`)
         .then((res) => res.json())
         .then((response) => {
           if (!response.length) return;
           this.commands = response[0].name ? response : [];
         })
-        .catch(console.error);
-      this.$toast.info("Loading commands");
+        .catch(() =>
+          this.$toast.console.warn(
+            "Failed to get commands list. Are you offline?"
+          )
+        );
     },
   },
   mounted() {
