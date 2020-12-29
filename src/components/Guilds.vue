@@ -84,7 +84,7 @@ export default {
     },
   },
   beforeMount() {
-    if (this.auth) dispatch("setGuilds", this.token);
+    if (this.auth) this.$store.dispatch("setGuilds", this.token);
   },
 };
 </script>
