@@ -86,12 +86,11 @@ export default new Vuex.Store({
         toggleTheme({ commit }) {
             commit('toggleTheme')
         },
-        login({ commit, dispatch }, { token, userId, user }) {
+        login({ commit }, { token, userId, user }) {
             localStorage.setItem('token', token);
             localStorage.setItem('userId', userId);
             localStorage.setItem('user', JSON.stringify(user));
             commit('authUser', { token, userId, user });
-            dispatch('setGuilds', token);
         },
         logout({ commit }) {
             commit('clearAuth');
@@ -100,14 +99,13 @@ export default new Vuex.Store({
             localStorage.removeItem('userId');
             localStorage.removeItem('user');
         },
-        autoLogin({ commit, dispatch }) {
+        autoLogin({ commit }) {
             const token = localStorage.getItem('token');
             if (!token)
                 return;
             const userId = localStorage.getItem('userId');
             const user = JSON.parse(localStorage.getItem('user'));
             commit('authUser', { token, userId, user });
-            dispatch('setGuilds', token);
         },
         setState({ commit }) {
             const rndStr = generateRandomString();

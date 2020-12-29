@@ -83,5 +83,8 @@ export default {
       });
     },
   },
+  beforeMount() {
+    if (this.auth) dispatch("setGuilds", this.token);
+  },
 };
 </script>
