@@ -4,6 +4,7 @@
     "description": "Dashboard for managing RallyRoleBot Discord Bot",
     "lang": "en",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "theme_color": "#121317",
     "background_color": "#121317",
