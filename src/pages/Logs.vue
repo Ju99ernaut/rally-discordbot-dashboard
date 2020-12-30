@@ -14,7 +14,8 @@
       class="px-4 py-3 mt-5 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
     >
       <p class="text-xl mb-4">
-        Rally {{ $t("logs.network") }} {{ $t("sidebar.logs") }}
+        Rally {{ $t("logs.network") }} {{ $t("sidebar.logs") }} for
+        {{ coin }} coin
       </p>
       <!-- component -->
       <div class="relative m-8">
@@ -110,6 +111,9 @@ export default {
   },
   computed: {
     ...mapState(["coins", "currentCoin"]),
+    coin() {
+      return this.coins[this.currentCoin].coinSymbol;
+    },
   },
   data() {
     return {
