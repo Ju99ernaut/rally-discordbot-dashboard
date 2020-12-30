@@ -4,6 +4,7 @@
       <breadcrumbs :name="$t('sidebar.commands')" />
 
       <div
+        v-if="auth"
         class="relative inline-block w-12 mr-2 mt-2 align-middle select-none transition duration-200 ease-in"
       >
         <input
@@ -54,6 +55,8 @@
 </style>
 
 <script>
+import { mapGetters } from "vuex";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Command from "@/components/Command";
 
@@ -65,6 +68,9 @@ export default {
   components: {
     Breadcrumbs,
     Command,
+  },
+  computed: {
+    ...mapGetters({ auth: "ifAuthenticated" }),
   },
   data() {
     return {
