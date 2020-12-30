@@ -81,7 +81,7 @@
             {{ $t("dashboard.balance") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ {{ balance || 0 }}
+            $ {{ balance || "_" }}
           </p>
         </div>
       </div>
@@ -103,7 +103,7 @@
             {{ $t("dashboard.rewards") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ {{ rewards || 0 }}
+            $ {{ rewards || "_" }}
           </p>
         </div>
       </div>
@@ -125,7 +125,7 @@
             {{ $t("dashboard.buys") }}/{{ $t("dashboard.sells") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ {{ volume || 0 }}
+            $ {{ volume || "_" }}
           </p>
         </div>
       </div>
@@ -147,7 +147,7 @@
             {{ $t("dashboard.holders") }}
           </p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            {{ holders || 0 }}
+            {{ holders || "_" }}
           </p>
         </div>
       </div>
@@ -229,10 +229,11 @@
 </style>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 import fetch from "@/utils/fetch";
 import coinData from "@/utils/coinData";
+import queryString from "@/utils/queryString";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import LineChart from "@/components/Charts/LineChart";
@@ -248,7 +249,15 @@ export default {
     BarChart,
   },
   computed: {
-    ...mapState(["user", "coins", "currentCoin", "defaultCoin"]),
+    ...mapState([
+      "user",
+      "coins",
+      "currentCoin",
+      "defaultCoin",
+      "currentGuildId",
+      "token",
+    ]),
+    ...mapGetters({ auth: "ifAuthenticated" }),
     username() {
       return this.user ? this.user.username : "Anonymous";
     },
@@ -348,9 +357,30 @@ export default {
   methods: {
     setDefaultCoin() {
       this.$store.dispatch("setDefaultCoin", this.coins[this.currentCoin]);
+      this.$toast.success("Default coin set in local storage!");
       //set default coin on API
-      //fetch...
-      this.$toast.success("Default coin set!");
+      if (!this.auth || !this.currentGuildId) return;
+
+      fetch(
+        `${config.botApi}/mappings/coin${queryString({
+          guildId: this.currentGuildId,
+        })}`,
+        {
+          method: "POST",
+          headers: {
+            authorization: this.token,
+          },
+          body: JSON.stringify({
+            coinKind: this.coins[this.currentCoin].coinSymbol,
+          }),
+        }
+      )
+        .then(() => this.$toast.success("Default coin set on server!"))
+        .catch(() =>
+          this.$toast.console.warn(
+            "Failed to set default coin. Are you offline?"
+          )
+        );
     },
     getCoinInfo(defaultCoin = null) {
       const coin = defaultCoin || this.coins[this.currentCoin];
