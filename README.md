@@ -7,6 +7,8 @@ Dashboard for managing rally discord bot built using `vuejs`. This app is ready 
 * `CLIENT_ID` - app client ID obtained from discord
 * `BOT_API` - base url for the bot API
 
+Also add the following redirect URIs to your app on discord `BASE_URL/` and `BASE_URL/dashboard/home`.
+
 [![Netlify Deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/CreatorCoinTools/rally-discordbot-dashboard)
 
 ## Screenshot
@@ -81,28 +83,19 @@ Fill in the `config.js` file
 
 | Setting | Description |
 |---------|-------------|
-| home | `Base URL of the dashboard site` |
-| clientId | `discord client ID` |
-| githubHome | `repo homepage` |
+| `home` | Base URL of the dashboard site |
+| `clientId` | discord client ID |
+| `botApi` | Base URL for the discord bot API |
+| `githubHome` | repo homepage |
+
 ### `config.js` example
 ```js
 export default {
     home: "http://localhost:8080/",
     clientId: "786246670530773023",
     botApi: "http://localhost:8000",
-    rallyApi: "https://api.rally.io/v1",
-    coingeckoApi: "https://api.coingecko.com/api/v3",
-    discordApi: "https://discord.com/api",
-    discordCdn: "https://cdn.discordapp.com",
     githubHome: "https://github.com/Ju99ernaut/rally-discordbot-dashboard",
-    colors: {
-        default: "#344675",
-        primary: "#42b883",
-        info: "#1d8cf8",
-        danger: "#fd5d93",
-        teal: "#00d6b4",
-        primaryGradient: ['rgba(66,134,121,0.55)', 'rgba(66,134,121,0.05)', 'rgba(66,134,121,0)'],
-    }
+    //...
 }
 ```
 
@@ -132,8 +125,6 @@ submitRequest() {
             "Content-Type": "application/x-www-form-urlencoded",
         },
     });
-    this.title = "";
-    this.description = "";
-    this.$toast.success("Feature request recorded");
+    //...
 },
 ```
