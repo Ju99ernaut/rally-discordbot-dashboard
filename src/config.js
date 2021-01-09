@@ -1,5 +1,5 @@
-const CLIENT_ID = process.env.CLIENT_ID;
-const BOT_API = process.env.BOT_API;
+const CLIENT_ID = process.env.VUE_APP_CLIENT_ID;
+const BOT_API = process.env.VUE_APP_BOT_API;
 
 export default {
     home: `${window.location.origin}/`,
