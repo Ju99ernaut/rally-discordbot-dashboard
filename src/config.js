@@ -1,12 +1,12 @@
 export default {
-    home: "http://127.0.0.1:8080/",
-    clientId: "786246670530773023",
-    botApi: "http://127.0.0.1:8000",
+    home: `${window.location.origin}/`,
+    clientId: process.env.CLIENT_ID || "",
+    botApi: process.env.BOT_API || "",
     rallyApi: "https://api.rally.io/v1",
     coingeckoApi: "https://api.coingecko.com/api/v3",
     discordApi: "https://discord.com/api",
     discordCdn: "https://cdn.discordapp.com",
-    githubHome: "https://github.com/Ju99ernaut/rally-discordbot-dashboard",
+    githubHome: "https://github.com/CreatorCoinTools/rally-discordbot-dashboard",
     colors: {
         default: "#344675",
         primary: "#42b883",
