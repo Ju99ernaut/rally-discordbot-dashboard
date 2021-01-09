@@ -1,0 +1,3 @@
+[template.enviroment]
+    CLIENT_ID = "change me for your app's discord client id"
+    BOT_API = "change me for the base url of the bot api"
