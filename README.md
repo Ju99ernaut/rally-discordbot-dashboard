@@ -9,7 +9,7 @@ Dashboard for managing rally discord bot built using `vuejs`. This app is ready 
 
 Also add the following redirect URIs to your app on discord `BASE_URL/` and `BASE_URL/dashboard/home`.
 
-[![Netlify Deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/CreatorCoinTools/rally-discordbot-dashboard)
+[![Netlify Deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Ju99ernaut/rally-discordbot-dashboard)
 
 ## Screenshot
 ![screehot](https://i.imgur.com/PexCtoM.png)
