@@ -2,15 +2,20 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/df11b244-1c7c-40dd-85ce-8c186ec9b17a/deploy-status)](https://app.netlify.com/sites/rally-discordbot-dashboard/deploys)
 
-Dashboard for managing rally discord bot built using `vuejs`
+Dashboard for managing rally discord bot built using `vuejs`. This app is ready to be deployed on netlify. On deploy it is required to set the `CLIENT_ID` and `BOT_API` enviroment variables.
 
-* [initial template](https://github.com/Murked/vue-tailwind-admin)
-* [theme](https://github.com/estevanmaito/windmill-dashboard)
-* [charts](https://github.com/creativetimofficial/vue-black-dashboard)
+* `CLIENT_ID` - app client ID obtained from discord
+* `BOT_API` - base url for the bot API
+
+[![Netlify Deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/CreatorCoinTools/rally-discordbot-dashboard)
 
 ## Screenshot
 ![screehot](https://i.imgur.com/PexCtoM.png)
 
+
+* [initial template](https://github.com/Murked/vue-tailwind-admin)
+* [theme](https://github.com/estevanmaito/windmill-dashboard)
+* [charts](https://github.com/creativetimofficial/vue-black-dashboard)
 ## TODO
 
 ### Setup
