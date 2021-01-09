@@ -5,7 +5,8 @@
 Dashboard for managing rally discord bot built using `vuejs`. This app is ready to be deployed on netlify. On deploy it is required to set the `CLIENT_ID` and `BOT_API` enviroment variables.
 
 * `CLIENT_ID` - app client ID obtained from discord
-* `BOT_API` - base url for the bot API
+* `BOT_API` - base url for the bot API, more info [here](https://github.com/CreatorCoinTools/RallyRoleBot) on setting up the bot and API
+
 
 Also add the following redirect URIs to your app on discord `BASE_URL/` and `BASE_URL/dashboard/home`.
 
