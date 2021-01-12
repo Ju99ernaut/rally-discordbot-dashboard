@@ -94,17 +94,18 @@
             <tbody
               class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
             >
-              <tr
-                v-for="(channelMap, index) in channelMappings"
-                :key="index"
-                class="text-gray-700 dark:text-gray-400"
-              >
-                <td class="px-4 py-3">{{ channelMap.coinKind }}</td>
-                <td class="px-4 py-3">{{ channelMap.requiredBalance }}</td>
-                <td class="px-4 py-3">{{ channelMap.channel }}</td>
-                <td class="px-4 py-3">
-                  <div class="flex items-center space-x-4 text-sm">
-                    <!--<button
+              <template v-if="channelMappings.length">
+                <tr
+                  v-for="(channelMap, index) in channelMappings"
+                  :key="index"
+                  class="text-gray-700 dark:text-gray-400"
+                >
+                  <td class="px-4 py-3">{{ channelMap.coinKind }}</td>
+                  <td class="px-4 py-3">{{ channelMap.requiredBalance }}</td>
+                  <td class="px-4 py-3">{{ channelMap.channel }}</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center space-x-4 text-sm">
+                      <!--<button
                       @click="addChannelMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit"
@@ -120,27 +121,28 @@
                         ></path>
                       </svg>
                     </button>-->
-                    <button
-                      @click="removeChannelMapping(index)"
-                      class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                      aria-label="Delete"
-                    >
-                      <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
+                      <button
+                        @click="removeChannelMapping(index)"
+                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                        aria-label="Delete"
                       >
-                        <path
-                          fill-rule="evenodd"
-                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                        <svg
+                          class="w-5 h-5"
+                          aria-hidden="true"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </template>
               <tr>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
@@ -215,17 +217,18 @@
             <tbody
               class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
             >
-              <tr
-                v-for="(roleMap, index) in roleMappings"
-                :key="index"
-                class="text-gray-700 dark:text-gray-400"
-              >
-                <td class="px-4 py-3">{{ roleMap.coinKind }}</td>
-                <td class="px-4 py-3">{{ roleMap.requiredBalance }}</td>
-                <td class="px-4 py-3">{{ roleMap.roleName }}</td>
-                <td class="px-4 py-3">
-                  <div class="flex items-center space-x-4 text-sm">
-                    <!--<button
+              <template v-if="roleMappings.length">
+                <tr
+                  v-for="(roleMap, index) in roleMappings"
+                  :key="index"
+                  class="text-gray-700 dark:text-gray-400"
+                >
+                  <td class="px-4 py-3">{{ roleMap.coinKind }}</td>
+                  <td class="px-4 py-3">{{ roleMap.requiredBalance }}</td>
+                  <td class="px-4 py-3">{{ roleMap.roleName }}</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center space-x-4 text-sm">
+                      <!--<button
                       @click="addRoleMapping"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit"
@@ -241,27 +244,28 @@
                         ></path>
                       </svg>
                     </button>-->
-                    <button
-                      @click="removeRoleMapping(index)"
-                      class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                      aria-label="Delete"
-                    >
-                      <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
+                      <button
+                        @click="removeRoleMapping(index)"
+                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                        aria-label="Delete"
                       >
-                        <path
-                          fill-rule="evenodd"
-                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                        <svg
+                          class="w-5 h-5"
+                          aria-hidden="true"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </template>
               <tr>
                 <td class="px-3 py-3">
                   <label class="block w-full text-sm">
@@ -391,6 +395,28 @@ export default {
       this.id = 3;
       //remove role mapping endpoint
     },
+    validate(id) {
+      if (id === 0) {
+        const { coinKind, requiredBalance, channel } = this.channelMapping;
+        return coinKind && requiredBalance && channel;
+      } else if (id === 2) {
+        const { coinKind, requiredBalance, roleName } = this.roleMapping;
+        return coinKind && requiredBalance && roleName;
+      } else {
+        return true;
+      }
+    },
+    clear(id) {
+      if (id === 0) {
+        this.channelMapping = {
+          coinKind: "",
+          requiredBalance: "",
+          channel: "",
+        };
+      } else if (id === 2) {
+        this.roleMapping = { coinKind: "", requiredBalance: "", roleName: "" };
+      }
+    },
     //send a request
     confirm(id) {
       if (!this.currentGuildId || !this.auth) return;
@@ -434,7 +460,10 @@ export default {
           break;
       }
 
-      this.$toast.info(message);
+      if (!this.validate(id)) {
+        this.$toast.info("Some important fields are missing");
+        return;
+      }
 
       fetch(`${config.botApi}${endpoint}`, {
         method,
@@ -445,13 +474,20 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
-          if (!response.length) return;
+          this.$toast.info(message);
+          if (!response.length) {
+            if (id >= 2) this.roleMappings = [];
+            else this.channelMappings = [];
+            return;
+          }
           if (id >= 2) this.roleMappings = response[0].coinKind ? response : [];
           else this.channelMappings = response[0].coinKind ? response : [];
         })
         .catch(() =>
-          this.$toast.warn("Failed to complete action. Are you offline?")
+          this.$toast.warning("Failed to complete action. Are you offline?")
         );
+
+      this.clear(id);
     },
     refresh(val) {
       if (!this.auth) return;
@@ -469,7 +505,7 @@ export default {
           this.channelMappings = response[0].coinKind ? response : [];
         })
         .catch(() =>
-          this.$toast.warn("Failed to get data channel. Are you offline?")
+          this.$toast.warning("Failed to get data channel. Are you offline?")
         );
 
       fetch(`${config.botApi}/mappings/roles/${val}`, {
@@ -483,7 +519,7 @@ export default {
           this.roleMappings = response[0].coinKind ? response : [];
         })
         .catch(() =>
-          this.$toast.warn("Failed to get role mappings. Are you offline?")
+          this.$toast.warning("Failed to get role mappings. Are you offline?")
         );
     },
   },
