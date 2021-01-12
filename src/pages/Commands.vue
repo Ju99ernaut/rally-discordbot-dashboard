@@ -87,7 +87,7 @@ export default {
           this.commands = response[0].name ? response : [];
         })
         .catch(() =>
-          this.$toast.console.warn(
+          this.$toast.console.warning(
             "Failed to get commands list. Are you offline?"
           )
         );
