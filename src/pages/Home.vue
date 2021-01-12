@@ -418,8 +418,9 @@ export default {
         );
     },
     refresh() {
-      this.$toast.info("Refreshing creator coin info...");
+      this.$toast.info("Refreshing coin info...");
       this.getCoinInfo();
+      this.getMarketData();
     },
     getDefaultCoinInfo() {
       if (this.defaultCoin) {
