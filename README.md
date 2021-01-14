@@ -7,10 +7,9 @@ Dashboard for managing rally discord bot built using `vuejs`, a tour of the UI i
 * `CLIENT_ID` - app client ID obtained from discord
 * `BOT_API` - base url for the bot API, more info [here](https://github.com/CreatorCoinTools/RallyRoleBot) on setting up the bot and API
 
-
 Also add the following redirect URIs to your app on discord `BASE_URL/` and `BASE_URL/dashboard/home`.
 
-[![Netlify Deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/CreatorCoinTools/rally-discordbot-dashboard)
+[![Netlify Deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Ju99ernaut/rally-discordbot-dashboard)
 
 If self hosting is not your thing you can start using the dashboard right away at https://rallybot.app
 
