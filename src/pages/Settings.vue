@@ -114,7 +114,7 @@ export default {
             this.$toast.error("An error was encountered. Please try again");
         })
         .catch(() =>
-          this.$toast.warn("Failed to toggle bot. Are you offline?")
+          this.$toast.warning("Failed to toggle bot. Are you offline?")
         );
     },
     onPrefixChange() {
@@ -145,7 +145,7 @@ export default {
             this.$toast.error("An error was encountered. Please try again");
         })
         .catch(() =>
-          this.$toast.warn("Failed to change prefix. Are you offline?")
+          this.$toast.warning("Failed to change prefix. Are you offline?")
         );
     },
     onReset() {
@@ -173,7 +173,7 @@ export default {
           } else
             this.$toast.error("An error was encountered. Please try again");
         })
-        .catch(() => this.$toast.warn("Failed to reset. Are you offline?"));
+        .catch(() => this.$toast.warning("Failed to reset. Are you offline?"));
     },
     refresh(val) {
       if (!this.auth) return;
@@ -192,7 +192,9 @@ export default {
           } else
             this.$toast.error("An error was encountered. Please try again");
         })
-        .catch(() => this.$toast.warn("Failed to refresh. Are you offline?"));
+        .catch(() =>
+          this.$toast.warning("Failed to refresh. Are you offline?")
+        );
     },
   },
   watch: {
