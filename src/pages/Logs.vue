@@ -132,7 +132,9 @@ export default {
         .then((response) => {
           this.logs = response;
         })
-        .catch(() => this.$toast.warn("Failed to refresh. Are you offline?"));
+        .catch(() =>
+          this.$toast.warning("Failed to refresh. Are you offline?")
+        );
     },
   },
   mounted() {

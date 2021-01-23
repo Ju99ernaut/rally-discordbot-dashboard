@@ -377,9 +377,7 @@ export default {
       )
         .then(() => this.$toast.success("Default coin set on server!"))
         .catch(() =>
-          this.$toast.console.warn(
-            "Failed to set default coin. Are you offline?"
-          )
+          this.$toast.warning("Failed to set default coin. Are you offline?")
         );
     },
     getCoinInfo(defaultCoin = null) {
@@ -397,7 +395,7 @@ export default {
           this.balance = bal.toFixed();
         })
         .catch(() =>
-          this.$toast.warn("Failed to get balance. Are you offline?")
+          this.$toast.warning("Failed to get balance. Are you offline?")
         );
 
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/summary`)
@@ -407,7 +405,7 @@ export default {
           this.holders = response.totalSupporters;
         })
         .catch(() =>
-          this.$toast.warn("Failed to get summary. Are you offline?")
+          this.$toast.warning("Failed to get summary. Are you offline?")
         );
 
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/rewards`)
@@ -416,12 +414,13 @@ export default {
           this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
         })
         .catch(() =>
-          this.$toast.warn("Failed to get rewards. Are you offline?")
+          this.$toast.warning("Failed to get rewards. Are you offline?")
         );
     },
     refresh() {
-      this.$toast.info("Refreshing creator coin info...");
+      this.$toast.info("Refreshing coin info...");
       this.getCoinInfo();
+      this.getMarketData();
     },
     getDefaultCoinInfo() {
       if (this.defaultCoin) {

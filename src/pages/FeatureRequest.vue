@@ -90,7 +90,9 @@ export default {
       )
         .then(() => this.$toast.success("Feature request recorded"))
         .catch(() =>
-          this.$toast.warn("Failed to send feature request. Are you offline?")
+          this.$toast.warning(
+            "Failed to send feature request. Are you offline?"
+          )
         );
       this.title = "";
       this.description = "";
