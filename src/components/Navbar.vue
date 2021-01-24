@@ -4,28 +4,29 @@
       class="w-full h-20 md:h-16 px-6 shadow-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-between"
     >
       <!-- left navbar -->
-      <div class="flex">
-        <!-- mobile hamburger -->
-        <div
-          class="inline-block text-gray-500 lg:hidden flex items-center mr-4"
-        >
-          <button
-            name="toggle-sidebar"
-            class="hover:text-red-500 hover:border-white focus:outline-none navbar-burger"
-            @click="toggleSidebar()"
+      <div class="flex flex-row">
+        <div class="flex">
+          <!-- mobile hamburger -->
+          <div
+            class="inline-block text-gray-500 lg:hidden flex items-center mr-4"
           >
-            <svg
-              class="h-5 w-5"
-              v-bind:style="{ fill: 'currentColor' }"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+            <button
+              name="toggle-sidebar"
+              class="hover:text-red-500 hover:border-white focus:outline-none navbar-burger"
+              @click="toggleSidebar()"
             >
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-        </div>
+              <svg
+                class="h-5 w-5"
+                v-bind:style="{ fill: 'currentColor' }"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+              </svg>
+            </button>
+          </div>
 
-        <!-- search bar 
+          <!-- search bar 
         <div class="relative text-gray-600">
           <input
             type="search"
@@ -54,6 +55,9 @@
             </svg>
           </button>
         </div>-->
+        </div>
+
+        <price-ticker price="$0.280" :increase="false" />
       </div>
 
       <!-- right navbar -->
@@ -174,16 +178,18 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import Notifications from "./Notifications";
 import config from "@/config";
 import queryString from "@/utils/queryString";
 
+import Notifications from "./Notifications";
+import PriceTicker from "./PriceTicker";
 import { ZoomCenterTransition } from "vue2-transitions";
 
 export default {
   name: "Navbar",
   components: {
     Notifications,
+    PriceTicker,
     ZoomCenterTransition,
   },
   computed: {
