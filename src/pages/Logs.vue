@@ -14,8 +14,7 @@
       class="px-4 py-3 mt-5 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
     >
       <p class="text-xl mb-4">
-        Rally {{ $t("logs.network") }} {{ $t("sidebar.logs") }} for
-        {{ coin }} coin
+        Rally {{ $t("logs.network") }} {{ $t("sidebar.logs") }} for ${{ coin }}
       </p>
       <!-- component -->
       <div class="relative m-8">
@@ -31,19 +30,21 @@
                   class="bg-red-600 rounded-full h-4 w-4 border-gray-200 border-2 z-10"
                 ></div>
                 <div class="flex-1 ml-4 font-medium">
-                  {{ log.completedDate || log.createdDate }}
+                  {{
+                    new Date(log.completedDate || log.createdDate).toUTCString()
+                  }}
                 </div>
               </div>
               <div class="ml-12">
-                {{ log.status }} - {{ log.actionType }}
+                {{ log.status }} action "{{ log.actionType }}"
                 {{
                   log.actionAmountOfCoin
-                    ? ": " + log.actionAmountOfCoin + " coins"
+                    ? ", amounting to " + log.actionAmountOfCoin + " coins"
                     : ""
                 }}
                 {{
                   log.actionCostInCents
-                    ? ": " + log.actionCostInCents + " cents"
+                    ? ", amounting to " + log.actionCostInCents + " cents"
                     : ""
                 }}
               </div>
