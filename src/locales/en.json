@@ -58,6 +58,7 @@
         "prefix": "Prefix",
         "enable": "Enable",
         "disable": "Disable",
+        "currency": "Currency",
         "reset": "Reset"
     },
     "navbar": {
