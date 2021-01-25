@@ -57,7 +57,19 @@
         </div>-->
         </div>
 
-        <price-ticker price="$0.280" :increase="false" />
+        <div
+          id="price-ticker-holder"
+          class="cursor-pointer"
+          @click="switchToken"
+        >
+          <price-ticker
+            :price="price"
+            :icon="icon"
+            :coin="coin"
+            :percentage="percentage ? percentage + '%' : ''"
+            :increase="increase"
+          />
+        </div>
       </div>
 
       <!-- right navbar -->
@@ -180,6 +192,8 @@
 import { mapState, mapGetters } from "vuex";
 import config from "@/config";
 import queryString from "@/utils/queryString";
+import fetch from "@/utils/fetch";
+import coinData from "@/utils/coinData";
 
 import Notifications from "./Notifications";
 import PriceTicker from "./PriceTicker";
@@ -193,7 +207,15 @@ export default {
     ZoomCenterTransition,
   },
   computed: {
-    ...mapState(["sideBarOpen", "dark", "user", "stateParam"]),
+    ...mapState([
+      "sideBarOpen",
+      "dark",
+      "user",
+      "stateParam",
+      "coins",
+      "currentCoin",
+      "currency",
+    ]),
     ...mapGetters({ auth: "ifAuthenticated" }),
     state() {
       return btoa(this.stateParam);
@@ -218,12 +240,21 @@ export default {
       };
       return `${config.discordApi}/oauth2/authorize${queryString(loginParams)}`;
     },
+    increase() {
+      return this.percentage && parseFloat(this.percentage) < 0 ? false : true;
+    },
   },
   data() {
     return {
       dropDownOpen: false,
       notificationsOpen: false,
       cdn: config.discordCdn,
+      viewCoin: true,
+      coinId: "rally-2",
+      coin: "$RLY",
+      icon: "",
+      price: "$0",
+      percentage: "",
     };
   },
   methods: {
@@ -245,6 +276,54 @@ export default {
       this.$store.dispatch("logout");
       this.dropDownOpen = false;
       this.notificationsOpen = false;
+    },
+    refreshRallyPrice() {
+      const endpoint = `simple/price`;
+      const chartParams = {
+        ids: this.coinId,
+        vs_currencies: this.currency,
+        include_24hr_change: true,
+      };
+      coinData(endpoint, chartParams, (res) => {
+        this.coin = "$RLY";
+        this.icon = "";
+        this.price = res[this.coinId].usd.toFixed(3).toString();
+        this.percentage = res[this.coinId].usd_24h_change.toFixed(2).toString();
+      });
+    },
+    refreshCCPrice() {
+      this.coin = `$${this.coins[this.currentCoin].coinSymbol}`;
+      this.icon = this.coins[this.currentCoin].coinImagePath;
+      this.percentage = "";
+      fetch(
+        `${config.rallyApi}/creator_coins/${
+          this.coins[this.currentCoin].coinSymbol
+        }/price`
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          this.price = `$${parseFloat(response.priceInUSD).toFixed(3)}`;
+        })
+        .catch(() =>
+          this.$toast.warning("Failed to get coin price. Are you offline?")
+        );
+    },
+    switchToken() {
+      if (this.viewCoin) this.refreshRallyPrice();
+      else this.refreshCCPrice();
+      this.viewCoin = !this.viewCoin;
+    },
+  },
+  mounted() {
+    if (this.coins[this.currentCoin]) this.refreshCCPrice();
+    else this.refreshRallyPrice();
+    setInterval(() => {
+      if (!this.viewCoin) this.refreshRallyPrice();
+    }, 60000);
+  },
+  watch: {
+    currentCoin() {
+      if (this.coins[this.currentCoin]) this.refreshCCPrice();
     },
   },
 };
