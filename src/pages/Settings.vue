@@ -42,11 +42,60 @@
       <button
         type="button"
         name="reset"
-        class="mt-4 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+        class="mt-4 bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
         @click="onReset"
       >
         {{ $t("settings.reset") }}
       </button>
+    </div>
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <p class="text-xl mb-4">{{ $t("setup.coin") }}</p>
+      <div class="flex">
+        <label class="block mr-4 w-1/2 text-sm">
+          <span class="text-gray-700 dark:text-gray-400">{{
+            $t("dashboard.default")
+          }}</span>
+          <select
+            ref="coins"
+            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+            @change="setDefaultCoin"
+          >
+            <template v-if="coins.length">
+              <option
+                v-for="(coin, index) in coins"
+                :key="coin.rnbUserId"
+                :value="coin.coinSymbol"
+                :selected="index === currentCoin"
+              >
+                {{ coin.coinSymbol }}
+              </option>
+            </template>
+            <option v-else>{{ $t("dashboard.loading") }}...</option>
+          </select>
+        </label>
+        <label class="block w-1/2 text-sm">
+          <span class="text-gray-700 dark:text-gray-400">{{
+            $t("settings.currency")
+          }}</span>
+          <select
+            ref="currencies"
+            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+            @change="setDefaultCurrency"
+          >
+            <template v-if="currencies.length">
+              <option
+                v-for="(currency, index) in currencies"
+                :key="index"
+                :value="currency.value"
+                :selected="index === currentCurrency"
+              >
+                {{ currency.label }}
+              </option>
+            </template>
+            <option v-else>{{ $t("dashboard.loading") }}...</option>
+          </select>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -76,7 +125,7 @@ export default {
     Breadcrumbs,
   },
   computed: {
-    ...mapState(["currentGuildId", "token"]),
+    ...mapState(["currentGuildId", "token", "coins", "currentCoin"]),
     ...mapGetters({ auth: "ifAuthenticated" }),
   },
   data() {
@@ -84,12 +133,17 @@ export default {
       defaultPrefix: "$",
       currentPrefix: "",
       botEnabled: true,
+      currencies: [{ value: "usd", label: "USD" }],
+      currentCurrency: 0,
     };
   },
   methods: {
     onBotToggle() {
       //toggle bot endpoint
-      if (!this.currentGuildId || !this.auth) return;
+      if (!this.currentGuildId || !this.auth) {
+        this.$toast.info("No guild has been selected");
+        return;
+      }
 
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
@@ -119,7 +173,10 @@ export default {
     },
     onPrefixChange() {
       //change prefix endpoint
-      if (!this.currentGuildId || !this.auth) return;
+      if (!this.currentGuildId || !this.auth) {
+        this.$toast.info("No guild has been selected");
+        return;
+      }
 
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
@@ -150,7 +207,10 @@ export default {
     },
     onReset() {
       //change settings to default
-      if (!this.currentGuildId || !this.auth) return;
+      if (!this.currentGuildId || !this.auth) {
+        this.$toast.info("No guild has been selected");
+        return;
+      }
 
       fetch(
         `${config.botApi}/mappings/prefix${queryString({
@@ -195,6 +255,52 @@ export default {
         .catch(() =>
           this.$toast.warning("Failed to refresh. Are you offline?")
         );
+
+      fetch(`${config.botApi}/mappings/coin/${val}`, {
+        headers: {
+          authorization: this.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.coinKind) {
+            this.$refs.coins.value = response.coinKind;
+          }
+        })
+        .catch(() =>
+          this.$toast.warning("Failed to refresh. Are you offline?")
+        );
+    },
+    setDefaultCoin() {
+      this.$store.dispatch("setDefaultCoin", this.coins[this.currentCoin]);
+      this.$toast.success("Default coin set in local storage!");
+      //set default coin on API
+      if (!this.auth || !this.currentGuildId) return;
+
+      fetch(
+        `${config.botApi}/mappings/coin${queryString({
+          guildId: this.currentGuildId,
+        })}`,
+        {
+          method: "POST",
+          headers: {
+            authorization: this.token,
+          },
+          body: JSON.stringify({
+            coinKind: this.coins[this.currentCoin].coinSymbol,
+          }),
+        }
+      )
+        .then(() => this.$toast.success("Default coin set on server!"))
+        .catch(() =>
+          this.$toast.warning("Failed to set default coin. Are you offline?")
+        );
+    },
+    setDefaultCurrency() {
+      this.$store.dispatch(
+        "setCurrency",
+        this.currencies[this.currentCurrency].value
+      );
     },
   },
   watch: {

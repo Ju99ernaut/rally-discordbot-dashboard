@@ -2,6 +2,71 @@
   <div id="home">
     <breadcrumbs :name="$t('sidebar.dashboard')" />
 
+    <Modal
+      :show.sync="modalVisible"
+      :closeBtn="true"
+      mdlTitle="Info"
+      mdlContent="Set global default coin and currency"
+      mdlType="info"
+    >
+      <div slot="mdlBody">
+        <div class="px-4 py-3 mb-8">
+          <label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">{{
+              $t("dashboard.creatorCoin")
+            }}</span>
+            <select
+              class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+              @change="setCoin"
+            >
+              <template v-if="coins.length">
+                <option
+                  v-for="(coin, index) in coins"
+                  :key="coin.rnbUserId"
+                  :value="coin.coinSymbol"
+                  :selected="index === currentCoin"
+                >
+                  {{ coin.coinSymbol }}
+                </option>
+              </template>
+              <option v-else>{{ $t("dashboard.loading") }}...</option>
+            </select>
+          </label>
+          <label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">{{
+              $t("settings.currency")
+            }}</span>
+            <select
+              ref="currencies"
+              @change="setCurrency"
+              class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+            >
+              <template v-if="currencies.length">
+                <option
+                  v-for="(currency, index) in currencies"
+                  :key="index"
+                  :value="currency.value"
+                  :selected="index === currentCurrency"
+                >
+                  {{ currency.label }}
+                </option>
+              </template>
+              <option v-else>{{ $t("dashboard.loading") }}...</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <button
+        slot="actionBtn"
+        type="button"
+        name="confirm"
+        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm bg-green-600 hover:bg-green-700 focus:ring-green-500"
+        @click="setDefaults"
+      >
+        Confirm
+      </button>
+    </Modal>
+
     <div class="lg:flex justify-between items-center mb-6">
       <p class="text-2xl font-semibold mb-2 lg:mb-0">
         {{ $t("dashboard.welcome") }}, {{ username }}!
@@ -19,7 +84,9 @@
     <div class="flex justify-between items-center mb-6">
       <div class="w-full xl:w-4/6">
         <label class="block mb-5 text-sm">
-          <span class="text-gray-700 dark:text-gray-400"> Creator Coin </span>
+          <span class="text-gray-700 dark:text-gray-400">{{
+            $t("dashboard.creatorCoin")
+          }}</span>
           <select
             ref="coins"
             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
@@ -99,11 +166,27 @@
           </svg>
         </div>
         <div>
-          <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">
             {{ $t("dashboard.rewards") }}
           </p>
+          <select
+            class="w-full p-1 text-xs dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+            @change="setRewardsKey"
+          >
+            <template v-if="rewards">
+              <option
+                v-for="(key, index) in Object.keys(rewards)"
+                :key="index"
+                :value="key"
+                :selected="index === currentRewards"
+              >
+                {{ key }}
+              </option>
+            </template>
+            <option v-else>{{ $t("dashboard.loading") }}...</option>
+          </select>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ {{ rewards || "_" }}
+            $ {{ rewardsDisplay || "_" }}
           </p>
         </div>
       </div>
@@ -236,6 +319,7 @@ import coinData from "@/utils/coinData";
 import queryString from "@/utils/queryString";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Modal from "@/components/Modal";
 import LineChart from "@/components/Charts/LineChart";
 import BarChart from "@/components/Charts/BarChart";
 import * as chartConfigs from "@/components/Charts/config";
@@ -245,6 +329,7 @@ export default {
   name: "DashboardHome",
   components: {
     Breadcrumbs,
+    Modal,
     LineChart,
     BarChart,
   },
@@ -256,10 +341,17 @@ export default {
       "defaultCoin",
       "currentGuildId",
       "token",
+      "currency",
     ]),
     ...mapGetters({ auth: "ifAuthenticated" }),
     username() {
       return this.user ? this.user.username : "Anonymous";
+    },
+    rewardsDisplay() {
+      return (
+        parseFloat(this.rewards[this.currentRewards]).toFixed(2).toString() ||
+        ""
+      );
     },
     purpleLineChart() {
       return {
@@ -344,7 +436,6 @@ export default {
       volume: "",
       holders: "",
       coinId: "rally-2",
-      vs_currency: "usd",
       days: 1,
       priceData: [],
       priceLabels: [],
@@ -352,6 +443,10 @@ export default {
       volumeLabels: [],
       capData: [],
       capLabels: [],
+      modalVisible: false,
+      currencies: [{ value: "usd", label: "USD" }],
+      currentCurrency: 0,
+      currentRewards: "weeklyAccumulatedReward",
     };
   },
   methods: {
@@ -379,6 +474,14 @@ export default {
         .catch(() =>
           this.$toast.warning("Failed to set default coin. Are you offline?")
         );
+    },
+    setDefaults() {
+      this.setDefaultCoin();
+      this.$store.dispatch(
+        "setCurrency",
+        this.currencies[this.currentCurrency].value
+      );
+      this.modalVisible = false;
     },
     getCoinInfo(defaultCoin = null) {
       const coin = defaultCoin || this.coins[this.currentCoin];
@@ -411,7 +514,7 @@ export default {
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/rewards`)
         .then((res) => res.json())
         .then((response) => {
-          this.rewards = parseFloat(response.lastOneHourEarned).toFixed();
+          this.rewards = response;
         })
         .catch(() =>
           this.$toast.warning("Failed to get rewards. Are you offline?")
@@ -439,6 +542,12 @@ export default {
       this.$store.commit("setCurrentCoin", e.target.selectedIndex);
       this.getCoinInfo();
     },
+    setCurrency(e) {
+      this.currentCurrency = e.target.selectedIndex;
+    },
+    setRewardsKey(e) {
+      this.currentRewards = e.target.value;
+    },
     setChartData(res) {
       const prices = res.prices.map((price) => price[1]); //"prices": [[timestamp, price],...]
       const marketCaps = res.market_caps.map((cap) => cap[1]); //"market_caps:[[timestamp, market_cap],...]"
@@ -454,7 +563,7 @@ export default {
       this.$toast.info("Updating market data...");
       const endpoint = `coins/${this.coinId}/market_chart`;
       const chartParams = {
-        vs_currency: this.vs_currency,
+        vs_currency: this.currency,
         days: this.days,
       };
       coinData(endpoint, chartParams, this.setChartData);
@@ -466,6 +575,7 @@ export default {
   mounted() {
     this.getMarketData();
     this.getDefaultCoinInfo();
+    this.modalVisible = this.defaultCoin ? false : true;
   },
   watch: {
     coins() {

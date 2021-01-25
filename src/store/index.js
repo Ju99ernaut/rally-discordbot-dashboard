@@ -18,6 +18,7 @@ export default new Vuex.Store({
         coins: [],
         defaultCoin: null,
         currentCoin: 0,
+        currency: 'usd',
         stateParam: null,
         sideBarOpen: false,
         dark: true,
@@ -77,6 +78,9 @@ export default new Vuex.Store({
         },
         setDefaultCoin(state, coin) {
             state.defaultCoin = coin;
+        },
+        setCurrency(state, currency) {
+            state.currency = currency;
         }
     },
     actions: {
@@ -160,5 +164,15 @@ export default new Vuex.Store({
                 return;
             this.state.dark = theme === 'dark';
         },
+        setCurrency({ commit }, currency) {
+            localStorage.setItem('currency', currency);
+            commit('setCurrency', currency);
+        },
+        getCurrency({ commit }) {
+            const currency = localStorage.getItem('currency');
+            if (!currency)
+                return;
+            commit('setCurrency', currency);
+        }
     }
 });

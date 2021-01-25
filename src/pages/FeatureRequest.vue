@@ -45,7 +45,7 @@
         name="submit"
         @click="submitRequest"
         type="button"
-        class="mt-5 w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 text-base font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+        class="mt-4 bg-red-500 hover:bg-red-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
       >
         {{ $t("featureRequest.submit") }}
       </button>
