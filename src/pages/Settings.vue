@@ -56,6 +56,7 @@
             $t("dashboard.default")
           }}</span>
           <select
+            ref="coins"
             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
             @change="setDefaultCoin"
           >
@@ -235,7 +236,6 @@ export default {
         .catch(() => this.$toast.warning("Failed to reset. Are you offline?"));
     },
     refresh(val) {
-      //TODO Get coin
       if (!this.auth) return;
 
       fetch(`${config.botApi}/mappings/prefix/${val}`, {
@@ -251,6 +251,21 @@ export default {
             this.$toast.info("Settings refreshed");
           } else
             this.$toast.error("An error was encountered. Please try again");
+        })
+        .catch(() =>
+          this.$toast.warning("Failed to refresh. Are you offline?")
+        );
+
+      fetch(`${config.botApi}/mappings/coin/${val}`, {
+        headers: {
+          authorization: this.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.coinKind) {
+            this.$refs.coins.value = response.coinKind;
+          }
         })
         .catch(() =>
           this.$toast.warning("Failed to refresh. Are you offline?")
