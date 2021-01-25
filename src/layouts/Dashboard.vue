@@ -53,6 +53,7 @@ export default {
   beforeMount() {
     this.$store.dispatch("getDefaultCoin");
     this.$store.dispatch("setCoins");
+    this.$store.dispatch("getCurrency");
   },
 };
 </script>
