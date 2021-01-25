@@ -16,14 +16,18 @@
       <p class="m-0 -mt-1 ml-2 text-xs font-light">
         <span class="m-0 text-xs font-bold">{{ coin }}</span>
       </p>
-      <div
-        class="flex flex-row -mt-2"
-        :class="increase ? 'text-green-500' : 'text-red-500'"
-      >
-        <p class="m-0 text-lg ml-2 font-medium">{{ price }}</p>
+      <div class="flex flex-row -mt-2">
+        <p
+          class="m-0 text-lg ml-2 font-medium"
+          :class="percentage ? '' : 'text-green-500'"
+        >
+          {{ price }}
+        </p>
         <svg
           class="w-6 h-6 inline-block text-2xl flex-shrink-0 select-none"
-          :class="increase ? 'transform rotate-180' : ''"
+          :class="
+            increase ? 'transform rotate-180 text-green-500' : 'text-red-500'
+          "
           fill="currentColor"
           focusable="false"
           viewBox="0 0 24 24"
@@ -31,6 +35,12 @@
         >
           <path d="M7 10l5 5 5-5z"></path>
         </svg>
+        <p
+          class="m-0 text-sm font-normal"
+          :class="increase ? 'text-green-500' : 'text-red-500'"
+        >
+          {{ percentage }}
+        </p>
       </div>
     </div>
   </div>
@@ -58,6 +68,11 @@ export default {
       type: Boolean,
       default: true,
       description: "Price increase or decrease",
+    },
+    percentage: {
+      type: String,
+      default: "",
+      description: "% increase/decrease",
     },
   },
 };
