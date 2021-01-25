@@ -166,11 +166,27 @@
           </svg>
         </div>
         <div>
-          <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">
             {{ $t("dashboard.rewards") }}
           </p>
+          <select
+            class="w-full p-1 text-xs dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+            @change="setRewardsKey"
+          >
+            <template v-if="rewards">
+              <option
+                v-for="(key, index) in Object.keys(rewards)"
+                :key="index"
+                :value="key"
+                :selected="index === currentRewards"
+              >
+                {{ key }}
+              </option>
+            </template>
+            <option v-else>{{ $t("dashboard.loading") }}...</option>
+          </select>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            $ {{ rewards || "_" }}
+            $ {{ rewardsDisplay || "_" }}
           </p>
         </div>
       </div>
@@ -331,6 +347,12 @@ export default {
     username() {
       return this.user ? this.user.username : "Anonymous";
     },
+    rewardsDisplay() {
+      return (
+        parseFloat(this.rewards[this.currentRewards]).toFixed(2).toString() ||
+        ""
+      );
+    },
     purpleLineChart() {
       return {
         extraOptions: chartConfigs.purpleChartOptions,
@@ -424,6 +446,7 @@ export default {
       modalVisible: false,
       currencies: [{ value: "usd", label: "USD" }],
       currentCurrency: 0,
+      currentRewards: "weeklyAccumulatedReward",
     };
   },
   methods: {
@@ -491,7 +514,7 @@ export default {
       fetch(`${config.rallyApi}/creator_coins/${coin.coinSymbol}/rewards`)
         .then((res) => res.json())
         .then((response) => {
-          this.rewards = parseFloat(response.weeklyAccumulatedReward).toFixed();
+          this.rewards = response;
         })
         .catch(() =>
           this.$toast.warning("Failed to get rewards. Are you offline?")
@@ -521,6 +544,9 @@ export default {
     },
     setCurrency(e) {
       this.currentCurrency = e.target.selectedIndex;
+    },
+    setRewardsKey(e) {
+      this.currentRewards = e.target.value;
     },
     setChartData(res) {
       const prices = res.prices.map((price) => price[1]); //"prices": [[timestamp, price],...]
