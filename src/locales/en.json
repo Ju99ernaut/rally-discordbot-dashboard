@@ -25,6 +25,10 @@
         "period": "Period",
         "default": "Default"
     },
+    "deeplink":{
+        "Help" : "Need help?",
+        "Home" : "Home"
+    },
     "setup": {
         "go": "Let's go",
         "channels": "Setup channels on discord",

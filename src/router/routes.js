@@ -9,6 +9,7 @@ const Logs = () => import('@/pages/Logs');
 const Settings = () => import('@/pages/Settings');
 const Setup = () => import('@/pages/Setup');
 const NotFound = () => import('@/pages/NotFound');
+const Deeplink = () => import('@/pages/Deeplink');
 
 export default [
     { path: '/', name: 'Homepage', component: Landing },
@@ -25,5 +26,6 @@ export default [
             { path: 'setup', name: 'Setup', component: Setup },
         ]
     },
+    { path: '/deeplink', name: 'Deeplink', component: Deeplink },
     { path: "*", component: NotFound },
 ]
