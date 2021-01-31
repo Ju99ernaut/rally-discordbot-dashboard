@@ -122,6 +122,11 @@
               class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
               >Generated Link</label
             ><br />
+            <label
+              id="flink"
+              class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
+              ></label
+            ><br />
             <div class="py-2" />
             <a
               v-on:click="CheckUrl"
@@ -185,9 +190,9 @@ export default {
       Memo = document.getElementById("FMemo").value;
       if(CoinName || CurrencyType || Ammount || Memo){
         var url = "https://www.rally.io/creator/"+CoinName+"?inputType="+CurrencyType+"&amount="+Ammount+"note="+Memo
-        console.log(url)
+        document.getElementById("flink").innerHTML = url
       } else {
-        console.log("Error, Fill all the fields")
+        document.getElementById("flink").innerHTML = "Error! fill all filds"
       }
       return url
     }
