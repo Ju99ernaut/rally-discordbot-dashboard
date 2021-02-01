@@ -54,25 +54,18 @@
               >Coin Name</label
             ><br />
             <div class="py-2" />
-            <input
-              type="text"
-              id="FCoinName"
-              name="fname"
-              value=""
-              class="px-6 py-3 rounded-3xl"
-            /><br />
-            <!-- <select
+            <select
               type="text"
               id="FCoinName"
               name="fname"
               value=""
               class="px-6 py-3 rounded-3xl"
             >
+              <option v-for="item in coins" :key="item.coinSymbol">
+                {{ item.coinSymbol }}
+              </option>
+            </select>
 
-            <option v-for="item in filters" :value="item" v-bind=> {{item}} </option>
-
-            </select> -->
-            
             <br />
             <div class="py-2" />
             <label
@@ -81,13 +74,10 @@
               >Currency Type</label
             ><br />
             <div class="py-2" />
-            <input
-              type="text"
-              id="FCurrencyType"
-              name="fname"
-              value=""
-              class="px-6 py-3 rounded-3xl"
-            /><br />
+            <input type="radio" id="COIN" name="FCurrencyType" value="male" />
+            <label for="COIN" class="px-2 text-l font-bold text-true-gray-800 dark:text-gray-100" >COIN</label><br />
+            <input type="radio" id="USD" name="FCurrencyType" value="female" />
+            <label for="USD" class="px-2 text-l font-bold text-true-gray-800 dark:text-gray-100" >USD</label><br />
             <div class="py-2" />
             <label
               for="fname"
@@ -125,7 +115,7 @@
             <label
               id="flink"
               class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-              ></label
+            ></label
             ><br />
             <div class="py-2" />
             <a
@@ -150,6 +140,7 @@ import config from "@/config";
 
 export default {
   name: "Landing",
+
   computed: {
     ...mapGetters({ auth: "ifAuthenticated" }),
     ...mapState(["user", "stateParam"]),
@@ -170,32 +161,52 @@ export default {
         state: this.state,
       };
       return `${config.discordApi}/oauth2/authorize${queryString(loginParams)}`;
-    }, 
-
-
+    },
   },
   data() {
     return {
       botUrl: `https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&permissions=268438560&scope=bot`,
-      // filters : ["a","b","c"]
+      coins: [],
     };
   },
-  methods : {
-
-    CheckUrl(){
-      var CoinName,CurrencyType,Ammount,Memo;
+  methods: {
+    CheckUrl() {
+      var CoinName, CurrencyType, Ammount, Memo;
       CoinName = document.getElementById("FCoinName").value;
-      CurrencyType = document.getElementById("FCurrencyType").value;
+      CurrencyType = ""
+      if( document.getElementById("COIN").checked ) {
+        CurrencyType = "COIN"
+      } else if (document.getElementById("USD").checked){
+        CurrencyType = "USD"
+      }
       Ammount = document.getElementById("FAmmount").value;
       Memo = document.getElementById("FMemo").value;
-      if(CoinName || CurrencyType || Ammount || Memo){
-        var url = "https://www.rally.io/creator/"+CoinName+"?inputType="+CurrencyType+"&amount="+Ammount+"note="+Memo
-        document.getElementById("flink").innerHTML = url
+      if (CoinName || CurrencyType || Ammount || Memo) {
+        var url =
+          "https://www.rally.io/creator/" +
+          CoinName +
+          "?inputType=" +
+          CurrencyType +
+          "&amount=" +
+          Ammount +
+          "note=" +
+          Memo;
+        document.getElementById("flink").innerHTML = url;
       } else {
-        document.getElementById("flink").innerHTML = "Error! fill all filds"
+        document.getElementById("flink").innerHTML = "Error! fill all filds";
       }
-      return url
-    }
-  }
+      return url;
+    },
+    fetchCoins() {
+      fetch(`${config.rallyApi}/creator_coins/`)
+        .then((res) => res.json())
+        .then((response) => {
+          this.coins = response;
+        });
+    },
+  },
+  mounted() {
+    this.fetchCoins();
+  },
 };
 </script>
