@@ -38,7 +38,7 @@
             }}</span>
             <select
               ref="currencies"
-              @change="setCurrency"
+              v-model="currentCurrency"
               class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
             >
               <template v-if="currencies.length">
@@ -171,7 +171,7 @@
           </p>
           <select
             class="w-full p-1 text-xs dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
-            @change="setRewardsKey"
+            v-model="currentRewards"
           >
             <template v-if="rewards">
               <option
@@ -238,11 +238,24 @@
 
     <label class="w-full xl:w-1/4 block mb-3 text-sm">
       <span class="text-gray-700 dark:text-gray-400">{{
+        $t("dashboard.chart")
+      }}</span>
+      <select
+        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+        v-model="chartIdx"
+      >
+        <option value="1" selected="true">Rally</option>
+        <option value="2">{{ $t("dashboard.creatorCoin") }}</option>
+      </select>
+    </label>
+
+    <label v-if="chartIdx === 1" class="w-full xl:w-1/4 block mb-3 text-sm">
+      <span class="text-gray-700 dark:text-gray-400">{{
         $t("dashboard.period")
       }}</span>
       <select
         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
-        @change="setPeriod"
+        v-model="days"
       >
         <option value="1" selected="true">24h</option>
         <option value="7">7D</option>
@@ -255,7 +268,13 @@
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">Rally {{ $t("dashboard.marketCaps") }}</p>
+          <p class="text-xl mb-4">
+            {{
+              chartIdx === 1
+                ? "Rally " + $t("dashboard.marketCaps")
+                : coins[currentCoin] + " " + $t("dashboard.prices")
+            }}
+          </p>
           <div class="chart-area">
             <line-chart
               style="height: 100%"
@@ -272,7 +291,13 @@
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
-          <p class="text-xl mb-4">Rally {{ $t("dashboard.volumes") }}</p>
+          <p class="text-xl mb-4">
+            {{
+              chartIdx === 1
+                ? "Rally " + $t("dashboard.volumes")
+                : coins[currentCoin] + " " + $t("dashboard.rewards")
+            }}
+          </p>
           <div class="chart-area">
             <bar-chart
               style="height: 100%"
@@ -285,7 +310,7 @@
         </div>
       </div>
 
-      <div class="w-full mt-8 px-3">
+      <div v-if="chartIdx === 1" class="w-full mt-8 px-3">
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
@@ -447,6 +472,7 @@ export default {
       currencies: [{ value: "usd", label: "USD" }],
       currentCurrency: 0,
       currentRewards: "weeklyAccumulatedReward",
+      chartIdx: 1,
     };
   },
   methods: {
@@ -542,12 +568,6 @@ export default {
       this.$store.commit("setCurrentCoin", e.target.selectedIndex);
       this.getCoinInfo();
     },
-    setCurrency(e) {
-      this.currentCurrency = e.target.selectedIndex;
-    },
-    setRewardsKey(e) {
-      this.currentRewards = e.target.value;
-    },
     setChartData(res) {
       const prices = res.prices.map((price) => price[1]); //"prices": [[timestamp, price],...]
       const marketCaps = res.market_caps.map((cap) => cap[1]); //"market_caps:[[timestamp, market_cap],...]"
@@ -568,8 +588,34 @@ export default {
       };
       coinData(endpoint, chartParams, this.setChartData);
     },
-    setPeriod(e) {
-      this.days = e.target.value;
+    getCoinMarketData() {
+      const coin = this.coins[this.currentCoin];
+
+      if (!coin) {
+        this.chartIdx = 1;
+        this.$toast.warning("Coin not found");
+        return;
+      }
+
+      fetch(`${config.botApi}/coins/${coin.coinSymbol}/historical_price`)
+        .then((res) => res.json())
+        .then((response) => {
+          this.capData = response.map((price) => price.priceInUsd);
+        })
+        .catch(() =>
+          this.$toast.warning("Failed to get data. Are you offline?")
+        );
+
+      fetch(
+        `${config.rallyApi}/creator_coins/${coin.coinSymbol}/historical_rewards`
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          this.volumeData = response.map((reward) => reward.weeklyReward);
+        })
+        .catch(() =>
+          this.$toast.warning("Failed to get data. Are you offline?")
+        );
     },
   },
   mounted() {
@@ -583,6 +629,11 @@ export default {
     },
     days() {
       this.getMarketData();
+    },
+    chartIdx(val) {
+      // update chart data
+      if (val === 1) this.getMarketData();
+      else this.getCoinMarketData();
     },
   },
 };

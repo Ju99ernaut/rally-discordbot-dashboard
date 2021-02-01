@@ -287,22 +287,24 @@ export default {
       coinData(endpoint, chartParams, (res) => {
         this.coin = "$RLY";
         this.icon = "";
-        this.price = res[this.coinId].usd.toFixed(3).toString();
+        this.price = `$${res[this.coinId].usd.toFixed(3)}`;
         this.percentage = res[this.coinId].usd_24h_change.toFixed(2).toString();
       });
     },
     refreshCCPrice() {
       this.coin = `$${this.coins[this.currentCoin].coinSymbol}`;
       this.icon = this.coins[this.currentCoin].coinImagePath;
-      this.percentage = "";
       fetch(
-        `${config.rallyApi}/creator_coins/${
+        `${config.botApi}/coins/${
           this.coins[this.currentCoin].coinSymbol
-        }/price`
+        }/price?include_24hr_change=true`
       )
         .then((res) => res.json())
         .then((response) => {
           this.price = `$${parseFloat(response.priceInUSD).toFixed(3)}`;
+          this.percentage = parseFloat(response.usd_24h_change).toFixed(
+            2
+          ).toString;
         })
         .catch(() =>
           this.$toast.warning("Failed to get coin price. Are you offline?")
