@@ -102,7 +102,7 @@
             </router-link>
             <router-link
               tag="div"
-              :to="{ path: '/deeplink' }"
+              :to="{ path: 'deeplink' }"
               class="w-full flex items-center h-10 pl-4 hover:text-red-400 rounded-lg cursor-pointer"
             >
               <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">

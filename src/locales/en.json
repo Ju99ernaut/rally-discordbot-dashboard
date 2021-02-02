@@ -27,7 +27,14 @@
     },
     "deeplink":{
         "Help" : "Need help?",
-        "Home" : "Home"
+        "Home" : "Home",
+        "coinName" : "Coin Name",
+        "currencyType" : "Currency Type",
+        "ammount" : "Ammount",
+        "memo" : "Memo",
+        "generatedLink" : "Generated link",
+        "link" : "link"
+
     },
     "setup": {
         "go": "Let's go",

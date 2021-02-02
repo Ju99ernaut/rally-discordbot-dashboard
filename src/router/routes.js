@@ -24,8 +24,8 @@ export default [
             { path: 'logs', name: 'Logs', component: Logs },
             { path: 'settings', name: 'Settings', component: Settings },
             { path: 'setup', name: 'Setup', component: Setup },
+            { path: 'deeplink', name: 'Deeplink', component: Deeplink },
         ]
     },
-    { path: '/deeplink', name: 'Deeplink', component: Deeplink },
     { path: "*", component: NotFound },
 ]
