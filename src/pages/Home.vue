@@ -236,32 +236,37 @@
       </div>
     </div>
 
-    <label class="w-full xl:w-1/4 block mb-3 text-sm">
-      <span class="text-gray-700 dark:text-gray-400">{{
-        $t("dashboard.chart")
-      }}</span>
-      <select
-        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
-        v-model="chartIdx"
-      >
-        <option value="1" selected="true">Rally</option>
-        <option value="2">{{ $t("dashboard.creatorCoin") }}</option>
-      </select>
-    </label>
+    <div class="flex">
+      <label class="w-full xl:w-1/4 block mb-3 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">{{
+          $t("dashboard.chart")
+        }}</span>
+        <select
+          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+          v-model="chartIdx"
+        >
+          <option value="rly" selected="true">Rally</option>
+          <option value="cc">{{ $t("dashboard.creatorCoin") }}</option>
+        </select>
+      </label>
 
-    <label v-if="chartIdx === 1" class="w-full xl:w-1/4 block mb-3 text-sm">
-      <span class="text-gray-700 dark:text-gray-400">{{
-        $t("dashboard.period")
-      }}</span>
-      <select
-        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
-        v-model="days"
+      <label
+        v-if="chartIdx === 'rly'"
+        class="w-full xl:w-1/4 block ml-3 mb-3 text-sm"
       >
-        <option value="1" selected="true">24h</option>
-        <option value="7">7D</option>
-        <option value="30">1M</option>
-      </select>
-    </label>
+        <span class="text-gray-700 dark:text-gray-400">{{
+          $t("dashboard.period")
+        }}</span>
+        <select
+          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+          v-model="days"
+        >
+          <option value="1" selected="true">24h</option>
+          <option value="7">7D</option>
+          <option value="30">1M</option>
+        </select>
+      </label>
+    </div>
 
     <div class="flex flex-wrap -mx-3">
       <div class="w-full xl:w-1/2 px-3">
@@ -270,9 +275,9 @@
         >
           <p class="text-xl mb-4">
             {{
-              chartIdx === 1
+              chartIdx === "rly"
                 ? "Rally " + $t("dashboard.marketCaps")
-                : coins[currentCoin] + " " + $t("dashboard.prices")
+                : coins[currentCoin].coinSymbol + " " + $t("dashboard.prices")
             }}
           </p>
           <div class="chart-area">
@@ -293,9 +298,9 @@
         >
           <p class="text-xl mb-4">
             {{
-              chartIdx === 1
+              chartIdx === "rly"
                 ? "Rally " + $t("dashboard.volumes")
-                : coins[currentCoin] + " " + $t("dashboard.rewards")
+                : coins[currentCoin].coinSymbol + " " + $t("dashboard.rewards")
             }}
           </p>
           <div class="chart-area">
@@ -310,7 +315,7 @@
         </div>
       </div>
 
-      <div v-if="chartIdx === 1" class="w-full mt-8 px-3">
+      <div v-if="chartIdx === 'rly'" class="w-full mt-8 px-3">
         <div
           class="w-full bg-white rounded-lg shadow-md dark:bg-gray-800 p-4 mb-8 xl:mb-0"
         >
@@ -472,7 +477,7 @@ export default {
       currencies: [{ value: "usd", label: "USD" }],
       currentCurrency: 0,
       currentRewards: "weeklyAccumulatedReward",
-      chartIdx: 1,
+      chartIdx: "rly",
     };
   },
   methods: {
@@ -549,7 +554,8 @@ export default {
     refresh() {
       this.$toast.info("Refreshing coin info...");
       this.getCoinInfo();
-      this.getMarketData();
+      if (this.chartIdx === "rly") this.getMarketData();
+      else this.getCoinMarketData();
     },
     getDefaultCoinInfo() {
       if (this.defaultCoin) {
@@ -600,7 +606,8 @@ export default {
       fetch(`${config.botApi}/coins/${coin.coinSymbol}/historical_price`)
         .then((res) => res.json())
         .then((response) => {
-          this.capData = response.map((price) => parseFloat(price.priceInUsd));
+          this.capData = response.map((price) => parseFloat(price.priceInUSD));
+          this.capLabels = Array(response.length).fill("");
         })
         .catch(() =>
           this.$toast.warning("Failed to get data. Are you offline?")
@@ -614,6 +621,7 @@ export default {
           this.volumeData = response.map((reward) =>
             parseFloat(reward.weeklyReward)
           );
+          this.volumeLabels = Array(response.length).fill("");
         })
         .catch(() =>
           this.$toast.warning("Failed to get data. Are you offline?")
@@ -634,7 +642,7 @@ export default {
     },
     chartIdx(val) {
       // update chart data
-      if (val === 1) this.getMarketData();
+      if (val === "rly") this.getMarketData();
       else this.getCoinMarketData();
     },
   },
