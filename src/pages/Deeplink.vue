@@ -1,25 +1,19 @@
 <template>
-  <div class="px-20 py-6">
-
-    <div class="flex items-center justify-between">
-      <div class="flex items-center justify-center">
-        <breadcrumbs :name="$t('sidebar.deeplink')" />
-      </div>
-    </div>
-
-    <div class="mr-5 py-5">
-      <label
-        for="fname"
-        class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-        >{{ $t("deeplink.coinName") }}</label
+  <div>
+    <breadcrumbs :name="$t('sidebar.deeplink')" />
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <label class="text-xl font-bold text-true-gray-800 dark:text-gray-100">{{
+        $t("deeplink.coinName")
+      }}</label
       ><br />
       <div class="py-2" />
       <select
         type="text"
         id="FCoinName"
+        v-model="CoinName"
         name="fname"
         value=""
-        class="px-6 py-3 rounded-3xl"
+        class="block mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
       >
         <option
           v-for="item in coins"
@@ -32,62 +26,71 @@
 
       <br />
       <div class="py-2" />
-      <label
-        for="fname"
-        class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-        >{{ $t("deeplink.currencyType") }}</label
+      <label class="text-xl font-bold text-true-gray-800 dark:text-gray-100">{{
+        $t("deeplink.currencyType")
+      }}</label
       ><br />
       <div class="py-2" />
-      <input type="radio" id="COIN" name="FCurrencyType" value="male" />
+      <input
+        type="radio"
+        id="COIN"
+        name="FCurrencyType"
+        v-model="CurrencyType"
+        value="COIN"
+      />
       <label
         for="COIN"
         class="px-2 text-l font-bold text-true-gray-800 dark:text-gray-100"
         >COIN</label
       ><br />
-      <input type="radio" id="USD" name="FCurrencyType" value="female" />
+      <input
+        type="radio"
+        id="USD"
+        name="FCurrencyType"
+        v-model="CurrencyType"
+        value="USD"
+      />
       <label
         for="USD"
         class="px-2 text-l font-bold text-true-gray-800 dark:text-gray-100"
         >USD</label
       ><br />
       <div class="py-2" />
-      <label
-        for="fname"
-        class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-        >{{ $t("deeplink.ammount") }}</label
+      <label class="text-xl font-bold text-true-gray-800 dark:text-gray-100">{{
+        $t("deeplink.ammount")
+      }}</label
       ><br />
       <div class="py-2" />
       <input
         id="FAmmount"
-        name="fname"
+        v-model="Ammount"
         value=""
         type="number"
-        class="px-6 py-3 rounded-3xl"
+        class="block mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
       /><br />
       <div class="py-2" />
-      <label
-        for="fname"
-        class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-        >{{ $t("deeplink.memo") }}</label
+      <label class="text-xl font-bold text-true-gray-800 dark:text-gray-100">{{
+        $t("deeplink.memo")
+      }}</label
       ><br />
       <div class="py-2" />
       <input
         type="text"
         id="FMemo"
+        v-model="Memo"
         name="fname"
         value=""
-        class="px-6 py-3 rounded-3xl"
+        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
       /><br />
       <div class="py-2" />
-      <label
-        for="fname"
-        class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-        >        {{ $t("deeplink.generatedLink") }} </label
+      <label class="text-xl font-bold text-true-gray-800 dark:text-gray-100">
+        {{ $t("deeplink.generatedLink") }} </label
       ><br />
       <label
         id="flink"
         class="text-xl font-bold text-true-gray-800 dark:text-gray-100"
-      ></label
+      >
+        {{ url }} </label
       ><br />
       <div class="py-2" />
       <button
@@ -104,56 +107,46 @@
 
 <script>
 import { mapState } from "vuex";
-import config from "@/config";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default {
-  name: "Landing",
+  name: "Deeplink",
   components: {
     Breadcrumbs,
   },
   computed: {
-    ...mapState(["user", "stateParam", "coins"]),
-    state() {
-      return btoa(this.stateParam);
-    },
+    ...mapState(["coins"]),
   },
   data() {
     return {
-      botUrl: `https://discord.com/api/oauth2/authorize?client_id=${config.clientId}&permissions=268438560&scope=bot`,
+      CoinName: "",
+      CurrencyType: "",
+      Ammount: "",
+      Memo: "",
+      url: "URL here",
     };
   },
   methods: {
     CheckUrl() {
-      var CoinName, CurrencyType, Ammount, Memo;
-      CoinName = document.getElementById("FCoinName").value;
-      CurrencyType = "";
-      if (document.getElementById("COIN").checked) {
-        CurrencyType = "COIN";
-      } else if (document.getElementById("USD").checked) {
-        CurrencyType = "USD";
-      }
-      Ammount = document.getElementById("FAmmount").value;
-      Memo = document.getElementById("FMemo").value;
-      if (CoinName && CurrencyType && !isNaN(Ammount)) {
-        var url =
+      var CoinName = this.CoinName;
+      var CurrencyType = this.CurrencyType;
+      var Ammount = this.Ammount;
+      var Memo = this.Memo;
+      if (CoinName && CurrencyType && !isNaN(Ammount) && Ammount != 0) {
+        this.url =
           "https://www.rally.io/creator/" +
           CoinName +
           "?inputType=" +
           CurrencyType +
           "&amount=" +
-          Ammount +
-          "note=" +
-          Memo;
-        document.getElementById("flink").innerHTML = url;
+          Ammount;
+        if (Memo) {
+          this.url = this.url + "note=" + Memo;
+        }
       } else {
-        document.getElementById("flink").innerHTML = "Error! fill all filds";
+        this.url = "Error! fill all filds";
       }
-      return url;
     },
-  },
-  mounted() {
-    this.fetchCoins();
   },
 };
 </script>
