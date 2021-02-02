@@ -307,7 +307,19 @@ export default {
             .toString();
         })
         .catch(() =>
-          this.$toast.warning("Failed to get coin price. Are you offline?")
+          fetch(
+            `${config.rallyApi}/creator_coins/${
+              this.coins[this.currentCoin].coinSymbol
+            }/price`
+          )
+            .then((res) => res.json())
+            .then((response) => {
+              this.price = `$${parseFloat(response.priceInUSD).toFixed(3)}`;
+              this.percentage = "";
+            })
+            .catch(() =>
+              this.$toast.warning("Failed to get coin price. Are you offline?")
+            )
         );
     },
     switchToken() {
