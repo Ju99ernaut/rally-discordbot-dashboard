@@ -57,7 +57,7 @@
       ><br />
       <div class="py-2" />
       <label class="text-xl font-bold text-true-gray-800 dark:text-gray-100">{{
-        $t("deeplink.ammount")
+        $t("deeplink.amount")
       }}</label
       ><br />
       <div class="py-2" />

@@ -30,7 +30,7 @@
         "Home" : "Home",
         "coinName" : "Coin Name",
         "currencyType" : "Currency Type",
-        "ammount" : "Ammount",
+        "amount" : "Amount",
         "memo" : "Memo",
         "generatedLink" : "Generated link",
         "link" : "link"
