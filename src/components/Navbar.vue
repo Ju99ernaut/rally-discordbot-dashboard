@@ -302,9 +302,9 @@ export default {
         .then((res) => res.json())
         .then((response) => {
           this.price = `$${parseFloat(response.priceInUSD).toFixed(3)}`;
-          this.percentage = parseFloat(response.usd_24h_change).toFixed(
-            2
-          ).toString;
+          this.percentage = parseFloat(response.usd_24h_change)
+            .toFixed(2)
+            .toString();
         })
         .catch(() =>
           this.$toast.warning("Failed to get coin price. Are you offline?")

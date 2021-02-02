@@ -600,7 +600,7 @@ export default {
       fetch(`${config.botApi}/coins/${coin.coinSymbol}/historical_price`)
         .then((res) => res.json())
         .then((response) => {
-          this.capData = response.map((price) => price.priceInUsd);
+          this.capData = response.map((price) => parseFloat(price.priceInUsd));
         })
         .catch(() =>
           this.$toast.warning("Failed to get data. Are you offline?")
@@ -611,7 +611,9 @@ export default {
       )
         .then((res) => res.json())
         .then((response) => {
-          this.volumeData = response.map((reward) => reward.weeklyReward);
+          this.volumeData = response.map((reward) =>
+            parseFloat(reward.weeklyReward)
+          );
         })
         .catch(() =>
           this.$toast.warning("Failed to get data. Are you offline?")
