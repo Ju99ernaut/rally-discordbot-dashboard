@@ -82,7 +82,8 @@
         "misc": "MISC",
         "logs": "Logs",
         "controls": "Controls",
-        "settings": "Settings"
+        "settings": "Settings",
+        "deeplink" : "Deeplink"
     },
     "footer": {
         "terms": "Terms of Service",
