@@ -23,7 +23,8 @@
         "creatorCoin": "Creator Coin",
         "loading": "Loading",
         "period": "Period",
-        "default": "Default"
+        "default": "Default",
+        "chart": "Chart"
     },
     "setup": {
         "go": "Let's go",
