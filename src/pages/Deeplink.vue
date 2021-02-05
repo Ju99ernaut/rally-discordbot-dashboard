@@ -134,7 +134,7 @@ export default {
       var Memo = this.Memo;
       if (CoinName && CurrencyType && !isNaN(Ammount) && Ammount != 0) {
         this.url =
-          "https://www.rally.io/creator/" +
+          "https://www.rally.io/creator/?" +
           CoinName +
           "?inputType=" +
           CurrencyType +
