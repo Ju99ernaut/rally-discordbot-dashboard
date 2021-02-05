@@ -141,7 +141,7 @@ export default {
           "&amount=" +
           Ammount;
         if (Memo) {
-          this.url = this.url + "note=" + Memo;
+          this.url = this.url + "&note=" + Memo;
         }
       } else {
         this.url = "Error! fill all filds";
