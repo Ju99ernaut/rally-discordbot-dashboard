@@ -33,15 +33,15 @@
       <div class="py-2" />
       <input
         type="radio"
-        id="COIN"
+        id="COINS"
         name="FCurrencyType"
         v-model="CurrencyType"
-        value="COIN"
+        value="COINS"
       />
       <label
-        for="COIN"
+        for="COINS"
         class="px-2 text-l font-bold text-true-gray-800 dark:text-gray-100"
-        >COIN</label
+        >COINS</label
       ><br />
       <input
         type="radio"
