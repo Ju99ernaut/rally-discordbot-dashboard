@@ -116,7 +116,7 @@ export default new Vuex.Store({
             localStorage.setItem('stateParam', rndStr);
             commit('setState', rndStr);
         },
-        setGuilds({ commit }, token) {
+        setGuilds({ commit, state }, token) {
             fetch(`${config.discordApi}/users/@me/guilds`, {
                     headers: {
                         authorization: token,
@@ -130,7 +130,7 @@ export default new Vuex.Store({
                             redirect_uri: `${config.home}dashboard/home`,
                             response_type: "token",
                             scope: "identify guilds",
-                            state: this.state,
+                            state: btoa(state.stateParam),
                         };
                         window.location.replace(`${config.discordApi}/oauth2/authorize${queryString(loginParams)}`);
                         return;
