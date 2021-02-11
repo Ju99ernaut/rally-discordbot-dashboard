@@ -25,6 +25,17 @@
         "period": "Period",
         "default": "Default"
     },
+    "deeplink":{
+        "Help" : "Need help?",
+        "Home" : "Home",
+        "coinName" : "Coin Name",
+        "currencyType" : "Currency Type",
+        "amount" : "Amount",
+        "memo" : "Memo",
+        "generatedLink" : "Generated link",
+        "link" : "link"
+
+    },
     "setup": {
         "go": "Let's go",
         "channels": "Setup channels on discord",
@@ -78,7 +89,8 @@
         "misc": "MISC",
         "logs": "Logs",
         "controls": "Controls",
-        "settings": "Settings"
+        "settings": "Settings",
+        "deeplink" : "Deeplink"
     },
     "footer": {
         "terms": "Terms of Service",
