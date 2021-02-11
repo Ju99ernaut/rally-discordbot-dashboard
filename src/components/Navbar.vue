@@ -295,19 +295,6 @@ export default {
       this.coin = `$${this.coins[this.currentCoin].coinSymbol}`;
       this.icon = this.coins[this.currentCoin].coinImagePath;
       fetch(
-        `${config.botApi}/coins/${
-          this.coins[this.currentCoin].coinSymbol
-        }/price?include_24hr_change=true`
-      )
-        .then((res) => res.json())
-        .then((response) => {
-          this.price = `$${parseFloat(response.priceInUSD).toFixed(3)}`;
-          this.percentage = parseFloat(response.usd_24h_change)
-            .toFixed(2)
-            .toString();
-        })
-        .catch(() =>
-          fetch(
             `${config.rallyApi}/creator_coins/${
               this.coins[this.currentCoin].coinSymbol
             }/price`
@@ -320,7 +307,18 @@ export default {
             .catch(() =>
               this.$toast.warning("Failed to get coin price. Are you offline?")
             )
-        );
+      fetch(
+        `${config.botApi}/coins/${
+          this.coins[this.currentCoin].coinSymbol
+        }/price?include_24hr_change=true`
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.usd_24h_change)
+            this.percentage = parseFloat(response.usd_24h_change)
+              .toFixed(2)
+              .toString();
+        });
     },
     switchToken() {
       if (this.viewCoin) this.refreshRallyPrice();
