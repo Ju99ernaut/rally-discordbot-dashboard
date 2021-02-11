@@ -1,7 +1,7 @@
 //Common views
 import Landing from '@/pages/Landing';
 
-const Dashboard = () => import('@/components/Dashboard');
+const Dashboard = () => import('@/layouts/Dashboard');
 const DashboardHome = () => import('@/pages/Home');
 const Commands = () => import('@/pages/Commands');
 const FeatureRequest = () => import('@/pages/FeatureRequest');

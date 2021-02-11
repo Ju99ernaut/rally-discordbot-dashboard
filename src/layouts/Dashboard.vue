@@ -33,9 +33,9 @@
 <script>
 import { mapState } from "vuex";
 
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 import { FadeTransition } from "vue2-transitions";
 
@@ -53,6 +53,7 @@ export default {
   beforeMount() {
     this.$store.dispatch("getDefaultCoin");
     this.$store.dispatch("setCoins");
+    this.$store.dispatch("getCurrency");
   },
 };
 </script>

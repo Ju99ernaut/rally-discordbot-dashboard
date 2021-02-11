@@ -23,7 +23,8 @@
         "creatorCoin": "Creator Coin",
         "loading": "Loading",
         "period": "Period",
-        "default": "Default"
+        "default": "Default",
+        "chart": "Chart"
     },
     "deeplink":{
         "Help" : "Need help?",
@@ -69,6 +70,7 @@
         "prefix": "Prefix",
         "enable": "Enable",
         "disable": "Disable",
+        "currency": "Currency",
         "reset": "Reset"
     },
     "navbar": {

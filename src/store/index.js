@@ -18,6 +18,7 @@ export default new Vuex.Store({
         coins: [],
         defaultCoin: null,
         currentCoin: 0,
+        currency: 'usd',
         stateParam: null,
         sideBarOpen: false,
         dark: true,
@@ -77,6 +78,9 @@ export default new Vuex.Store({
         },
         setDefaultCoin(state, coin) {
             state.defaultCoin = coin;
+        },
+        setCurrency(state, currency) {
+            state.currency = currency;
         }
     },
     actions: {
@@ -112,7 +116,7 @@ export default new Vuex.Store({
             localStorage.setItem('stateParam', rndStr);
             commit('setState', rndStr);
         },
-        setGuilds({ commit }, token) {
+        setGuilds({ commit, state }, token) {
             fetch(`${config.discordApi}/users/@me/guilds`, {
                     headers: {
                         authorization: token,
@@ -126,7 +130,7 @@ export default new Vuex.Store({
                             redirect_uri: `${config.home}dashboard/home`,
                             response_type: "token",
                             scope: "identify guilds",
-                            state: this.state,
+                            state: btoa(state.stateParam),
                         };
                         window.location.replace(`${config.discordApi}/oauth2/authorize${queryString(loginParams)}`);
                         return;
@@ -160,5 +164,15 @@ export default new Vuex.Store({
                 return;
             this.state.dark = theme === 'dark';
         },
+        setCurrency({ commit }, currency) {
+            localStorage.setItem('currency', currency);
+            commit('setCurrency', currency);
+        },
+        getCurrency({ commit }) {
+            const currency = localStorage.getItem('currency');
+            if (!currency)
+                return;
+            commit('setCurrency', currency);
+        }
     }
 });

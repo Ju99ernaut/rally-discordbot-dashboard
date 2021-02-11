@@ -4,28 +4,29 @@
       class="w-full h-20 md:h-16 px-6 shadow-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-between"
     >
       <!-- left navbar -->
-      <div class="flex">
-        <!-- mobile hamburger -->
-        <div
-          class="inline-block text-gray-500 lg:hidden flex items-center mr-4"
-        >
-          <button
-            name="toggle-sidebar"
-            class="hover:text-red-500 hover:border-white focus:outline-none navbar-burger"
-            @click="toggleSidebar()"
+      <div class="flex flex-row">
+        <div class="flex">
+          <!-- mobile hamburger -->
+          <div
+            class="inline-block text-gray-500 lg:hidden flex items-center mr-4"
           >
-            <svg
-              class="h-5 w-5"
-              v-bind:style="{ fill: 'currentColor' }"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+            <button
+              name="toggle-sidebar"
+              class="hover:text-red-500 hover:border-white focus:outline-none navbar-burger"
+              @click="toggleSidebar()"
             >
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-        </div>
+              <svg
+                class="h-5 w-5"
+                v-bind:style="{ fill: 'currentColor' }"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+              </svg>
+            </button>
+          </div>
 
-        <!-- search bar 
+          <!-- search bar 
         <div class="relative text-gray-600">
           <input
             type="search"
@@ -54,6 +55,21 @@
             </svg>
           </button>
         </div>-->
+        </div>
+
+        <div
+          id="price-ticker-holder"
+          class="cursor-pointer"
+          @click="switchToken"
+        >
+          <price-ticker
+            :price="price"
+            :icon="icon"
+            :coin="coin"
+            :percentage="percentage ? percentage + '%' : ''"
+            :increase="increase"
+          />
+        </div>
       </div>
 
       <!-- right navbar -->
@@ -174,20 +190,32 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import Notifications from "./Notifications";
 import config from "@/config";
 import queryString from "@/utils/queryString";
+import fetch from "@/utils/fetch";
+import coinData from "@/utils/coinData";
 
+import Notifications from "./Notifications";
+import PriceTicker from "./PriceTicker";
 import { ZoomCenterTransition } from "vue2-transitions";
 
 export default {
   name: "Navbar",
   components: {
     Notifications,
+    PriceTicker,
     ZoomCenterTransition,
   },
   computed: {
-    ...mapState(["sideBarOpen", "dark", "user", "stateParam"]),
+    ...mapState([
+      "sideBarOpen",
+      "dark",
+      "user",
+      "stateParam",
+      "coins",
+      "currentCoin",
+      "currency",
+    ]),
     ...mapGetters({ auth: "ifAuthenticated" }),
     state() {
       return btoa(this.stateParam);
@@ -212,12 +240,21 @@ export default {
       };
       return `${config.discordApi}/oauth2/authorize${queryString(loginParams)}`;
     },
+    increase() {
+      return this.percentage && parseFloat(this.percentage) < 0 ? false : true;
+    },
   },
   data() {
     return {
       dropDownOpen: false,
       notificationsOpen: false,
       cdn: config.discordCdn,
+      viewCoin: true,
+      coinId: "rally-2",
+      coin: "$RLY",
+      icon: "",
+      price: "$0",
+      percentage: "",
     };
   },
   methods: {
@@ -239,6 +276,66 @@ export default {
       this.$store.dispatch("logout");
       this.dropDownOpen = false;
       this.notificationsOpen = false;
+    },
+    refreshRallyPrice() {
+      const endpoint = `simple/price`;
+      const chartParams = {
+        ids: this.coinId,
+        vs_currencies: this.currency,
+        include_24hr_change: true,
+      };
+      coinData(endpoint, chartParams, (res) => {
+        this.coin = "$RLY";
+        this.icon = "";
+        this.price = `$${res[this.coinId].usd.toFixed(3)}`;
+        this.percentage = res[this.coinId].usd_24h_change.toFixed(2).toString();
+      });
+    },
+    refreshCCPrice() {
+      this.coin = `$${this.coins[this.currentCoin].coinSymbol}`;
+      this.icon = this.coins[this.currentCoin].coinImagePath;
+      fetch(
+            `${config.rallyApi}/creator_coins/${
+              this.coins[this.currentCoin].coinSymbol
+            }/price`
+          )
+            .then((res) => res.json())
+            .then((response) => {
+              this.price = `$${parseFloat(response.priceInUSD).toFixed(3)}`;
+              this.percentage = "";
+            })
+            .catch(() =>
+              this.$toast.warning("Failed to get coin price. Are you offline?")
+            )
+      fetch(
+        `${config.botApi}/coins/${
+          this.coins[this.currentCoin].coinSymbol
+        }/price?include_24hr_change=true`
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.usd_24h_change)
+            this.percentage = parseFloat(response.usd_24h_change)
+              .toFixed(2)
+              .toString();
+        });
+    },
+    switchToken() {
+      if (this.viewCoin) this.refreshRallyPrice();
+      else this.refreshCCPrice();
+      this.viewCoin = !this.viewCoin;
+    },
+  },
+  mounted() {
+    if (this.coins[this.currentCoin]) this.refreshCCPrice();
+    else this.refreshRallyPrice();
+    setInterval(() => {
+      if (!this.viewCoin) this.refreshRallyPrice();
+    }, 60000);
+  },
+  watch: {
+    currentCoin() {
+      if (this.coins[this.currentCoin]) this.refreshCCPrice();
     },
   },
 };

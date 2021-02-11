@@ -41,6 +41,7 @@ export default {
             user,
             username: user.username,
           });
+          window.location.hash = "";
         })
         .catch(() =>
           this.$toast.error(
@@ -55,7 +56,6 @@ export default {
   mounted() {
     this.$store.dispatch("setState");
     this.$toast.info("State has been reset");
-    window.location.hash = "";
   },
 };
 </script>
